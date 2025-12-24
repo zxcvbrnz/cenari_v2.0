@@ -1,0 +1,25 @@
+[15-Jun-2024 23:34:40 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 8.1.28. in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/vendor/composer/platform_check.php on line 28
+[15-Jun-2024 23:44:40 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:44:40 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:19 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:20 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:20 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:20 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:20 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:21 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:21 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:21 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:21 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:21 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:21 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:22 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:22 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:22 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:22 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[15-Jun-2024 23:45:22 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 4
+[15-Jun-2024 23:45:22 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[21-Aug-2024 02:14:56 UTC] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/vendor/symfony/finder/Finder.php on line 42
+[01-Oct-2024 05:04:51 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/public_html/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[24-Oct-2024 03:44:38 UTC] PHP Warning:  symlink(): File exists in /home/sekol172/kursus.cenari.sch.id/cenari_v2.0/public/simlink.php on line 5
+[04-Jul-2025 16:04:31 Asia/Ujung_Pandang] PHP Fatal error:  Cannot declare class App\Livewire\Components\Admin\PrivateJadwalBerlangsung, because the name is already in use in /home/sekol172/kursus.cenari.sch.id/cenari_v2.0/resources/views/livewire/components/admin/view-pelatihan-group.blade.php on line 9
+[04-Jul-2025 16:38:16 Asia/Ujung_Pandang] PHP Fatal error:  Cannot redeclare App\Livewire\Components\Admin\ViewPelatihanGroup::$waktuMulai in /home/sekol172/kursus.cenari.sch.id/cenari_v2.0/app/Livewire/Components/Admin/ViewPelatihanGroup.php on line 21

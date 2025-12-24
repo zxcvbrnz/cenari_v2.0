@@ -1,0 +1,5 @@
+<x-app-layout>
+    <main class="py-14 md:py-20 md:px-6">
+        <livewire:components.instruktur.detail-peserta />
+    </main>
+</x-app-layout>
