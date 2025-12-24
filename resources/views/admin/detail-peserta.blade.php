@@ -61,27 +61,29 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       <?php
-                                            $totalNilai = 0;
-                                            $jumlahMateri = 0;
+                                        <?php
+                                        $totalNilai = 0;
+                                        $jumlahMateri = 0;
                                         ?>
                                         @foreach (range(1, 10) as $i)
                                             @if (isset($peserta->nilai->{'materi_' . $i}) && isset($peserta->nilai->{'nilai_' . $i}))
                                                 <?php
-                                                    $totalNilai += $peserta->nilai->{'nilai_' . $i};
-                                                    $jumlahMateri++;
+                                                $totalNilai += $peserta->nilai->{'nilai_' . $i};
+                                                $jumlahMateri++;
                                                 ?>
                                                 <tr class="bg-white border-b">
-                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-600 whitespace-nowrap">
+                                                    <th scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-600 whitespace-nowrap">
                                                         {{ $peserta->nilai->{'materi_' . $i} }}
                                                     </th>
-                                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                                    <td scope="row"
+                                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                         {{ $peserta->nilai->{'nilai_' . $i} }}
                                                     </td>
                                                 </tr>
                                             @endif
                                         @endforeach
-                                        
+
                                         @if ($jumlahMateri > 0)
                                             <?php $rataRata = $totalNilai / $jumlahMateri; ?>
                                             <tr class="bg-gray-200 font-bold">
@@ -102,6 +104,18 @@
                     @endif
                 </div>
             </div>
+        </div>
+        <div class="py-4 mb-6 bg-white border border-slate-200 shadow-lg rounded-sm lg:col-span-2">
+            <div class="flex items-center space-x-2 pb-4 px-4 sm:px-6 text-gray-800 font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 256 256">
+                    <path
+                        d="M224,48V96a8,8,0,0,1-16,0V56H160a8,8,0,0,1,0-16h56A8,8,0,0,1,224,48ZM96,200H48V152a8,8,0,0,0-16,0v56a8,8,0,0,0,8,8H96a8,8,0,0,0,0-16Zm120-56a8,8,0,0,0-8,8v40H160a8,8,0,0,0,0,16h56a8,8,0,0,0,8-8V152A8,8,0,0,0,216,144ZM40,104a8,8,0,0,0,8-8V56h40a8,8,0,0,0,0-16H40a8,8,0,0,0-8,8V96A8,8,0,0,0,40,104Z">
+                    </path>
+                </svg>
+                <span>QR Code Akses Peserta</span>
+            </div>
+            <hr>
+            <livewire:components.admin.qrcode-peserta :peserta="$peserta" />
         </div>
         @if (auth()->user()->role === 'admin')
             <livewire:components.admin.hapus-peserta :peserta="$peserta" />

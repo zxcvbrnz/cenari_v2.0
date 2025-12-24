@@ -13,6 +13,9 @@ use App\Http\Middleware\Materi;
 
 // use Silvanix\Wablas\Message;
 
+Route::get('/peserta/{unique_code}', [AdminController::class, 'unique_code_peserta']);
+
+
 Route::get('/', function () {
     return redirect('/login');
 });

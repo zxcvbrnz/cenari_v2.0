@@ -47,7 +47,16 @@ class AdminController extends Controller
             ->with('mapel', $pelatihan_baru)
             ->with('pelatihan', $pelatihan_lulus);
     }
+
+
     // ========= CRUD PESERTA ==========
+    public function unique_code_peserta($unique_code)
+    {
+        $peserta = Peserta::with('user')->where('unique_code', $unique_code)->firstOrFail();
+
+        return view('welcome', compact('peserta'));
+    }
+
     public function peserta()
     {
         return view('admin.data-peserta');
@@ -63,6 +72,7 @@ class AdminController extends Controller
     }
     public function creating_peserta(Request $request)
     {
+        $str = Str::random(30) . Carbon::now()->getTimestamp() . Str::random(30);
         $id_instruktur = null;
         $id_mapel = null;
         if ($request->instruktur) {
@@ -110,6 +120,7 @@ class AdminController extends Controller
             'status_saat_ini' => $request->status_saat_ini,
             'status' => 'aktif',
             'status_pembayaran' => $status_pembayaran,
+            'barcode' => $str,
         ]);
         Sertifikat::create(['id_peserta' => $data->id]);
         if (!$request->id_group) {
@@ -139,7 +150,7 @@ class AdminController extends Controller
         event(new Registered((User::create($akun))));
 
         $send = new Message();
-        
+
         $nomor_ins = $data->id_group ? Group::findOrFail($data->id_group)->instruktur : Instruktur::findOrFail($id_instruktur);
 
         // $nomor_ins = Instruktur::findOrFail($id_instruktur)->nomor_telepon;
