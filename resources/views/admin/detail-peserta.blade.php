@@ -115,7 +115,9 @@
                 <span>QR Code Akses Peserta</span>
             </div>
             <hr>
-            <livewire:components.admin.qrcode-peserta :peserta="$peserta" />
+            @if (auth()->user()->role === 'admin')
+                <livewire:components.admin.qrcode-peserta :peserta="$peserta" />
+            @endif
         </div>
         @if (auth()->user()->role === 'admin')
             <livewire:components.admin.hapus-peserta :peserta="$peserta" />
