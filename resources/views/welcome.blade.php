@@ -55,15 +55,10 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 border-t border-slate-50 bg-slate-50/50">
-                    <div class="p-4 text-center border-r border-slate-100">
-                        <span
-                            class="block text-[10px] text-slate-400 uppercase font-bold tracking-widest">Kehadiran</span>
-                        <span class="text-lg font-black text-slate-700">{{ $peserta->riwayatAbsensi->count() }}x</span>
-                    </div>
+                <div class="flex justify-center border-t border-slate-50 bg-slate-50/50">
                     <div class="p-4 text-center">
                         <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-widest">Nilai
-                            Rata</span>
+                            Rata-Rata</span>
                         <?php
                         $totalNilai = 0;
                         $jumlahMateri = 0;
@@ -96,7 +91,8 @@
                     <div class="flex items-center justify-between mb-8">
                         <div>
                             <h3 class="text-xl font-black text-slate-800">Detail Akademik</h3>
-                            <p class="text-sm text-slate-400">Informasi resmi peserta kursus Cenari</p>
+                            <p class="text-sm text-slate-400">Informasi akademik peserta
+                                {{ $peserta->id_group ? 'pelatihan' : 'kursus' }} Cenari</p>
                         </div>
                         <div
                             class="h-12 w-12 bg-violet-100 rounded-2xl flex items-center justify-center text-violet-600">
