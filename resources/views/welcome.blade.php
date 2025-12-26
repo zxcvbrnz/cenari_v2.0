@@ -58,7 +58,7 @@
                 <div class="flex justify-center border-t border-slate-50 bg-slate-50/50">
                     <div class="p-4 text-center">
                         <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-widest">Nilai
-                            Rata-Rata</span>
+                            Akhir Akademik</span>
                         <?php
                         $totalNilai = 0;
                         $jumlahMateri = 0;
