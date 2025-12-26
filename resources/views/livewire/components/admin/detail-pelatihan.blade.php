@@ -1,7 +1,7 @@
 <main class="py-14 md:py-20">
     <div class="mb-6 bg-white border border-slate-200 shadow-lg rounded-sm">
         <div class="text-slate-700 p-4">
-            Detail
+            Detail Pelatihan
         </div>
         <hr>
         <div class="p-4">
