@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pesertas', function (Blueprint $table) {
             $table->id();
+            $table->string('unique_code')->nullable();
             $table->foreignId('id_instruktur')->nullable()->constrained('instrukturs');
             $table->foreignId('id_group')->nullable();
             $table->foreignId('id_mapel')->nullable();
@@ -48,7 +49,6 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('status_saat_ini')->nullable();
             $table->string('status_pembayaran')->nullable();
-            $table->string('barcode')->nullable();
             $table->timestamps();
         });
     }
