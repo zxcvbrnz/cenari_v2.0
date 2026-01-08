@@ -70,120 +70,126 @@ class AdminController extends Controller
         $groups = Group::where('status', 'aktif')->get();
         return view('admin.create-peserta', compact('ins', 'mapels', 'groups'));
     }
+    // public function creating_peserta(Request $request)
+    // {
+    //     $str = Str::random(30) . Carbon::now()->getTimestamp();
+    //     $id_instruktur = null;
+    //     $id_mapel = null;
+    //     if ($request->instruktur) {
+    //         $insmap = explode('-', $request->instruktur);
+    //         $id_instruktur = $insmap[0];
+    //         $id_mapel = $insmap[1];
+    //     }
+    //     $status_pembayaran = $request->status_pembayaran;
+    //     if ($request->id_group) {
+    //         $status_pembayaran = 'Lunas';
+    //     }
+    //     $data = Peserta::create([
+    //         'id_instruktur' => $id_instruktur,
+    //         'id_group' => $request->id_group,
+    //         'id_mapel' => $id_mapel,
+    //         'tempat_lahir' => $request->tempat_lahir,
+    //         'tanggal_lahir' => $request->tanggal_lahir,
+    //         'nama_ibu' => $request->nama_ibu,
+    //         'nama_ayah' => $request->nama_ayah,
+    //         'nisn' => $request->nisn,
+    //         'nik' => $request->nik,
+    //         'jenis_kelamin' => $request->jenis_kelamin,
+    //         'pendidikan' => $request->pendidikan,
+    //         'agama' => $request->agama,
+    //         'kewarganegaraan' => $request->kewarganegaraan,
+    //         'penerima_kps' => $request->penerima_kps,
+    //         'no_kps' => $request->no_kps,
+    //         'layak_pip' => $request->layak_pip,
+    //         'alasan_pip' => $request->alasan_pip,
+    //         'penerima_kip' => $request->penerima_kip,
+    //         'no_kip' => $request->no_kip,
+    //         'alamat' => $request->alamat,
+    //         'rt' => $request->rt,
+    //         'rw' => $request->rw,
+    //         'kode_pos' => $request->kode_pos,
+    //         'nama_desa_kelurahan' => $request->nama_desa_kelurahan,
+    //         'provinsi' => $request->provinsi,
+    //         'kab_kota' => $request->kab_kota,
+    //         'kecamatan' => $request->kecamatan,
+    //         'kelurahan' => $request->kelurahan,
+    //         'jenis_tinggal' => $request->jenis_tinggal,
+    //         'alat_transportasi' => $request->alat_transportasi,
+    //         'nomor_telepon' => $request->nomor_telepon,
+    //         'email' => $request->email,
+    //         'status_saat_ini' => $request->status_saat_ini,
+    //         'status' => 'aktif',
+    //         'status_pembayaran' => $status_pembayaran,
+    //         'barcode' => $str,
+    //     ]);
+    //     Sertifikat::create(['id_peserta' => $data->id]);
+    //     if (!$request->id_group) {
+    //         Pembayaran::create([
+    //             'id_peserta' => $data->id,
+    //             'jumlah_dibayar' => $request->jumlah_dibayar,
+    //             'tanggal_dibayar' => $request->tanggal_dibayar,
+    //             'deskripsi' => $request->deskripsi,
+    //         ]);
+    //     }
+    //     $username = '';
+    //     $nameParts = explode(' ', $request->name);
+    //     if (count($nameParts) > 0) {
+    //         $firstName = $nameParts[0];
+    //         $secondName = count($nameParts) > 1 ? $nameParts[1] : '';
+    //         $nameToUse = $secondName ?: $firstName;
+    //         $username = Str::of($nameToUse . ' ' . $data->id)->slug('-');
+    //     }
+    //     $akun = [
+    //         'name' => $request->name,
+    //         'role' => 'peserta',
+    //         'id_peserta' => $data->id,
+    //         'username' => $username,
+    //         'password' => 'cenarikursus'
+    //     ];
+    //     $akun['password'] = Hash::make($akun['password']);
+    //     event(new Registered((User::create($akun))));
+
+    //     $send = new Message();
+
+    //     $nomor_ins = $data->id_group ? Group::findOrFail($data->id_group)->instruktur : Instruktur::findOrFail($id_instruktur);
+
+    //     // $nomor_ins = Instruktur::findOrFail($id_instruktur)->nomor_telepon;
+    //     $wa = [
+    //         [
+    //             'phone' => $request->nomor_telepon,
+    //             'message' => 'Halo *' . $request->name . '*<br><br>' .
+    //                 'Pendaftaranmu Telah Terverifikasi, Berikut Username Dan Passwordmu' .
+    //                 '<br><br>' . 'Username : ' . $username .
+    //                 '<br>' . 'Password : cenarikursus' .
+    //                 '<br><br>' . 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+    //         ],
+    //         [
+    //             'phone' => $nomor_ins->nomor_telepon,
+    //             'message' => 'Halo *' . $nomor_ins->user->name . '*<br><br>' .
+    //                 'Murid Bernama *' . $request->name . '* Telah Menjadi Murid Didik Anda, Untuk Lebih Lanjut' . "<br><br>" .
+    //                 'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
+    //                 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+    //         ],
+    //         [
+    //             'phone' => env('ADMIN_NUMBER'),
+    //             'message' => 'Halo *Admin*' . '<br>' . 'Peserta Bernama *' . $request->name . '* Telah Didaftarkan Pada Aplikasi Dengan Akun Seperti Berikut' .
+    //                 '<br><br>' . 'Username : ' . $username .
+    //                 '<br>' . 'Password : cenarikursus' .
+    //                 '<br><br>' . 'Untuk Lebih Lanjut' .
+    //                 "<br>" . 'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
+    //                 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+    //         ],
+
+    //     ];
+    //     $send->multiple_text($wa);
+
+    //     return redirect()->route('admin.data.peserta');
+    // }
+
+
     public function creating_peserta(Request $request)
     {
-        $str = Str::random(30) . Carbon::now()->getTimestamp();
-        $id_instruktur = null;
-        $id_mapel = null;
-        if ($request->instruktur) {
-            $insmap = explode('-', $request->instruktur);
-            $id_instruktur = $insmap[0];
-            $id_mapel = $insmap[1];
-        }
-        $status_pembayaran = $request->status_pembayaran;
-        if ($request->id_group) {
-            $status_pembayaran = 'Lunas';
-        }
-        $data = Peserta::create([
-            'id_instruktur' => $id_instruktur,
-            'id_group' => $request->id_group,
-            'id_mapel' => $id_mapel,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'nama_ibu' => $request->nama_ibu,
-            'nama_ayah' => $request->nama_ayah,
-            'nisn' => $request->nisn,
-            'nik' => $request->nik,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'pendidikan' => $request->pendidikan,
-            'agama' => $request->agama,
-            'kewarganegaraan' => $request->kewarganegaraan,
-            'penerima_kps' => $request->penerima_kps,
-            'no_kps' => $request->no_kps,
-            'layak_pip' => $request->layak_pip,
-            'alasan_pip' => $request->alasan_pip,
-            'penerima_kip' => $request->penerima_kip,
-            'no_kip' => $request->no_kip,
-            'alamat' => $request->alamat,
-            'rt' => $request->rt,
-            'rw' => $request->rw,
-            'kode_pos' => $request->kode_pos,
-            'nama_desa_kelurahan' => $request->nama_desa_kelurahan,
-            'provinsi' => $request->provinsi,
-            'kab_kota' => $request->kab_kota,
-            'kecamatan' => $request->kecamatan,
-            'kelurahan' => $request->kelurahan,
-            'jenis_tinggal' => $request->jenis_tinggal,
-            'alat_transportasi' => $request->alat_transportasi,
-            'nomor_telepon' => $request->nomor_telepon,
-            'email' => $request->email,
-            'status_saat_ini' => $request->status_saat_ini,
-            'status' => 'aktif',
-            'status_pembayaran' => $status_pembayaran,
-            'barcode' => $str,
-        ]);
-        Sertifikat::create(['id_peserta' => $data->id]);
-        if (!$request->id_group) {
-            Pembayaran::create([
-                'id_peserta' => $data->id,
-                'jumlah_dibayar' => $request->jumlah_dibayar,
-                'tanggal_dibayar' => $request->tanggal_dibayar,
-                'deskripsi' => $request->deskripsi,
-            ]);
-        }
-        $username = '';
-        $nameParts = explode(' ', $request->name);
-        if (count($nameParts) > 0) {
-            $firstName = $nameParts[0];
-            $secondName = count($nameParts) > 1 ? $nameParts[1] : '';
-            $nameToUse = $secondName ?: $firstName;
-            $username = Str::of($nameToUse . ' ' . $data->id)->slug('-');
-        }
-        $akun = [
-            'name' => $request->name,
-            'role' => 'peserta',
-            'id_peserta' => $data->id,
-            'username' => $username,
-            'password' => 'cenarikursus'
-        ];
-        $akun['password'] = Hash::make($akun['password']);
-        event(new Registered((User::create($akun))));
-
-        $send = new Message();
-
-        $nomor_ins = $data->id_group ? Group::findOrFail($data->id_group)->instruktur : Instruktur::findOrFail($id_instruktur);
-
-        // $nomor_ins = Instruktur::findOrFail($id_instruktur)->nomor_telepon;
-        $wa = [
-            [
-                'phone' => $request->nomor_telepon,
-                'message' => 'Halo *' . $request->name . '*<br><br>' .
-                    'Pendaftaranmu Telah Terverifikasi, Berikut Username Dan Passwordmu' .
-                    '<br><br>' . 'Username : ' . $username .
-                    '<br>' . 'Password : cenarikursus' .
-                    '<br><br>' . 'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-            ],
-            [
-                'phone' => $nomor_ins->nomor_telepon,
-                'message' => 'Halo *' . $nomor_ins->user->name . '*<br><br>' .
-                    'Murid Bernama *' . $request->name . '* Telah Menjadi Murid Didik Anda, Untuk Lebih Lanjut' . "<br><br>" .
-                    'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
-                    'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-            ],
-            [
-                'phone' => env('ADMIN_NUMBER'),
-                'message' => 'Halo *Admin*' . '<br>' . 'Peserta Bernama *' . $request->name . '* Telah Didaftarkan Pada Aplikasi Dengan Akun Seperti Berikut' .
-                    '<br><br>' . 'Username : ' . $username .
-                    '<br>' . 'Password : cenarikursus' .
-                    '<br><br>' . 'Untuk Lebih Lanjut' .
-                    "<br>" . 'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
-                    'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-            ],
-
-        ];
-        $send->multiple_text($wa);
-
-        return redirect()->route('admin.data.peserta');
+        return dd($request);
     }
     public function edit_peserta($id)
     {
