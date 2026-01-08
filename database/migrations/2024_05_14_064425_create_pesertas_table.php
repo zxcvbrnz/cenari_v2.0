@@ -48,6 +48,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('status_saat_ini')->nullable();
             $table->string('status_pembayaran')->nullable();
+            $table->string('barcode')->nullable();
             $table->timestamps();
         });
     }
