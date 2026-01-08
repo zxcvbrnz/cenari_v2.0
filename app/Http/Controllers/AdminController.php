@@ -72,7 +72,7 @@ class AdminController extends Controller
     }
     public function creating_peserta(Request $request)
     {
-        $str = Str::random(30) . Carbon::now()->getTimestamp() . Str::random(30);
+        $str = Str::random(30) . Carbon::now()->getTimestamp();
         $id_instruktur = null;
         $id_mapel = null;
         if ($request->instruktur) {
