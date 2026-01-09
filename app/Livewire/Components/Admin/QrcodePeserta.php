@@ -41,15 +41,23 @@ class QrcodePeserta extends Component
         if (!$this->peserta) return null;
 
         $url = 'https://kursus.cenari.sch.id/peserta/' . $this->peserta->unique_code;
-
-        // Menggunakan API QR Server (Gratis & Cepat) untuk menghasilkan PNG
         $apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=" . urlencode($url) . "&format=png&ecc=H";
 
         try {
-            $imageContent = file_get_contents($apiUrl);
+            // Membersihkan buffer
+            if (ob_get_level()) ob_end_clean();
 
-            if ($imageContent === false) {
-                throw new \Exception("Gagal mengambil gambar dari API");
+            // Menggunakan cURL sebagai pengganti file_get_contents
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $apiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Bypass cek SSL jika perlu
+            $imageContent = curl_exec($ch);
+            curl_close($ch);
+
+            if (!$imageContent) {
+                throw new \Exception("cURL gagal mengambil data dari API.");
             }
 
             $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
@@ -60,8 +68,8 @@ class QrcodePeserta extends Component
                 'Content-Type' => 'image/png',
             ]);
         } catch (\Exception $e) {
-            Log::error("API QR Error: " . $e->getMessage());
-            $this->dispatch('alert-fail', message: 'Koneksi API gagal.');
+            Log::error("cURL QR Error: " . $e->getMessage());
+            $this->dispatch('alert-fail', message: 'Koneksi Server gagal, hubungi admin.');
             return null;
         }
     }
