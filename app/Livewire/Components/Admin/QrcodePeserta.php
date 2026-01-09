@@ -40,31 +40,28 @@ class QrcodePeserta extends Component
     {
         if (!$this->peserta) return null;
 
-        try {
-            // Membersihkan buffer
-            if (ob_get_level()) ob_end_clean();
+        $url = 'https://kursus.cenari.sch.id/peserta/' . $this->peserta->unique_code;
 
-            // Gunakan format PNG, namun jika sistem masih komplain Imagick,
-            // Kita paksa render menggunakan GD secara manual jika memungkinkan
-            $qrCodeData = QrCode::format('png')
-                ->size(1000)
-                ->margin(2)
-                ->errorCorrection('H')
-                ->generate('https://kursus.cenari.sch.id/peserta/' . $this->peserta->unique_code);
+        // Menggunakan API QR Server (Gratis & Cepat) untuk menghasilkan PNG
+        $apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=" . urlencode($url) . "&format=png&ecc=H";
+
+        try {
+            $imageContent = file_get_contents($apiUrl);
+
+            if ($imageContent === false) {
+                throw new \Exception("Gagal mengambil gambar dari API");
+            }
 
             $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
 
-            return Response::streamDownload(function () use ($qrCodeData) {
-                echo $qrCodeData;
+            return Response::streamDownload(function () use ($imageContent) {
+                echo $imageContent;
             }, $fileName, [
                 'Content-Type' => 'image/png',
-                'Content-Length' => strlen($qrCodeData)
             ]);
         } catch (\Exception $e) {
-            Log::error("QR PNG Error: " . $e->getMessage());
-
-            // JIKA TETAP GAGAL, gunakan opsi "Jalan Pintas" di bawah (Solusi 2)
-            $this->dispatch('alert-fail', message: 'Gagal generate PNG: ' . $e->getMessage());
+            Log::error("API QR Error: " . $e->getMessage());
+            $this->dispatch('alert-fail', message: 'Koneksi API gagal.');
             return null;
         }
     }
