@@ -62,7 +62,7 @@ class QrcodePeserta extends Component
             Log::error("QR Download Error: " . $e->getMessage());
 
             // Kirim notifikasi ke UI Livewire
-            $this->dispatch('alert-error', message: 'Server gagal memproses gambar. Gunakan format SVG atau hubungi admin server.');
+            $this->dispatch('alert-fail', message: 'Server gagal memproses gambar. Gunakan format SVG atau hubungi admin server.');
             return null;
         }
     }
