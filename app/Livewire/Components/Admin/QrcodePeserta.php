@@ -40,9 +40,12 @@ class QrcodePeserta extends Component
     {
         if (!$this->peserta) return null;
 
+        // Pastikan tidak ada output lain sebelum ini
+        if (ob_get_level()) ob_end_clean();
+
         try {
-            // Generate gambar sebagai string
-            // Tambahkan ->format('png') secara eksplisit
+            // Kita generate sebagai PNG
+            // Jika tetap gagal, server Anda mungkin butuh 'imagick' diaktifkan di cPanel
             $image = QrCode::format('png')
                 ->size(1000)
                 ->margin(2)
@@ -51,18 +54,19 @@ class QrcodePeserta extends Component
 
             $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
 
-            // Menggunakan streamDownload dengan output yang dipaksa bersih
+            // Menggunakan Header manual untuk memastikan cPanel tidak salah baca format
             return Response::streamDownload(function () use ($image) {
                 echo $image;
             }, $fileName, [
                 'Content-Type' => 'image/png',
+                'Content-Transfer-Encoding' => 'binary',
             ]);
         } catch (\Exception $e) {
-            // Jika masih error, besar kemungkinan modul sistem server belum lengkap
-            Log::error("QR Download Error: " . $e->getMessage());
+            // Log pesan error asli agar kita tahu apa yang kurang di server
+            Log::error("QR PNG Error: " . $e->getMessage());
 
-            // Kirim notifikasi ke UI Livewire
-            $this->dispatch('alert-fail', message: 'Server gagal memproses gambar. Gunakan format SVG atau hubungi admin server.');
+            // Tampilkan error di layar jika dalam mode development
+            $this->dispatch('alert-fail', message: 'Gagal: ' . $e->getMessage());
             return null;
         }
     }
