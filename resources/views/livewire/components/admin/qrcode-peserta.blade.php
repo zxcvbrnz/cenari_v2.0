@@ -30,7 +30,7 @@
                 </svg>
             </div>
 
-            <span wire:loading.remove>UNDUH QR CODE (SVG)</span>
+            <span wire:loading.remove>UNDUH QR CODE</span>
             <span wire:loading class="hidden">MENYIAPKAN...</span>
         </button>
     </div>
