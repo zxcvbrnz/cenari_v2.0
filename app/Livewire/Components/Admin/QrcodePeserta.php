@@ -36,12 +36,13 @@ class QrcodePeserta extends Component
     //     }, $fileName, ['Content-Type' => 'image/svg+xml']);
     // }
 
-    public function downloadQrCode(): ?StreamedResponse
+    public function downloadQrCode()
     {
         if (!$this->peserta) return null;
 
         try {
-            // Generate PNG dengan ukuran besar (1000px) agar tajam di Canva
+            // Generate gambar sebagai string
+            // Tambahkan ->format('png') secara eksplisit
             $image = QrCode::format('png')
                 ->size(1000)
                 ->margin(2)
@@ -50,16 +51,18 @@ class QrcodePeserta extends Component
 
             $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
 
+            // Menggunakan streamDownload dengan output yang dipaksa bersih
             return Response::streamDownload(function () use ($image) {
                 echo $image;
             }, $fileName, [
                 'Content-Type' => 'image/png',
-                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
             ]);
         } catch (\Exception $e) {
-            // Log error jika GD library belum aktif
-            Log::error("QR Code Error: " . $e->getMessage());
-            $this->dispatch('alert-error', message: 'Gagal generate gambar. Pastikan GD Library aktif di cPanel.');
+            // Jika masih error, besar kemungkinan modul sistem server belum lengkap
+            Log::error("QR Download Error: " . $e->getMessage());
+
+            // Kirim notifikasi ke UI Livewire
+            $this->dispatch('alert-error', message: 'Server gagal memproses gambar. Gunakan format SVG atau hubungi admin server.');
             return null;
         }
     }
