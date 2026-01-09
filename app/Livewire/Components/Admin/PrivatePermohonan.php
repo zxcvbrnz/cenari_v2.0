@@ -49,83 +49,93 @@ class PrivatePermohonan extends Component
         $ins = $data->id_instruktur;
         $nomor_telpon = Instruktur::findOrFail($ins);
         $tanggalwaktu = Carbon::parse($data->waktu_mulai)->locale('id')->format('d F Y - H:i');
-        $wa = [
-                [
-                    'phone' => $nomor_telpon->nomor_telepon,
-                    'message' =>
-                        "Halo *" . $nomor_telpon->user->name . "*\n" .
-                        "Permohonanmu Telah Direspon dan Disetujui\n" .
-                        "```\n" .
-                        "Peserta Didik   : " . $data->nama_peserta . "\n" .
-                        "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
-                        "Keterangan      : " . $data->keterangan . "\n" .
-                        "```\n" .
-                        "Silakan cek informasi lengkap di website kami:\n" .
-                        "www.kursus.cenari.sch.id",
-                ],
-                [
-                    'phone' => '085103326061',
-                    'message' =>
-                        "Halo *Admin*\n" .
-                        "Permohonan Jadwal Telah Disetujui\n" .
-                        "```\n" .
-                        "Instruktur      : " . $nomor_telpon->user->name . "\n" .
-                        "Peserta Didik   : " . $data->nama_peserta . "\n" .
-                        "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
-                        "Keterangan      : " . $data->keterangan . "\n" .
-                        "```\n" .
-                        "Silakan cek informasi lengkap di website kami:\n" .
-                        "www.kursus.cenari.sch.id",
-                ],
-                [
-                    'phone' => '081349674994',
-                    'message' =>
-                        "Halo *Admin*\n" .
-                        "Permohonan Jadwal Telah Disetujui\n" .
-                        "```\n" .
-                        "Instruktur      : " . $nomor_telpon->user->name . "\n" .
-                        "Peserta Didik   : " . $data->nama_peserta . "\n" .
-                        "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
-                        "Keterangan      : " . $data->keterangan . "\n" .
-                        "```\n" .
-                        "Silakan cek informasi lengkap di website kami:\n" .
-                        "www.kursus.cenari.sch.id",
-                ],
-                [
-                    'phone' => '089691884833',
-                    'message' =>
-                        "Halo *Admin*\n" .
-                        "Permohonan Jadwal Telah Disetujui\n" .
-                        "```\n" .
-                        "Instruktur      : " . $nomor_telpon->user->name . "\n" .
-                        "Peserta Didik   : " . $data->nama_peserta . "\n" .
-                        "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
-                        "Keterangan      : " . $data->keterangan . "\n" .
-                        "```\n" .
-                        "Silakan cek informasi lengkap di website kami:\n" .
-                        "www.kursus.cenari.sch.id",
-                ],
-            ];
-        $send->multiple_text($wa);
+
+        // Kumpulkan daftar penerima agar mudah dikirim satu per satu dengan jeda
+        $receivers = [
+            [
+                'phone' => $nomor_telpon->nomor_telepon,
+                'message' =>
+                "Halo *" . $nomor_telpon->user->name . "*\n" .
+                    "Permohonanmu Telah Direspon dan Disetujui\n" .
+                    "```\n" .
+                    "Peserta Didik   : " . $data->nama_peserta . "\n" .
+                    "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
+                    "Keterangan      : " . $data->keterangan . "\n" .
+                    "```\n" .
+                    "Silakan cek informasi lengkap di website kami:\n" .
+                    "www.kursus.cenari.sch.id",
+            ],
+            [
+                'phone' => '085103326061',
+                'message' =>
+                "Halo *Admin*\n" .
+                    "Permohonan Jadwal Telah Disetujui\n" .
+                    "```\n" .
+                    "Instruktur      : " . $nomor_telpon->user->name . "\n" .
+                    "Peserta Didik   : " . $data->nama_peserta . "\n" .
+                    "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
+                    "Keterangan      : " . $data->keterangan . "\n" .
+                    "```\n" .
+                    "Silakan cek informasi lengkap di website kami:\n" .
+                    "www.kursus.cenari.sch.id",
+            ],
+            [
+                'phone' => '081349674994',
+                'message' =>
+                "Halo *Admin*\n" .
+                    "Permohonan Jadwal Telah Disetujui\n" .
+                    "```\n" .
+                    "Instruktur      : " . $nomor_telpon->user->name . "\n" .
+                    "Peserta Didik   : " . $data->nama_peserta . "\n" .
+                    "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
+                    "Keterangan      : " . $data->keterangan . "\n" .
+                    "```\n" .
+                    "Silakan cek informasi lengkap di website kami:\n" .
+                    "www.kursus.cenari.sch.id",
+            ],
+            [
+                'phone' => '089691884833',
+                'message' =>
+                "Halo *Admin*\n" .
+                    "Permohonan Jadwal Telah Disetujui\n" .
+                    "```\n" .
+                    "Instruktur      : " . $nomor_telpon->user->name . "\n" .
+                    "Peserta Didik   : " . $data->nama_peserta . "\n" .
+                    "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
+                    "Keterangan      : " . $data->keterangan . "\n" .
+                    "```\n" .
+                    "Silakan cek informasi lengkap di website kami:\n" .
+                    "www.kursus.cenari.sch.id",
+            ],
+        ];
+
+        // Kirim satu per satu dengan jeda waktu acak
+        foreach ($receivers as $index => $wa) {
+            $send->multiple_text([$wa]);
+
+            // Berikan jeda antara 4 sampai 8 detik, kecuali pada pesan terakhir
+            if ($index < count($receivers) - 1) {
+                sleep(rand(4, 8));
+            }
+        }
     }
-    
+
     public function sendWaTolak($id): void
     {
         $send = new Message();
         $data = Absen::findOrFail($id);
         $ins = $data->id_instruktur;
         $nomor_telpon = Instruktur::findOrFail($ins);
-        $wa = [
-            [
-                'phone' => $nomor_telpon->nomor_telepon,
-                'message' =>
-                    "Halo *" . $nomor_telpon->user->name . "*\n" .
-                    "Permohonanmu Telah Direspon dan Ditolak\n\n" .
-                    "Silakan cek informasi lengkap di website kami:\n" .
-                    "www.kursus.cenari.sch.id",
-            ],
 
+        $wa = [
+            'phone' => $nomor_telpon->nomor_telepon,
+            'message' =>
+            "Halo *" . $nomor_telpon->user->name . "*\n" .
+                "Permohonanmu Telah Direspon dan Ditolak\n\n" .
+                "Silakan cek informasi lengkap di website kami:\n" .
+                "www.kursus.cenari.sch.id",
         ];
-        $send->multiple_text($wa);
+
+        $send->multiple_text([$wa]);
     }
 }

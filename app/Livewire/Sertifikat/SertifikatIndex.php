@@ -38,7 +38,7 @@ class SertifikatIndex extends Component
             'id_peserta' => ['required'],
             'sertifikat' => ['required', 'max:1024'],
         ]);
-        
+
         $send = new Message();
         $peserta = Peserta::findOrFail($this->id_peserta);
 
@@ -59,7 +59,7 @@ class SertifikatIndex extends Component
             Peserta::findOrFail($this->id_peserta)->update([
                 'status' => 'nonaktif'
             ]);
-            
+
             $wa = [
                 [
                     'phone' => $peserta->nomor_telepon,
@@ -70,7 +70,7 @@ class SertifikatIndex extends Component
                 ],
 
             ];
-            $send->multiple_text($wa);
+            // $send->multiple_text($wa);
 
             $this->reset('id_peserta', 'sertifikat');
             // $this->pesertas = Sertifikat::where('link', null)->latest()->get();

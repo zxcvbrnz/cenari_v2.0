@@ -84,8 +84,8 @@ class CreateNilaiPeserta extends Component
             'postNilai.nilai_10' => 'nullable|numeric',
         ]);
         if ($this->status === 'nonaktif') {
-                $this->dispatch('alert-fail', message: 'Tidak dapat mengubah peserta nonaktif');
-                    return;
+            $this->dispatch('alert-fail', message: 'Tidak dapat mengubah peserta nonaktif');
+            return;
         }
         $setting = Setting::findOrFail(1);
         if ($setting->value === 'ON') {
@@ -139,7 +139,7 @@ class CreateNilaiPeserta extends Component
 
         ];
         $send->multiple_text($wa);
-
+        sleep(rand(5, 8));
         $wa = [
             [
                 'phone' => env('ADMIN_NUMBER_2'),
