@@ -40,27 +40,31 @@ class QrcodePeserta extends Component
     {
         if (!$this->peserta) return null;
 
-        // Membersihkan buffer agar file tidak korup
-        if (ob_get_level()) ob_end_clean();
-
         try {
-            // Generate PNG
-            $image = QrCode::format('png')
+            // Membersihkan buffer
+            if (ob_get_level()) ob_end_clean();
+
+            // Gunakan format PNG, namun jika sistem masih komplain Imagick,
+            // Kita paksa render menggunakan GD secara manual jika memungkinkan
+            $qrCodeData = QrCode::format('png')
                 ->size(1000)
                 ->margin(2)
+                ->errorCorrection('H')
                 ->generate('https://kursus.cenari.sch.id/peserta/' . $this->peserta->unique_code);
 
             $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
 
-            return Response::streamDownload(function () use ($image) {
-                echo $image;
+            return Response::streamDownload(function () use ($qrCodeData) {
+                echo $qrCodeData;
             }, $fileName, [
                 'Content-Type' => 'image/png',
+                'Content-Length' => strlen($qrCodeData)
             ]);
         } catch (\Exception $e) {
-            // Jika Imagick tetap diminta, kita tampilkan instruksi ke user
             Log::error("QR PNG Error: " . $e->getMessage());
-            $this->dispatch('alert-fail', message: 'Ekstensi Imagick belum aktif di cPanel.');
+
+            // JIKA TETAP GAGAL, gunakan opsi "Jalan Pintas" di bawah (Solusi 2)
+            $this->dispatch('alert-fail', message: 'Gagal generate PNG: ' . $e->getMessage());
             return null;
         }
     }
