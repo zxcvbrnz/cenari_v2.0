@@ -40,20 +40,28 @@ class QrcodePeserta extends Component
     {
         if (!$this->peserta) return null;
 
-        // 1. Ubah format ke png
-        // 2. Pastikan margin cukup agar QR tidak terpotong saat masuk frame
-        $image = QrCode::format('png')
-            ->size(1000) // Ukuran besar agar tidak pecah di Canva
-            ->margin(2)
-            ->errorCorrection('H') // High error correction agar tetap terbaca meski di-resize
-            ->generate('https://kursus.cenari.sch.id/peserta/' . $this->peserta->unique_code);
+        try {
+            // Generate PNG dengan ukuran besar (1000px) agar tajam di Canva
+            $image = QrCode::format('png')
+                ->size(1000)
+                ->margin(2)
+                ->errorCorrection('H')
+                ->generate('https://kursus.cenari.sch.id/peserta/' . $this->peserta->unique_code);
 
-        $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
+            $fileName = "QRCode-" . str($this->peserta->user->name)->slug() . ".png";
 
-        // 3. Ubah Content-Type menjadi image/png
-        return Response::streamDownload(function () use ($image) {
-            echo $image;
-        }, $fileName, ['Content-Type' => 'image/png']);
+            return Response::streamDownload(function () use ($image) {
+                echo $image;
+            }, $fileName, [
+                'Content-Type' => 'image/png',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]);
+        } catch (\Exception $e) {
+            // Log error jika GD library belum aktif
+            Log::error("QR Code Error: " . $e->getMessage());
+            $this->dispatch('alert-error', message: 'Gagal generate gambar. Pastikan GD Library aktif di cPanel.');
+            return null;
+        }
     }
 
     public function render()
