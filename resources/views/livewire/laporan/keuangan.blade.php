@@ -120,25 +120,19 @@
                             </td>
 
                             <td class="p-4 text-center">
-                                @php
-                                    $tanggalTransaksi = \Carbon\Carbon::parse($item['date']);
-                                    $selisihHari = $tanggalTransaksi->diffInDays(now());
-                                @endphp
-
-                                @if (!$item['is_pembayaran_spp'] && $selisihHari <= 3)
+                                @if ($item['is_deletable'])
                                     <button wire:click="hapusTransaksi({{ $item['id'] }})"
                                         wire:confirm="Yakin ingin menghapus transaksi ini?"
                                         class="text-slate-300 hover:text-rose-600 transition">
                                         🗑
                                     </button>
-                                @elseif($item['is_pembayaran_spp'])
+                                @elseif ($item['is_pembayaran_spp'])
                                     <span class="text-[9px] bg-slate-100 text-slate-400 px-2 py-1 rounded">
                                         Kursus
                                     </span>
-                                @else
-                                    <span class="text-slate-300">🔒</span>
                                 @endif
                             </td>
+
                         </tr>
                     @empty
                         <tr>
