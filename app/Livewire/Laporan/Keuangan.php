@@ -59,6 +59,9 @@ class Keuangan extends Component
                     'amount' => (int) $item->amount,
                     'is_pembayaran_spp' => false,
                     'is_deletable' => $selisihHari <= 3,
+
+                    'sort_date' => Carbon::parse($item->date)->startOfDay()->timestamp,
+                    'sort_created' => $item->created_at->timestamp,
                 ];
             })
             ->values();
@@ -72,15 +75,20 @@ class Keuangan extends Component
                     ? optional($item->group)->nama
                     : optional(optional($item->peserta)->user)->name;
 
+                $tanggal = optional($item->tanggal_dibayar)->format('Y-m-d');
+
                 return [
                     'id' => $item->id,
-                    'date' => optional($item->tanggal_dibayar)->format('Y-m-d'),
+                    'date' => $tanggal,
                     'created_at' => $item->created_at,
                     'description' => ($displayName ?? 'Umum') . ' - ' . ($item->deskripsi ?? 'Pembayaran'),
                     'type' => 'income',
                     'amount' => (int) ($item->jumlah_dibayar ?? 0),
                     'is_pembayaran_spp' => true,
                     'is_deletable' => false,
+
+                    'sort_date' => Carbon::parse($tanggal)->startOfDay()->timestamp,
+                    'sort_created' => $item->created_at->timestamp,
                 ];
             })
             ->values();
@@ -89,10 +97,16 @@ class Keuangan extends Component
         $this->keuangans = collect()
             ->concat($keuanganManual)
             ->concat($pembayaranSpp)
-            ->sortByDesc([
-                fn($item) => $item['date'],        // 1️⃣ tanggal transaksi
-                fn($item) => $item['created_at'],  // 2️⃣ jam input
-            ])
+            ->sort(function ($a, $b) {
+
+                // 1️⃣ PRIORITAS DATE (tanggal)
+                if ($a['sort_date'] !== $b['sort_date']) {
+                    return $b['sort_date'] <=> $a['sort_date'];
+                }
+
+                // 2️⃣ JIKA DATE SAMA → CREATED_AT (jam)
+                return $b['sort_created'] <=> $a['sort_created'];
+            })
             ->values();
     }
 
