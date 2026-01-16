@@ -64,9 +64,8 @@
                 <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
                     Saldo Keseluruhan
                 </div>
-
                 <div
-                    class="text-2xl font-mono font-bold {{ $saldoKeseluruhan >= 0 ? 'text-rose-600' : 'text-emerald-600' }}">
+                    class="text-2xl font-mono font-bold {{ $saldoKeseluruhan >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
                     Rp {{ number_format($saldoKeseluruhan, 0, ',', '.') }}
                 </div>
             </div>
