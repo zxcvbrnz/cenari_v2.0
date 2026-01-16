@@ -69,6 +69,7 @@ class Keuangan extends Component
 
         $pembayaranSpp = Pembayaran::whereYear('tanggal_dibayar', $year)
             ->whereMonth('tanggal_dibayar', $month)
+            ->where('jumlah_dibayar', '!=', 0)
             ->get()
             ->map(function ($item) {
                 $displayName = $item->id_group
