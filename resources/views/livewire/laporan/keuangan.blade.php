@@ -62,7 +62,7 @@
             </div>
             <div class="p-6 ">
                 <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                    Saldo Keseluruhan
+                    Saldo Total
                 </div>
                 <div
                     class="text-2xl font-mono font-bold {{ $saldoKeseluruhan >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
@@ -142,7 +142,7 @@
                                     </button>
                                 @elseif ($item['is_pembayaran_spp'])
                                     <span class="text-[9px] bg-slate-100 text-slate-400 px-2 py-1 rounded">
-                                        Kursus
+                                        Pembayaran
                                     </span>
                                 @endif
                             </td>
