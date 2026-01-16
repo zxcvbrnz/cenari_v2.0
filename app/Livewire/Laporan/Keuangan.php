@@ -58,8 +58,6 @@ class Keuangan extends Component
                     'type' => $item->type,
                     'amount' => (int) $item->amount,
                     'is_pembayaran_spp' => false,
-
-                    // ✅ INI INTINYA
                     'is_deletable' => $selisihHari <= 3,
                 ];
             })
@@ -91,7 +89,10 @@ class Keuangan extends Component
         $this->keuangans = collect()
             ->concat($keuanganManual)
             ->concat($pembayaranSpp)
-            ->sortByDesc('date')
+            ->sortByDesc([
+                fn($item) => $item['date'],        // 1️⃣ tanggal transaksi
+                fn($item) => $item['created_at'],  // 2️⃣ jam input
+            ])
             ->values();
     }
 
