@@ -30,26 +30,27 @@
                         class="mt-1 block w-full text-sm border-slate-200" placeholder="Contoh: Operasional" required />
                 </div>
                 <div class="md:col-span-4 flex justify-end">
-                    <button type="submit" wire:loading.attr="disabled" wire:target="tambahTransaksi"
-                        class="relative bg-slate-800 text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase hover:bg-violet-600 transition duration-300 shadow-md disabled:opacity-70 disabled:cursor-not-allowed">
-                        {{-- TEXT NORMAL --}}
+                    <button type="submit" wire:loading.attr="disabled"
+                        class="bg-slate-800 text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase hover:bg-violet-600 transition duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+
+                        {{-- Teks Normal --}}
                         <span wire:loading.remove wire:target="tambahTransaksi">
                             Simpan Transaksi
                         </span>
 
-                        {{-- LOADING --}}
+                        {{-- Teks & Icon Saat Loading --}}
                         <span wire:loading wire:target="tambahTransaksi" class="flex items-center gap-2">
-                            <svg class="w-4 h-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg"
+                            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                     stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                                 </path>
                             </svg>
                             Menyimpan...
                         </span>
                     </button>
-
                 </div>
             </form>
         </div>
