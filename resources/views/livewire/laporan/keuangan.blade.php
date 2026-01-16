@@ -42,20 +42,20 @@
         <div
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-white">
             <div class="p-6">
-                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Total Pemasukan
-                    ({{ $filter_bulan }})</div>
+                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
+                    Total Pemasukan ({{ $filter_bulan }})</div>
                 <div class="text-2xl font-mono font-bold text-emerald-600">Rp
                     {{ number_format($totalIncome, 0, ',', '.') }}</div>
             </div>
             <div class="p-6">
-                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Total Pengeluaran
-                    ({{ $filter_bulan }})</div>
+                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
+                    Total Pengeluaran ({{ $filter_bulan }})</div>
                 <div class="text-2xl font-mono font-bold text-rose-600">Rp
                     {{ number_format($totalExpense, 0, ',', '.') }}</div>
             </div>
             <div class="p-6">
-                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Saldo Akhir
-                    ({{ $filter_bulan }})</div>
+                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
+                    Saldo Bulanan ({{ $filter_bulan }})</div>
                 <div class="text-2xl font-mono font-bold {{ $saldo >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
                     Rp {{ number_format($saldo, 0, ',', '.') }}
                 </div>
