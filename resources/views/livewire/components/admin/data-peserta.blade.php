@@ -14,7 +14,7 @@
             <hr>
             <div class="p-6">
                 <table class="dat-table stripe hover text-sm text-left text-gray-500"
-                    style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                    style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
                     <thead class="text-xs text-gray-700 uppercase">
                         <tr>
                             <th data-priority="1" class="text-start">#</th>
@@ -47,7 +47,8 @@
                                 </td>
                                 <td>
                                     <div>{{ $dat->mapel ? $dat->mapel->nama : $dat->group->mapel->nama }}</div>
-                                    <div class="text-slate-600 text-xs font-bold">{{ $dat->mapel ? '' : $dat->group->nama }}</div>
+                                    <div class="text-slate-600 text-xs font-bold">
+                                        {{ $dat->mapel ? '' : $dat->group->nama }}</div>
                                 </td>
                                 <td>{{ $dat->user->username }}</td>
                                 <td>{{ $dat->created_at ? $dat->created_at->format('d F Y') : '' }}</td>

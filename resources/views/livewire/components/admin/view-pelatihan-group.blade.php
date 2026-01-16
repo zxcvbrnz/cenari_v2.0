@@ -8,7 +8,7 @@
     <hr>
     <div class="p-6">
         <table class="dat-table-jadwal-pelatihan-view stripe hover text-sm text-left text-gray-500"
-            style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+            style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
             <thead class="text-xs text-gray-700 uppercase">
                 <tr>
                     <th data-priority="1" class="text-start">Nomor</th>
@@ -22,7 +22,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $dat->nama_peserta }}</td>
                         <td>
-                            @if($dat->status === '1')
+                            @if ($dat->status === '1')
                                 <button onclick="Absen({{ $dat->id }})"
                                     class="px-3 py-1 rounded text-violet-600 text-xs border border-violet-600 hover:bg-violet-800 hover:text-white transition duration-300 ease-linear">
                                     Absen

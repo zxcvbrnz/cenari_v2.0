@@ -5,7 +5,7 @@
     <hr>
     <div class="p-6">
         <table class="dat-table-permohonan stripe hover text-sm text-left text-gray-500"
-            style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+            style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
             <thead class="text-xs text-gray-700 uppercase">
                 <tr>
                     <th data-priority="1" class="text-start">Peserta didik</th>
@@ -55,7 +55,7 @@
     }
 
     function tolakPrivate(id) {
-         Swal.fire({
+        Swal.fire({
             title: 'Tolak Jadwal',
             input: 'text',
             inputPlaceholder: 'Masukkan keterangan',

@@ -5,7 +5,7 @@
     <hr>
     <div class="p-6">
         <table class="dat-table-jadwal-pelatihan stripe hover text-sm text-left text-gray-500"
-            style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+            style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
             <thead class="text-xs text-gray-700 uppercase">
                 <tr>
                     <th class="text-start">Status</th>
@@ -33,11 +33,12 @@
                         <td>{{ $dat->keterangan }}</td>
                         <td class="space-x-2">
                             <a href="{{ route('admin.jadwal.pelatihan.view', ['id_group' => $dat->id_group, 'id_instruktur' => $dat->id_instruktur, 'waktu_mulai' => $dat->waktu_mulai, 'keterangan' => $dat->keterangan]) }}"
-                               wire:navigate
-                               class="px-3 py-1 rounded text-violet-600 text-xs border border-violet-600 hover:bg-violet-800 hover:text-white transition duration-300 ease-linear">
-                               View
+                                wire:navigate
+                                class="px-3 py-1 rounded text-violet-600 text-xs border border-violet-600 hover:bg-violet-800 hover:text-white transition duration-300 ease-linear">
+                                View
                             </a>
-                            <button onclick="selesai({{ $dat->id_group }}, {{ $dat->id_instruktur }}, '{{ $dat->waktu_mulai }}')"
+                            <button
+                                onclick="selesai({{ $dat->id_group }}, {{ $dat->id_instruktur }}, '{{ $dat->waktu_mulai }}')"
                                 class="px-3 py-1 rounded text-green-600 text-xs border border-green-600 hover:bg-green-800 hover:text-white transition duration-300 ease-linear">
                                 Selesai
                             </button>

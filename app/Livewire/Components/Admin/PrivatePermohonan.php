@@ -89,9 +89,7 @@ class PrivatePermohonan extends Component
                     "Peserta Didik   : " . $data->nama_peserta . "\n" .
                     "Tanggal/Waktu   : " . $tanggalwaktu . " WITA" . "\n" .
                     "Keterangan      : " . $data->keterangan . "\n" .
-                    "```\n" .
-                    "Silakan cek informasi lengkap di website kami:\n" .
-                    "www.kursus.cenari.sch.id",
+                    "```\n",
             ],
             [
                 'phone' => '089691884833',

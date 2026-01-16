@@ -8,7 +8,7 @@
             <div class="p-6">
                 <table class="dat-table stripe hover text-sm text-left text-gray-500"
                     style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-                    <thead class="text-xs text-gray-700 uppercase">
+                    <thead class="text-xs text-gray-700 uppercase" wire:ignore>
                         <tr>
                             <th class="text-start">No</th>
                             <th class="text-start">Nama</th>

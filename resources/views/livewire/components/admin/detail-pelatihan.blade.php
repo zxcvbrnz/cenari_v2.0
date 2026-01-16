@@ -15,7 +15,7 @@
         <hr>
         <div class="p-4">
             <table id="tableDetailPelatihan" class="stripe hover text-sm text-left text-gray-500"
-                style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
                 <thead class="text-xs text-gray-700 uppercase">
                     <tr>
                         <th data-priority="1" class="text-start">No</th>

@@ -7,7 +7,7 @@
             <hr>
             <div class="p-6">
                 <table class="dat-table stripe hover text-sm text-left text-gray-500"
-                    style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                    style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
                     <thead class="text-xs text-gray-700 uppercase">
                         <tr>
                             <th class="text-start">No</th>

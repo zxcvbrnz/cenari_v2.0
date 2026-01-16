@@ -5,7 +5,7 @@
     <hr>
     <div class="p-6">
         <table class="dat-table stripe hover text-sm text-left text-gray-500"
-            style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+            style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
             <thead class="text-xs text-gray-700 uppercase">
                 <tr>
                     <th class="text-start">No</th>
@@ -32,15 +32,15 @@
                             <a target="_blank"
                                 href="{{ 'https://wa.me/' . $dat->nomor_telepon . '?text=' . urlencode('Hallo ' . $dat->user->name) }}"
                                 class="text-blue-800 hover:text-blue-600 underline font-thin">{{ $dat->nomor_telepon }}</a>
-                                
-                                @php
-                                    $nomor = $dat->nomor_telepon;
-                                    if (Str::startsWith($nomor, '08')) {
-                                        $nomor = '62' . substr($nomor, 1);
-                                    }
-                                @endphp
-                                
-                                <a target="_blank"
+
+                            @php
+                                $nomor = $dat->nomor_telepon;
+                                if (Str::startsWith($nomor, '08')) {
+                                    $nomor = '62' . substr($nomor, 1);
+                                }
+                            @endphp
+
+                            <a target="_blank"
                                 href="{{ 'https://wa.me/' . $nomor . '?text=' . urlencode('Hallo ' . $dat->user->name) }}"
                                 class="text-blue-800 hover:text-blue-600 underline font-thin">{{ $dat->nomor_telepon }}</a>
                         </td>

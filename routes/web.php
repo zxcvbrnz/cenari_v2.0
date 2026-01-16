@@ -93,6 +93,9 @@ Route::middleware(['auth'])->group(function () {
         Route::view('/sertifikat-peserta-didik', 'sertifikat.index')->name('admin.sertifikat');
 
 
+        Route::view('/laporan-keuangan', 'laporan.keuangan')->name('admin.laporan.keuangan');
+
+
         // CRUD PESERTA
         Route::get('/data-peserta', [AdminController::class, 'peserta'])->name('admin.data.peserta');
         Route::get('/data-peserta/detail/{id}', [AdminController::class, 'detail_peserta'])->name('admin.data.peserta.detail');

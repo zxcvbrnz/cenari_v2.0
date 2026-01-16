@@ -9,12 +9,13 @@
                 @if ($data_pembayaran['id_peserta'] || $data_pembayaran['id_group'])
                     <form wire:submit="pembayaran" class="grid lg:grid-cols-2 gap-4">
                         <div>
-                             <div class="grid gap-4">
+                            <div class="grid gap-4">
                                 @if ($data_pembayaran['id_peserta'])
                                     <div>
-                                        <x-input-label class="required" for="data_pembayaran.id_peserta" :value="__('Peserta Didik')" />
-                                        <select wire:model="data_pembayaran.id_peserta" name="data_pembayaran.id_peserta"
-                                            id="data_pembayaran.id_peserta" required
+                                        <x-input-label class="required" for="data_pembayaran.id_peserta"
+                                            :value="__('Peserta Didik')" />
+                                        <select wire:model="data_pembayaran.id_peserta"
+                                            name="data_pembayaran.id_peserta" id="data_pembayaran.id_peserta" required
                                             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-sm shadow-sm block mt-1 w-full">
                                             <option selected value="">Pilih Peserta
                                             </option>
@@ -28,7 +29,8 @@
                                     </div>
                                 @elseif($data_pembayaran['id_group'])
                                     <div>
-                                        <x-input-label class="required" for="data_pembayaran.id_group" :value="__('Pelatihan')" />
+                                        <x-input-label class="required" for="data_pembayaran.id_group"
+                                            :value="__('Pelatihan')" />
                                         <select wire:model="data_pembayaran.id_group" name="data_pembayaran.id_group"
                                             id="data_pembayaran.id_group" required
                                             class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-sm shadow-sm block mt-1 w-full">
@@ -48,10 +50,11 @@
                                         :value="__('Jumlah')" />
                                     <div class="flex items-center text-slate-600 space-x-2">
                                         <div>Rp.</div>
-                                        <x-text-input
-                                            id="data_pembayaran.jumlah_dibayar" wire:model="data_pembayaran.jumlah_dibayar" name="data_pembayaran.jumlah_dibayar"
-                                            type="text" class="mt-1 block w-full" required
-                                            autocomplete="data_pembayaran.jumlah_dibayar"/>
+                                        <x-text-input id="data_pembayaran.jumlah_dibayar"
+                                            wire:model="data_pembayaran.jumlah_dibayar"
+                                            name="data_pembayaran.jumlah_dibayar" type="text"
+                                            class="mt-1 block w-full" required
+                                            autocomplete="data_pembayaran.jumlah_dibayar" />
                                     </div>
                                     <x-input-error class="mt-2" :messages="$errors->get('data_pembayaran.jumlah_dibayar')" />
                                 </div>
@@ -70,8 +73,8 @@
                             <div class="grid gap-4">
                                 <div>
                                     <x-input-label class="required" for="status_pembayaran" :value="__('Status Pembayaran')" />
-                                    <select wire:model="status_pembayaran" name="status_pembayaran" id="status_pembayaran"
-                                        required
+                                    <select wire:model="status_pembayaran" name="status_pembayaran"
+                                        id="status_pembayaran" required
                                         class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-sm shadow-sm block mt-1 w-full">
                                         <option selected value="">Pilih Status Pembayaran
                                         </option>
@@ -81,10 +84,11 @@
                                     <x-input-error class="mt-2" :messages="$errors->get('status_pembayaran')" />
                                 </div>
                                 <div>
-                                    <x-input-label class="required" for="data_pembayaran.deskripsi" :value="__('Deskripsi')" />
+                                    <x-input-label class="required" for="data_pembayaran.deskripsi"
+                                        :value="__('Deskripsi')" />
                                     <x-text-input wire:model="data_pembayaran.deskripsi" id="data_pembayaran.deskripsi"
-                                        name="data_pembayaran.deskripsi" type="text" class="mt-1 block w-full" required
-                                        autocomplete="data_pembayaran.deskripsi" />
+                                        name="data_pembayaran.deskripsi" type="text" class="mt-1 block w-full"
+                                        required autocomplete="data_pembayaran.deskripsi" />
                                     <x-input-error class="mt-2" :messages="$errors->get('data_pembayaran.deskripsi')" />
                                 </div>
                             </div>
@@ -109,7 +113,7 @@
             <hr>
             <div class="p-6">
                 <table id="tablePembayaran" class="stripe hover text-sm text-left text-gray-500"
-                    style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                    style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
                     <thead class="text-xs text-gray-700 uppercase">
                         <tr>
                             <th class="text-start">No</th>
@@ -128,17 +132,23 @@
                                 $threeDaysInHours = 3 * 24; // 3 days in hours
                                 $hoursSincePayment = \Carbon\Carbon::now()->diffInHours($pembayaran->created_at);
                                 $isOlderThanThreeDays = abs($hoursSincePayment) > $threeDaysInHours;
-                    
+
                                 // Hitung harga berdasarkan grup atau peserta
-                                $harga = $pembayaran->id_group ? $pembayaran->group->harga : $pembayaran->peserta->mapel->harga;
-                    
+                                $harga = $pembayaran->id_group
+                                    ? $pembayaran->group->harga
+                                    : $pembayaran->peserta->mapel->harga;
+
                                 // Hitung total pembayaran peserta jika ada
-                                $totalPembayaranPeserta = $pembayaran->id_group ? $pembayaran->group->pembayaran->sum('jumlah_dibayar') : $pembayaran->peserta->pembayaran->sum('jumlah_dibayar');
+                                $totalPembayaranPeserta = $pembayaran->id_group
+                                    ? $pembayaran->group->pembayaran->sum('jumlah_dibayar')
+                                    : $pembayaran->peserta->pembayaran->sum('jumlah_dibayar');
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="{{ $pembayaran->id_group ? 'font-semibold' : '' }}">
-                                    <div>{{ $pembayaran->id_group ? $pembayaran->group->nama : $pembayaran->peserta->user->name }}</div>
+                                    <div>
+                                        {{ $pembayaran->id_group ? $pembayaran->group->nama : $pembayaran->peserta->user->name }}
+                                    </div>
                                     <div class="text-xs">
                                         {{ $pembayaran->id_group ? $pembayaran->group->mapel->nama . ' | Pelatihan' : $pembayaran->peserta->mapel->nama }}
                                     </div>
@@ -146,7 +156,8 @@
                                 <td>Rp{{ number_format($pembayaran->jumlah_dibayar, 0, ',', '.') }}</td>
                                 <td>Rp{{ number_format($harga, 0, ',', '.') }}</td>
                                 <!-- Kolom baru untuk menampilkan selisih -->
-                                <td>{{ $harga - $totalPembayaranPeserta == 0 ? 'Lunas' : 'Rp' . number_format($harga - $totalPembayaranPeserta, 0, ',', '.') }}</td>
+                                <td>{{ $harga - $totalPembayaranPeserta == 0 ? 'Lunas' : 'Rp' . number_format($harga - $totalPembayaranPeserta, 0, ',', '.') }}
+                                </td>
                                 <td>{{ $pembayaran->tanggal_dibayar->format('d F Y H:i') }}</td>
                                 <td>{{ $pembayaran->deskripsi }}</td>
                                 <td class="flex space-x-1">
@@ -157,13 +168,15 @@
                                         </button>
                                     @endif
                                     @if (!$pembayaran->id_group && $pembayaran->peserta->status_pembayaran !== 'Lunas')
-                                        <button onclick="pelunasanJs({{ $pembayaran->peserta->id }}, '{{ $pembayaran->peserta->user->name }}')"
+                                        <button
+                                            onclick="pelunasanJs({{ $pembayaran->peserta->id }}, '{{ $pembayaran->peserta->user->name }}')"
                                             class="px-3 py-1 rounded text-violet-600 text-xs border border-violet-600 hover:bg-violet-800 hover:text-white transition duration-300 ease-linear">
                                             Lanjut
                                         </button>
                                     @endif
                                     @if ($pembayaran->id_group && $pembayaran->group->status_pembayaran !== 'Lunas')
-                                        <button onclick="pelunasanGroupJs({{ $pembayaran->group->id }}, '{{ $pembayaran->group->nama }}')"
+                                        <button
+                                            onclick="pelunasanGroupJs({{ $pembayaran->group->id }}, '{{ $pembayaran->group->nama }}')"
                                             class="px-3 py-1 rounded text-violet-600 text-xs border border-violet-600 hover:bg-violet-800 hover:text-white transition duration-300 ease-linear">
                                             Lanjut
                                         </button>

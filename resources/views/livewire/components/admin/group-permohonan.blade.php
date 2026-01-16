@@ -1,6 +1,6 @@
 <div class="p-6 bg-white border border-slate-200 shadow-lg rounded-sm">
     <table class="dat-table-permohonan stripe hover text-sm text-left text-gray-500"
-        style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+        style="width:100%; padding-top: 1em;  padding-bottom: 1em;" wire:ignore>
         <thead class="text-xs text-gray-700 uppercase">
             <tr>
                 <th class="text-start">Pelatihan</th>
