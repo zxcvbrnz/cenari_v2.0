@@ -31,30 +31,26 @@
                 </div>
                 <div class="md:col-span-4 flex justify-end">
                     <button type="submit" wire:loading.attr="disabled" wire:target="tambahTransaksi"
-                        class="bg-slate-800 text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase hover:bg-violet-600 transition duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">
+                        class="relative bg-slate-800 text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase hover:bg-violet-600 transition duration-300 shadow-md disabled:opacity-70 disabled:cursor-not-allowed">
 
-                        {{-- Pembungkus Kondisi --}}
-                        <div class="flex items-center justify-center gap-2">
+                        {{-- State 1: Teks Normal (Hanya muncul jika TIDAK sedang loading) --}}
+                        <span wire:loading.remove wire:target="tambahTransaksi">
+                            Simpan Transaksi
+                        </span>
 
-                            {{-- TAMPIL HANYA SAAT TIDAK LOADING --}}
-                            <span wire:loading.remove wire:target="tambahTransaksi">
-                                Simpan Transaksi
-                            </span>
-
-                            {{-- TAMPIL HANYA SAAT LOADING --}}
-                            <span wire:loading wire:target="tambahTransaksi" class="flex items-center gap-2">
-                                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10"
-                                        stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                    </path>
-                                </svg>
-                                <span>Memproses...</span>
-                            </span>
-
-                        </div>
+                        {{-- State 2: Teks Loading (Hanya muncul SAAT sedang loading) --}}
+                        {{-- Menggunakan inline-flex agar icon dan teks sejajar rapi --}}
+                        <span wire:loading wire:target="tambahTransaksi" class="inline-flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            <span>Memproses...</span>
+                        </span>
                     </button>
                 </div>
             </form>
@@ -105,9 +101,9 @@
                 <span class="px-3 text-[10px] font-black text-slate-500 uppercase">Periode :</span>
                 <input type="month" wire:model.lazy="filter_bulan"
                     class="text-sm border-none bg-transparent focus:ring-0 cursor-pointer">
-                <div wire:loading wire:target="filter_bulan" class="ml-2">
-                    <span class="text-[10px] text-violet-600 animate-pulse font-bold">Memuat data...</span>
-                </div>
+            </div>
+            <div wire:loading wire:target="filter_bulan" class="ml-2">
+                <span class="text-[10px] text-violet-600 animate-pulse font-bold">Memuat data...</span>
             </div>
         </div>
 
