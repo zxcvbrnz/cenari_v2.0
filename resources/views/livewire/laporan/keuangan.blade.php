@@ -133,7 +133,7 @@
                                     </button>
                                 @elseif($item['is_pembayaran_spp'])
                                     <span class="text-[9px] bg-slate-100 text-slate-400 px-2 py-1 rounded">
-                                        Sistem
+                                        Kursus
                                     </span>
                                 @else
                                     <span class="text-slate-300">🔒</span>
