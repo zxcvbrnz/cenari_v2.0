@@ -30,10 +30,26 @@
                         class="mt-1 block w-full text-sm border-slate-200" placeholder="Contoh: Operasional" required />
                 </div>
                 <div class="md:col-span-4 flex justify-end">
-                    <button type="submit"
-                        class="bg-slate-800 text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase hover:bg-violet-600 transition duration-300 shadow-md">
-                        Simpan Transaksi
+                    <button type="submit" wire:loading.attr="disabled" wire:target="tambahTransaksi"
+                        class="relative bg-slate-800 text-white px-6 py-2.5 rounded-sm text-xs font-bold uppercase hover:bg-violet-600 transition duration-300 shadow-md disabled:opacity-70 disabled:cursor-not-allowed">
+                        {{-- TEXT NORMAL --}}
+                        <span wire:loading.remove wire:target="tambahTransaksi">
+                            Simpan Transaksi
+                        </span>
+
+                        {{-- LOADING --}}
+                        <span wire:loading wire:target="tambahTransaksi" class="flex items-center gap-2">
+                            <svg class="w-4 h-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+                                </path>
+                            </svg>
+                            Menyimpan...
+                        </span>
                     </button>
+
                 </div>
             </form>
         </div>
@@ -55,7 +71,7 @@
             </div>
             <div class="p-6">
                 <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
-                    Saldo Bulanan ({{ $filter_bulan }})</div>
+                    Pemasukan Bersih ({{ $filter_bulan }})</div>
                 <div class="text-2xl font-mono font-bold {{ $saldo >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
                     Rp {{ number_format($saldo, 0, ',', '.') }}
                 </div>
