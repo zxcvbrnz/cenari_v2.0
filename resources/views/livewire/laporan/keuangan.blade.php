@@ -60,8 +60,8 @@
                     Rp {{ number_format($saldo, 0, ',', '.') }}
                 </div>
             </div>
-            <div class="p-6 bg-slate-900 text-white rounded-sm">
-                <div class="text-[10px] uppercase tracking-widest font-bold opacity-70">
+            <div class="p-6 ">
+                <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">
                     Saldo Keseluruhan
                 </div>
 
