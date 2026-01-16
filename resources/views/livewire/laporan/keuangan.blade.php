@@ -39,7 +39,8 @@
         </div>
 
         {{-- Statistik Ringkas --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-white">
+        <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100 bg-white">
             <div class="p-6">
                 <div class="text-[10px] uppercase tracking-widest font-bold text-slate-400">Total Pemasukan
                     ({{ $filter_bulan }})</div>
@@ -59,6 +60,16 @@
                     Rp {{ number_format($saldo, 0, ',', '.') }}
                 </div>
             </div>
+            <div class="p-6 bg-slate-900 text-white rounded-sm">
+                <div class="text-[10px] uppercase tracking-widest font-bold opacity-70">
+                    Saldo Keseluruhan
+                </div>
+
+                <div class="text-2xl font-mono font-bold text-emerald-400">
+                    Rp {{ number_format($saldoKeseluruhan, 0, ',', '.') }}
+                </div>
+            </div>
+
         </div>
     </div>
 

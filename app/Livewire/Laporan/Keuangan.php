@@ -157,6 +157,22 @@ class Keuangan extends Component
         $this->dispatch('alert-success-1', message: 'Transaksi berhasil dihapus');
     }
 
+    protected function getSaldoKeseluruhan(): int
+    {
+        // 1️⃣ TOTAL PEMASUKAN MANUAL
+        $incomeManual = ModelsKeuangan::where('type', 'income')->sum('amount');
+
+        // 2️⃣ TOTAL PENGELUARAN MANUAL
+        $expenseManual = ModelsKeuangan::where('type', 'expense')->sum('amount');
+
+        // 3️⃣ TOTAL PEMBAYARAN SPP
+        $incomeSpp = Pembayaran::where('jumlah_dibayar', '>', 0)
+            ->sum('jumlah_dibayar');
+
+        return ($incomeManual + $incomeSpp) - $expenseManual;
+    }
+
+
 
     public function render()
     {
@@ -169,9 +185,13 @@ class Keuangan extends Component
             ->sum('amount');
 
         return view('livewire.laporan.keuangan', [
+            // 🔹 BULAN TERPILIH
             'totalIncome'  => $totalIncome,
             'totalExpense' => $totalExpense,
             'saldo'        => $totalIncome - $totalExpense,
+
+            // 🔥 KESELURUHAN
+            'saldoKeseluruhan' => $this->getSaldoKeseluruhan(),
         ]);
     }
 }
