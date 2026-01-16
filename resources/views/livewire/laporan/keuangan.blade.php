@@ -43,9 +43,9 @@
 
                             {{-- Teks ini kita paksa SEMBUNYI dengan style="display:none" agar tidak bergantung pada CSS file --}}
                             <span wire:loading wire:target="tambahTransaksi" style="display: none;"
-                                class="flex items-center gap-2">
-                                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg"
-                                    fill="none" viewBox="0 0 24 24">
+                                class="items-center gap-2">
+                                <svg class="inline-block animate-spin h-4 w-4 text-white"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10"
                                         stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor"
