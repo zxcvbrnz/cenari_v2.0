@@ -131,7 +131,7 @@ class Keuangan extends Component
         ]);
 
         // reset form
-        $this->reset(['date', 'description', 'amount', 'type']);
+        $this->reset(['description', 'amount', 'type']);
         $this->type = 'income';
 
         $this->loadData();
