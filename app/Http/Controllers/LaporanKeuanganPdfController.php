@@ -18,6 +18,13 @@ class LaporanKeuanganPdfController extends Controller
         $year  = substr($bulan, 0, 4);
         $month = substr($bulan, 5, 2);
 
+        $carbon = Carbon::createFromFormat('Y-m', $bulan)->locale('id');
+
+        $namaBulan = $carbon->translatedFormat('F'); // Januari
+        $tahun     = $carbon->year;
+
+        $filename = "Laporan_Keuangan_{$namaBulan}_{$tahun}.pdf";
+
         /** ===============================
          * DATA MANUAL
          * =============================== */
@@ -80,6 +87,6 @@ class LaporanKeuanganPdfController extends Controller
             'saldo'        => $totalIncome - $totalExpense,
         ])->setPaper('A4', 'landscape');
 
-        return $pdf->download("laporan-keuangan-$bulan.pdf");
+        return $pdf->download($filename);
     }
 }
