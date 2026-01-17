@@ -29,10 +29,25 @@
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('instruktur')" />
                             </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <x-input-label class="required" for="waktu_mulai" :value="__('Waktu Mulai')" />
+                                    <x-text-input type="date" name="waktu_mulai" id="waktu_mulai"
+                                        class="mt-1 block w-full" required />
+                                    <x-input-error class="mt-2" :messages="$errors->get('waktu_mulai')" />
+                                </div>
+                                <div>
+                                    <x-input-label class="required" for="waktu_selesai" :value="__('Waktu Selesai')" />
+                                    <x-text-input type="date" name="waktu_selesai" id="waktu_selesai"
+                                        class="mt-1 block w-full" required />
+                                    <x-input-error class="mt-2" :messages="$errors->get('waktu_selesai')" />
+                                </div>
+                            </div>
                             <div>
                                 <x-input-label class="required" for="harga" :value="__('Harga')" />
-                                <x-text-input id="input-harga" type="text" class="mt-1 block w-full" type-currency="IDR"
-                                    required autocomplete="harga" placeholder="Rp." autocomplete="off"/>
+                                <x-text-input id="input-harga" type="text" class="mt-1 block w-full"
+                                    type-currency="IDR" required autocomplete="harga" placeholder="Rp."
+                                    autocomplete="off" />
                                 <input id="harga" name="harga" type="hidden">
                                 <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                             </div>
@@ -42,8 +57,8 @@
                 <div class="p-4 space-y-4">
                     <div>
                         <x-input-label class="required" for="jumlah_dibayar" :value="__('Jumlah Dibayar')" />
-                        <x-text-input type="text" id="input-jumlah-dibayar" class="mt-1 block w-full" type-currency="IDR1"
-                            placeholder="Rp. 0" autocomplete="off"/>
+                        <x-text-input type="text" id="input-jumlah-dibayar" class="mt-1 block w-full"
+                            type-currency="IDR1" placeholder="Rp. 0" autocomplete="off" />
                         <input id="jumlah-dibayar" name="jumlah_dibayar" type="hidden">
                         <x-input-error class="mt-2" :messages="$errors->get('jumlah_dibayar')" />
                     </div>
@@ -79,47 +94,47 @@
     </main>
     <script>
         document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
-                element.addEventListener('keyup', function(e) {
-                    let cursorPosition = this.selectionStart;
-                    let value = parseInt(this.value.replace(/[^,\d]/g, ''));
-                    let originalLength = this.value.length;
-                    if (isNaN(value)) {
-                        this.value = "";
-                    } else {    
-                        this.value = value.toLocaleString('id-ID', {
-                            currency: 'IDR',
-                            style: 'currency',
-                            minimumFractionDigits: 0
-                        });
-                        cursorPosition = this.value.length - originalLength + cursorPosition;
-                        this.setSelectionRange(cursorPosition, cursorPosition);
-                    }
-                    let priceInput = document.getElementById('input-harga').value;
-                    let priceValue = parseInt(priceInput.replace(/[^,\d]/g, ''));
-                    document.getElementById('harga').value = priceValue;
-                });
+            element.addEventListener('keyup', function(e) {
+                let cursorPosition = this.selectionStart;
+                let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+                let originalLength = this.value.length;
+                if (isNaN(value)) {
+                    this.value = "";
+                } else {
+                    this.value = value.toLocaleString('id-ID', {
+                        currency: 'IDR',
+                        style: 'currency',
+                        minimumFractionDigits: 0
+                    });
+                    cursorPosition = this.value.length - originalLength + cursorPosition;
+                    this.setSelectionRange(cursorPosition, cursorPosition);
+                }
+                let priceInput = document.getElementById('input-harga').value;
+                let priceValue = parseInt(priceInput.replace(/[^,\d]/g, ''));
+                document.getElementById('harga').value = priceValue;
             });
+        });
         document.getElementById('jumlah-dibayar').value = 0;
         document.querySelectorAll('input[type-currency="IDR1"]').forEach((element) => {
-                element.addEventListener('keyup', function(e) {
-                    let cursorPosition = this.selectionStart;
-                    let value = parseInt(this.value.replace(/[^,\d]/g, ''));
-                    let originalLength = this.value.length;
-                    if (isNaN(value)) {
-                        this.value = "0";
-                    } else {    
-                        this.value = value.toLocaleString('id-ID', {
-                            currency: 'IDR',
-                            style: 'currency',
-                            minimumFractionDigits: 0
-                        });
-                        cursorPosition = this.value.length - originalLength + cursorPosition;
-                        this.setSelectionRange(cursorPosition, cursorPosition);
-                    }
-                    let priceInput = document.getElementById('input-jumlah-dibayar').value;
-                    let priceValue = parseInt(priceInput.replace(/[^,\d]/g, ''));
-                    document.getElementById('jumlah-dibayar').value = priceValue;
-                });
+            element.addEventListener('keyup', function(e) {
+                let cursorPosition = this.selectionStart;
+                let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+                let originalLength = this.value.length;
+                if (isNaN(value)) {
+                    this.value = "0";
+                } else {
+                    this.value = value.toLocaleString('id-ID', {
+                        currency: 'IDR',
+                        style: 'currency',
+                        minimumFractionDigits: 0
+                    });
+                    cursorPosition = this.value.length - originalLength + cursorPosition;
+                    this.setSelectionRange(cursorPosition, cursorPosition);
+                }
+                let priceInput = document.getElementById('input-jumlah-dibayar').value;
+                let priceValue = parseInt(priceInput.replace(/[^,\d]/g, ''));
+                document.getElementById('jumlah-dibayar').value = priceValue;
             });
+        });
     </script>
 </x-app-layout>

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('id_mapel')->nullable()->constrained('mapels')->onDelete('set null');
             $table->string('nama');
             $table->string('status');
+            $table->date('waktu_mulai');
+            $table->date('waktu_selesai');
             $table->integer('harga');
             $table->string('status_pembayaran');
             $table->timestamps();

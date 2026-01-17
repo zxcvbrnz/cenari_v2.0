@@ -349,6 +349,8 @@ class AdminController extends Controller
             'id_mapel' => $id_mapel,
             'nama' => $request->nama,
             'status' => 'aktif',
+            'waktu_mulai' => $request->waktu_mulai,
+            'waktu_selesai' => $request->waktu_selesai,
             'harga' => $request->harga,
             'status_pembayaran' => $request->status_pembayaran,
         ]);

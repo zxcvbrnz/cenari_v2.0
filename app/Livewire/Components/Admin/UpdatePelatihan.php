@@ -13,6 +13,8 @@ class UpdatePelatihan extends Component
     public $data;
     public string $nama = '';
     public string $instruktur = '';
+    public  $waktu_mulai;
+    public  $waktu_selesai;
     public string $status = '';
     public $harga = 0;
     public string $status_pembayaran = '';
@@ -26,6 +28,8 @@ class UpdatePelatihan extends Component
         $this->instruktur = $data->id_instruktur . '-' . $data->id_mapel;
         $this->harga = $data->harga;
         $this->status = $data->status;
+        $this->waktu_mulai = $data->waktu_mulai;
+        $this->waktu_selesai = $data->waktu_selesai;
         $this->status_pembayaran = $data->status_pembayaran;
     }
 
@@ -45,9 +49,11 @@ class UpdatePelatihan extends Component
             'harga' => $this->harga,
             'id_mapel' => $id_mapel,
             'status' => $this->status,
+            'waktu_mulai' => $this->waktu_mulai,
+            'waktu_selesai' => $this->waktu_selesai,
             'status_pembayaran' => $this->status_pembayaran,
         ]);
-        
+
         Peserta::where('id_group', $this->data->id)->update(['status' => $this->status]);
 
         $this->dispatch('alert-success', message: 'Berhasil diedit.');

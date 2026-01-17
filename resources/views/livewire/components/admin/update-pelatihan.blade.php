@@ -21,6 +21,20 @@
                     </select>
                     <x-input-error class="mt-2" :messages="$errors->get('instruktur')" />
                 </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <x-input-label class="required" for="waktu_mulai" :value="__('Waktu Mulai')" />
+                        <x-text-input wire:model="waktu_mulai" type="date" name="waktu_mulai" id="waktu_mulai"
+                            class="mt-1 block w-full" required />
+                        <x-input-error class="mt-2" :messages="$errors->get('waktu_mulai')" />
+                    </div>
+                    <div>
+                        <x-input-label class="required" for="waktu_selesai" :value="__('Waktu Selesai')" />
+                        <x-text-input wire:model="waktu_selesai" type="date" name="waktu_selesai" id="waktu_selesai"
+                            class="mt-1 block w-full" required />
+                        <x-input-error class="mt-2" :messages="$errors->get('waktu_selesai')" />
+                    </div>
+                </div>
                 <div>
                     <x-input-label class="required" for="harga" :value="__('Harga')" />
                     <x-text-input id="input-harga" type="text" type-currency="IDR" autocomplete="off"
@@ -73,6 +87,13 @@
                 <div>Status</div>
                 <div class="text-end text-base text-slate-700">{{ $data->status }}</div>
             </div>
+            <div class="flex justify-between py-3">
+                <div>Waktu Mulai - Selesai</div>
+                <div class="text-end text-base text-slate-700">
+                    {{ \Carbon\Carbon::parse($data->waktu_mulai)->translatedFormat('d F Y') }} -
+                    {{ \Carbon\Carbon::parse($data->waktu_selesai)->translatedFormat('d F Y') }}
+                </div>
+            </div>
             <hr>
         </div>
     @endif
@@ -86,7 +107,7 @@
             let originalLength = this.value.length;
             if (isNaN(value)) {
                 this.value = "";
-            } else {    
+            } else {
                 this.value = value.toLocaleString('id-ID', {
                     currency: 'IDR',
                     style: 'currency',
