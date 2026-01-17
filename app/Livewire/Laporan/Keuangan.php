@@ -7,6 +7,10 @@ use App\Models\Keuangan as ModelsKeuangan;
 use App\Models\Pembayaran;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+// use Barryvdh\DomPDF\Facade\Pdf;
+// use Illuminate\Http\Response;
+// use Symfony\Component\HttpFoundation\StreamedResponse;
+
 
 class Keuangan extends Component
 {
@@ -194,4 +198,73 @@ class Keuangan extends Component
             'saldoKeseluruhan' => $this->getSaldoKeseluruhan(),
         ]);
     }
+
+    // public function exportPdf()
+    // {
+    //     // Validasi filter bulan
+    //     if (!preg_match('/^\d{4}-\d{2}$/', $this->filter_bulan)) {
+    //         abort(400, 'Format bulan tidak valid');
+    //     }
+
+    //     $year  = (int) substr($this->filter_bulan, 0, 4);
+    //     $month = (int) substr($this->filter_bulan, 5, 2);
+
+    //     /* ===============================
+    //  * AMBIL DATA (SAMA DENGAN TABLE)
+    //  * =============================== */
+    //     $keuanganManual = ModelsKeuangan::whereYear('date', $year)
+    //         ->whereMonth('date', $month)
+    //         ->get()
+    //         ->map(function ($item) {
+    //             return [
+    //                 'date'        => $item->date,
+    //                 'description' => $item->description,
+    //                 'type'        => $item->type,
+    //                 'amount'      => (int) $item->amount,
+    //             ];
+    //         });
+
+    //     $pembayaranSpp = Pembayaran::whereYear('tanggal_dibayar', $year)
+    //         ->whereMonth('tanggal_dibayar', $month)
+    //         ->where('jumlah_dibayar', '!=', 0)
+    //         ->get()
+    //         ->map(function ($item) {
+    //             $displayName = $item->id_group
+    //                 ? optional($item->group)->nama
+    //                 : optional(optional($item->peserta)->user)->name;
+
+    //             return [
+    //                 'date'        => optional($item->tanggal_dibayar)->format('Y-m-d'),
+    //                 'description' => ($displayName ?? 'Umum') . ' - ' . ($item->deskripsi ?? 'Pembayaran'),
+    //                 'type'        => 'income',
+    //                 'amount'      => (int) $item->jumlah_dibayar,
+    //             ];
+    //         });
+
+    //     $data = collect()
+    //         ->concat($keuanganManual)
+    //         ->concat($pembayaranSpp)
+    //         ->sortBy('date')
+    //         ->values();
+
+    //     /* ===============================
+    //  * HITUNG TOTAL
+    //  * =============================== */
+    //     $totalIncome = $data->where('type', 'income')->sum('amount');
+    //     $totalExpense = $data->where('type', 'expense')->sum('amount');
+    //     $saldo = $totalIncome - $totalExpense;
+
+    //     /* ===============================
+    //  * GENERATE PDF
+    //  * =============================== */
+    //     $pdf = Pdf::loadView('pdf.laporan-keuangan-bulanan', [
+    //         'bulan'         => $this->filter_bulan,
+    //         'data'          => $data,
+    //         'totalIncome'   => $totalIncome,
+    //         'totalExpense'  => $totalExpense,
+    //         'saldo'         => $saldo,
+    //     ])->setPaper('a4', 'landscape');
+
+    //     return $pdf->download('laporan-keuangan-' . $this->filter_bulan . '.pdf');
+    // }
 }

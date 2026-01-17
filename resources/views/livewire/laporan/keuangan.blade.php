@@ -118,7 +118,15 @@
                     class="inline-flex items-center gap-2 bg-violet-600 text-white px-4 py-2 rounded-sm text-xs font-bold uppercase hover:bg-violet-700 transition">
                     Download PDF
                 </a>
-
+                {{-- <button wire:click="exportPdf" wire:loading.attr="disabled" wire:target="exportPdf"
+                    class="bg-emerald-600 text-white px-4 py-2 text-xs font-bold uppercase rounded-sm hover:bg-emerald-700 transition shadow-md disabled:opacity-70 disabled:cursor-not-allowed">
+                    <span wire:loading.remove wire:target="exportPdf">
+                        Export PDF
+                    </span>
+                    <span wire:loading wire:target="exportPdf" style="display:none;">
+                        Menyiapkan PDF...
+                    </span>
+                </button> --}}
             </div>
         </div>
 
