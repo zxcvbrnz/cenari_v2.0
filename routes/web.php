@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InstrukturController;
+use App\Http\Controllers\LaporanKeuanganPdfController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PesertaController;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
         Route::get('/export-peserta-pdf/{id}', [PdfController::class, 'GeneratePDF'])->name('export.peserta.pdf');
+        Route::get('/laporan/keuangan/pdf/{bulan}', [LaporanKeuanganPdfController::class, 'bulanan'])->name('laporan.keuangan.pdf');
+
         Route::view('/settings/general', 'settings/general')->name('setting.general');
 
 
