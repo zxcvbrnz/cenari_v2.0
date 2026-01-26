@@ -12,7 +12,7 @@
         </div>
         <hr />
         <div class="p-4">
-            <div style="width: 80%; margin: auto;">
+            <div wire:ignore style="width: 80%; margin: auto;">
                 <canvas id="pesertaChart"></canvas>
             </div>
         </div>
