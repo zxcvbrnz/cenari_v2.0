@@ -97,8 +97,9 @@
         }
     });
     var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut', // Mengubah 'pie' menjadi 'doughnut' agar lebih modern
         data: {
             labels: @json($data['label2']),
             datasets: [{
@@ -113,16 +114,48 @@
                     @json($data['S3']),
                 ],
                 backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(0, 35, 121)',
-                    'rgb(88, 40, 127)',
-                    'rgb(64, 165, 120)',
-                    'rgb(228, 143, 69)',
+                    '#FF6384', // Merah muda
+                    '#36A2EB', // Biru terang
+                    '#FFCE56', // Kuning
+                    '#1E3A8A', // Biru Navy
+                    '#7C3AED', // Ungu
+                    '#10B981', // Hijau Emerald
+                    '#F59E0B', // Amber
                 ],
-                hoverOffset: 4
+                borderWidth: 2, // Ketebalan garis antar segmen
+                borderColor: '#ffffff', // Warna garis putih agar terlihat bersih
+                borderRadius: 5, // Membuat sudut segmen agak membulat
+                hoverOffset: 20, // Memberikan efek "meledak" saat kursor di atas segmen
+                spacing: 2, // Memberikan celah tipis antar segmen
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%', // Besarnya lubang tengah (semakin besar semakin tipis)
+            plugins: {
+                legend: {
+                    position: 'bottom', // Pindahkan legenda ke bawah agar chart punya ruang lebar
+                    labels: {
+                        usePointStyle: true, // Bentuk legenda jadi lingkaran (lebih estetik)
+                        padding: 20,
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: true
+                }
+            },
+            // Animasi saat chart muncul
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
         }
     });
 </script>
