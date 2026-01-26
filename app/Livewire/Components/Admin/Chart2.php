@@ -11,25 +11,30 @@ use Carbon\Carbon;
 class Chart2 extends Component
 {
     public $data;
-    public $chartData;
-
     public int $year;
+
+    // Tambahkan properti ini agar Livewire memantau perubahan input
+    protected $updatesQueryString = ['year'];
+
     public function mount(): void
     {
-        // $this->loadChartData();
         $this->year = Carbon::now()->year;
+        $this->prepareData();
+    }
 
+    // Fungsi ini kita pisahkan agar bisa dipanggil di mount() dan render()
+    public function prepareData(): void
+    {
         $mapelData = Mapel::with(['pesertas' => function ($query) {
             $query->select(DB::raw('id_mapel, MONTH(created_at) as month, COUNT(*) as count'))
                 ->whereYear('created_at', $this->year)
                 ->groupBy('id_mapel', 'month');
         }])->get();
 
-        // Mengorganisir data untuk dikirim ke view
         $this->data = $mapelData->map(function ($mapel) {
-            $monthlyData = array_fill(0, 12, 0); // Inisialisasi 12 bulan dengan nilai 0
+            $monthlyData = array_fill(0, 12, 0);
             foreach ($mapel->pesertas as $peserta) {
-                $monthlyData[$peserta->month - 1] = $peserta->count; // Isi data sesuai bulan
+                $monthlyData[$peserta->month - 1] = $peserta->count;
             }
             return [
                 'nama' => $mapel->nama,
@@ -40,7 +45,8 @@ class Chart2 extends Component
 
     public function render()
     {
-        $this->mount();
+        // Panggil ulang data setiap kali render agar data tetap ada saat tahun berubah
+        $this->prepareData();
         return view('livewire.components.admin.chart2');
     }
 }
