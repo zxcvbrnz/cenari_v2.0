@@ -22,12 +22,9 @@
 @script
     <script>
         let myChart;
+        const ctx = document.getElementById('pesertaChart').getContext('2d');
 
-        // Fungsi untuk merender chart
         function initChart(chartData) {
-            const ctx = document.getElementById('pesertaChart').getContext('2d');
-
-            // Hancurkan chart lama jika ada sebelum membuat baru (agar tidak tumpang tindih)
             if (myChart) {
                 myChart.destroy();
             }
@@ -51,6 +48,7 @@
                     datasets: datasets
                 },
                 options: {
+                    responsive: true,
                     scales: {
                         y: {
                             beginAtZero: true
@@ -58,17 +56,17 @@
                     },
                     interaction: {
                         intersect: false
-                    },
+                    }
                 }
             });
         }
 
-        // Jalankan saat pertama kali load
+        // Render pertama kali
         initChart({!! json_encode($data) !!});
 
-        // Jalankan ulang setiap kali Livewire selesai merender komponen (setelah ganti tahun)
-        $wire.on('post-render', () => {
-            initChart({!! json_encode($data) !!});
+        // Mendengarkan event dari PHP untuk update data tanpa refresh halaman
+        $wire.on('updateChartData', (event) => {
+            initChart(event.chartData);
         });
     </script>
 @endscript

@@ -19,6 +19,7 @@ class Chart2 extends Component
     public function mount(): void
     {
         $this->year = Carbon::now()->year;
+        $this->dispatch('updateChartData', chartData: $this->data);
         $this->prepareData();
     }
 
