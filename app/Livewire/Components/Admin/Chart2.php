@@ -47,7 +47,7 @@ class Chart2 extends Component
     {
         // Panggil ulang data setiap kali render agar data tetap ada saat tahun berubah
         $this->prepareData();
-        $this->dispatch('updateChartData',  $this->data);
+        $this->dispatch('updateChartData',  chartData: $this->data);
         return view('livewire.components.admin.chart2');
     }
 }
