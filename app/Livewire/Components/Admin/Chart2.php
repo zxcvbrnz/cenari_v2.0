@@ -37,4 +37,10 @@ class Chart2 extends Component
             ];
         });
     }
+
+    public function render()
+    {
+        $this->mount();
+        return view('livewire.components.admin.chart2');
+    }
 }
