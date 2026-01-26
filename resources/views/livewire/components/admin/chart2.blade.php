@@ -1,8 +1,14 @@
 <!-- resources/views/livewire/peserta-chart.blade.php -->
 <div class="grid gap-6 md:gap-8">
     <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
-        <div class="text-slate-700 p-4">
-            Data Perhitungan Program Perbulan Tahun {{ $year }}
+        <div class="text-slate-700 p-4 flex justify-between items-center">
+            <span>Data Perhitungan Program Perbulan Tahun {{ $year }}</span>
+            <select wire:model.live="year"
+                class="border border-slate-300 rounded px-3 py-1 text-sm focus:ring-2 focus:ring-violet-500 outline-none">
+                @for ($i = date('Y'); $i >= date('Y') - 5; $i--)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
         </div>
         <hr />
         <div class="p-4">
