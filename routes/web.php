@@ -77,6 +77,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::view('/settings/general', 'settings/general')->name('setting.general');
 
+        Route::view('/detail-data-card', 'detail-data-card')->name('admin.detail.datacard');
+
 
         // permohonan
         Route::get('/permohonan', [AdminController::class, 'absen'])->name('permohonan');

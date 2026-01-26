@@ -1,5 +1,5 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-    <div class="w-full h-40">
+    <a href="{{ route('admin.detail.datacard', ['status' => 'Baru']) }}" wire:navigate class="w-full h-40">
         <div class="w-full h-full bg-white border border-slate-200 shadow-lg rounded-sm px-8 py-6">
             <div class="flex">
                 <div class="bg-blue-100 text-blue-600 p-2.5 rounded-full">
@@ -19,8 +19,8 @@
                 <span class="text-xs block">{{ __('(Belum Melakukan Absensi)') }}</span>
             </div>
         </div>
-    </div>
-    <div class="w-full h-40">
+    </a>
+    <a href="{{ route('admin.detail.datacard', ['status' => 'Aktif']) }}" wire:navigate class="w-full h-40">
         <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
             <div class="flex">
                 <div class="bg-blue-100 text-blue-600 p-2.5 rounded-full">
@@ -41,8 +41,8 @@
 
             </div>
         </div>
-    </div>
-    <div class="w-full h-40">
+    </a>
+    <a href="{{ route('admin.detail.datacard', ['status' => 'Selesai']) }}" wire:navigate class="w-full h-40">
         <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
             <div class="flex">
                 <div class="bg-blue-100 text-blue-600 p-2.5 rounded-full">
@@ -63,7 +63,7 @@
                 <span class="text-xs block">{{ __('(Belum Ada Sertifikat)') }}</span>
             </div>
         </div>
-    </div>
+    </a>
     <div class="w-full h-40">
         <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
             <div class="flex">
@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-    <div class="w-full h-40">
+    <a href="{{ route('admin.detail.datacard', ['status' => 'Belum Lunas']) }}" wire:navigate class="w-full h-40">
         <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
             <div class="flex">
                 <div class="bg-blue-100 text-blue-600 p-2.5 rounded-full">
@@ -105,7 +105,7 @@
                 <span class="text-sm text-slate-600">Peserta Didik Belum Lunas</span>
             </div>
         </div>
-    </div>
+    </a>
     <div class="w-full h-40">
         <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
             <div class="flex">
