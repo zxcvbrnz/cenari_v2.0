@@ -1,5 +1,6 @@
 @if ($statusPembayaran !== 'Lunas')
-    <div class="flex items-center p-4 rounded-lg bg-red-50 border-l-4 border-red-500 shadow-sm" role="alert">
+    <div class="flex items-center p-4 rounded-lg border-l-4 {{ $statusPembayaran === 'Belum Bayar' ? 'bg-red-50 border-red-500' : 'bg-orange-50 border-orange-500' }} shadow-sm"
+        role="alert">
         <div class="flex-shrink-0">
             <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
@@ -8,14 +9,15 @@
             </svg>
         </div>
         <div class="ml-3 flex-1 md:flex md:justify-between items-center">
-            <p class="text-sm text-red-700">
+            <p class="text-sm {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }}">
                 <span class="font-bold">Perhatian!</span>
                 Status pembayaran Anda saat ini adalah <span
                     class="font-black underline">{{ $statusPembayaran }}</span>.
-                Segera lakukan pelunasan untuk dapat mengakses seluruh fitur dan mendapatkan sertifikat.
+                Segera lakukan pelunasan untuk dapat mengakses seluruh fitur.
             </p>
             <p class="mt-3 text-sm md:mt-0 md:ml-6">
-                <a href="#" class="whitespace-nowrap font-medium text-red-700 hover:text-red-600 underline">
+                <a href="#" wire:navigate
+                    class="whitespace-nowrap font-medium {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }} hover:text-red-600 underline">
                     Lihat Rincian Tagihan &rarr;
                 </a>
             </p>
