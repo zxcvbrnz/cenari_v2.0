@@ -51,10 +51,9 @@ class DataCard extends Component
             ->whereHas('nilai')
             ->count();
 
-        $this->pesertaDidikNonaktif = Peserta::where('id_group', null)->where('status', 'nonaktif')->whereHas('sertifikat', function ($query) {
+        $this->pesertaDidikNonaktif = Peserta::where('status', 'nonaktif')->whereHas('sertifikat', function ($query) {
             $query->whereNotNull('link');
-        })
-            ->count();
+        })->count();
 
         $this->pesertaDidikBelumLunas = Peserta::where('id_group', null)->where('status_pembayaran', 'Belum Lunas')->count();
         // Counting active Peserta
