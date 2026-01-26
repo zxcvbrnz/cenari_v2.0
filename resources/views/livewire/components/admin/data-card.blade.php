@@ -81,6 +81,7 @@
             </div>
             <div class="-mt-1">
                 <span class="text-sm text-slate-600">Peserta Didik Selesai</span>
+                <span class="text-xs block">{{ __('(Nonaktif - Terdapat Sertifikat)') }}</span>
             </div>
         </div>
     </div>
