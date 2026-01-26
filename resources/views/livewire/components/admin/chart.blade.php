@@ -16,7 +16,7 @@
         </div>
         <hr />
         <div class="p-4">
-            <div class="h-full" wire:ignore style="width: 80%; margin: auto;">
+            <div class="relative h-[400px] md:h-[450px] w-full" wire:ignore style="margin: auto;">
                 <canvas id="myChart"></canvas>
             </div>
         </div>
@@ -144,7 +144,7 @@
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '65%', // Besarnya lubang tengah (semakin besar semakin tipis)
+            cutout: '50%', // Besarnya lubang tengah (semakin besar semakin tipis)
             plugins: {
                 legend: {
                     position: 'bottom', // Pindahkan legenda ke bawah agar chart punya ruang lebar
