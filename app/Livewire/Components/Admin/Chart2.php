@@ -3,6 +3,7 @@
 namespace App\Livewire\Components\Admin;
 
 use App\Models\Mapel;
+use App\Models\Peserta;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Carbon\Carbon;
@@ -15,21 +16,18 @@ class Chart2 extends Component
     public function mount(): void
     {
         $this->year = Carbon::now()->year;
-        $this->loadChartData();
+        $this->fetchData();
     }
 
-    /**
-     * Fungsi ini akan terpanggil otomatis oleh Livewire
-     * setiap kali $year berubah via wire:model
-     */
+    // Fungsi ini dipanggil setiap kali properti $year berubah via wire:model
     public function updatedYear()
     {
-        $this->loadChartData();
-        // Mengirim event ke browser agar Chart.js melakukan update
+        $this->fetchData();
+        // Melempar event ke browser agar Chart.js melakukan update
         $this->dispatch('update-chart', data: $this->data);
     }
 
-    public function loadChartData()
+    public function fetchData(): void
     {
         $mapelData = Mapel::with(['pesertas' => function ($query) {
             $query->select(DB::raw('id_mapel, MONTH(created_at) as month, COUNT(*) as count'))
@@ -51,6 +49,6 @@ class Chart2 extends Component
 
     public function render()
     {
-        return view('livewire.components.admin.chart2');
+        return view('livewire.peserta-chart');
     }
 }

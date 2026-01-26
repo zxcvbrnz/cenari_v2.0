@@ -1,22 +1,18 @@
 <div class="grid gap-6 md:gap-8">
     <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
         <div class="text-slate-700 p-4 flex justify-between items-center">
-            <span class="font-bold uppercase tracking-tight text-sm">Data Perhitungan Program Perbulan</span>
+            <span>Data Perhitungan Program Perbulan Tahun {{ $year }}</span>
 
-            <select wire:model.live="year"
-                class="text-sm border-gray-300 rounded-lg focus:ring-violet-500 focus:border-violet-500">
-                @php
-                    $startYear = 2020; // Tahun awal sistem
-                    $currentYear = date('Y');
-                @endphp
-                @for ($y = $currentYear; $y >= $startYear; $y--)
-                    <option value="{{ $y }}">Tahun {{ $y }}</option>
+            <select wire:model.live="year" class="border border-violet-300 rounded px-2 py-1 text-sm">
+                @php $currentYear = date('Y'); @endphp
+                @for ($i = $currentYear; $i >= $currentYear - 5; $i--)
+                    <option value="{{ $i }}">{{ $i }}</option>
                 @endfor
             </select>
         </div>
         <hr />
         <div class="p-4">
-            <div style="width: 100%; height: 400px; margin: auto;">
+            <div style="width: 80%; margin: auto;">
                 <canvas id="pesertaChart"></canvas>
             </div>
         </div>
@@ -25,57 +21,47 @@
 
 @script
     <script>
-        var ctx = document.getElementById('pesertaChart').getContext('2d');
-        var myChart;
+        let ctx = document.getElementById('pesertaChart').getContext('2d');
+        let myChart;
 
-        // Fungsi untuk membuat dataset dari data mentah
+        // Fungsi helper untuk generate datasets
         function createDatasets(rawData) {
-            return rawData.map((element) => {
-                const r = Math.floor(Math.random() * 200); // Batasi ke 200 agar warna tidak terlalu terang
-                const g = Math.floor(Math.random() * 200);
-                const b = Math.floor(Math.random() * 200);
-                return {
-                    label: element.nama,
-                    data: element.monthlyData,
-                    borderColor: `rgba(${r}, ${g}, ${b}, 1)`,
-                    backgroundColor: `rgba(${r}, ${g}, ${b}, 0.1)`,
-                    borderWidth: 2,
-                    fill: true,
-                    tension: 0.4 // Membuat garis lebih halus
-                };
-            });
+            return rawData.map((element) => ({
+                label: element.nama,
+                data: element.monthlyData,
+                borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
+                backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
+                borderWidth: 1,
+                fill: true,
+                tension: 0.1
+            }));
         }
 
         // Inisialisasi Chart Pertama Kali
+        const initialData = {!! json_encode($data) !!};
         myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                datasets: createDatasets($wire.data)
+                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+                    'Oktober', 'November', 'Desember'
+                ],
+                datasets: createDatasets(initialData)
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1
-                        }
+                        beginAtZero: true
                     }
                 },
                 interaction: {
-                    intersect: false,
-                    mode: 'index'
+                    intersect: false
                 }
             }
         });
 
-        // Listen event dari Livewire untuk update data
-        $wire.on('update-chart', ({
-            data
-        }) => {
-            myChart.data.datasets = createDatasets(data);
+        // Mendengarkan perubahan data dari Livewire (Event update-chart)
+        $wire.on('update-chart', (event) => {
+            myChart.data.datasets = createDatasets(event.data);
             myChart.update();
         });
     </script>
