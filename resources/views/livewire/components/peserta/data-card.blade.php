@@ -1,10 +1,34 @@
+{{-- @if ($statusPembayaran !== 'Lunas') --}}
+<div class="mb-6 flex items-center p-4 rounded-lg bg-red-50 border-l-4 border-red-500 shadow-sm" role="alert">
+    <div class="flex-shrink-0">
+        <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                clip-rule="evenodd"></path>
+        </svg>
+    </div>
+    <div class="ml-3 flex-1 md:flex md:justify-between items-center">
+        <p class="text-sm text-red-700">
+            <span class="font-bold">Perhatian!</span>
+            Status pembayaran Anda saat ini adalah <span class="font-black underline">{{ $statusPembayaran }}</span>.
+            Segera lakukan pelunasan untuk dapat mengakses seluruh fitur dan mendapatkan sertifikat.
+        </p>
+        <p class="mt-3 text-sm md:mt-0 md:ml-6">
+            <a href="#" class="whitespace-nowrap font-medium text-red-700 hover:text-red-600 underline">
+                Lihat Rincian Tagihan &rarr;
+            </a>
+        </p>
+    </div>
+</div>
+{{-- @endif --}}
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-    @if(!auth()->user()->peserta->group)
+    @if (!auth()->user()->peserta->group)
         <div class="w-full h-40">
             <div class="w-full h-full bg-white border border-slate-200 shadow-lg rounded-sm px-8 py-6">
                 <div class="flex">
                     <div class="bg-blue-100 text-blue-600 p-2.5 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 256 256">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor"
+                            viewBox="0 0 256 256">
                             <path
                                 d="M224,48H32A16,16,0,0,0,16,64V192a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V64A16,16,0,0,0,224,48Zm0,16V88H32V64Zm0,128H32V104H224v88Zm-16-24a8,8,0,0,1-8,8H168a8,8,0,0,1,0-16h32A8,8,0,0,1,208,168Zm-64,0a8,8,0,0,1-8,8H120a8,8,0,0,1,0-16h16A8,8,0,0,1,144,168Z">
                             </path>
