@@ -1,5 +1,5 @@
 @if ($statusPembayaran !== 'Lunas')
-    <div class="mb-6 flex items-center p-4 rounded-lg bg-red-50 border-l-4 border-red-500 shadow-sm" role="alert">
+    <div class="flex items-center p-4 rounded-lg bg-red-50 border-l-4 border-red-500 shadow-sm" role="alert">
         <div class="flex-shrink-0">
             <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd"
