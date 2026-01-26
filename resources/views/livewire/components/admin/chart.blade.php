@@ -16,7 +16,7 @@
         </div>
         <hr />
         <div class="p-4">
-            <div wire:ignore style="width: 80%; margin: auto;">
+            <div class="h-full" wire:ignore style="width: 80%; margin: auto;">
                 <canvas id="myChart"></canvas>
             </div>
         </div>
