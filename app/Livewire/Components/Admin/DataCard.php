@@ -55,7 +55,7 @@ class DataCard extends Component
             $query->whereNotNull('link');
         })->count();
 
-        $this->pesertaDidikBelumLunas = Peserta::where('id_group', null)->where('status_pembayaran', 'Belum Lunas')->count();
+        $this->pesertaDidikBelumLunas = Peserta::where('id_group', null)->whereIn('status_pembayaran', ['Belum Lunas', 'Belum Dibayar'])->count();
         // Counting active Peserta
         // $this->peserta = Peserta::where('status', 'aktif')->count();
 
