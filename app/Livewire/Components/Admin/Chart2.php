@@ -11,16 +11,16 @@ use Carbon\Carbon;
 class Chart2 extends Component
 {
     public $data;
-    public int $year;
+    public int $year =  Carbon::now()->year;
 
     // Tambahkan properti ini agar Livewire memantau perubahan input
     protected $updatesQueryString = ['year'];
 
-    public function mount(): void
-    {
-        $this->year = Carbon::now()->year;
-        $this->prepareData();
-    }
+    // public function mount(): void
+    // {
+    //     $this->year = Carbon::now()->year;
+    //     $this->prepareData();
+    // }
 
     // Fungsi ini kita pisahkan agar bisa dipanggil di mount() dan render()
     public function prepareData(): void
