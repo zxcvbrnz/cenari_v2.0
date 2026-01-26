@@ -92,6 +92,18 @@
                         boxWidth: 12,
                         padding: 20
                     }
+                },
+                tooltip: {
+                    callbacks: {
+                        // Menambahkan baris "Total" di bagian bawah tooltip
+                        footer: (tooltipItems) => {
+                            let sum = 0;
+                            tooltipItems.forEach(function(tooltipItem) {
+                                sum += tooltipItem.parsed.y;
+                            });
+                            return 'Total: ' + sum;
+                        },
+                    }
                 }
             }
         }
@@ -138,6 +150,23 @@
                     position: 'bottom', // Pindahkan legenda ke bawah agar chart punya ruang lebar
                     labels: {
                         usePointStyle: true, // Bentuk legenda jadi lingkaran (lebih estetik)
+                        generateLabels: (chart) => {
+                            const data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map((label, i) => {
+                                    const value = data.datasets[0].data[i];
+                                    return {
+                                        text: `${label}: ${value} Peserta`,
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        strokeStyle: data.datasets[0].backgroundColor[i],
+                                        lineWidth: 0,
+                                        pointStyle: 'circle',
+                                        index: i
+                                    };
+                                });
+                            }
+                            return [];
+                        },
                         padding: 20,
                         font: {
                             size: 12
@@ -148,7 +177,17 @@
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     padding: 12,
                     cornerRadius: 8,
-                    displayColors: true
+                    displayColors: true,
+                    callbacks: {
+                        // Menambahkan persentase otomatis di dalam tooltip
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            let total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            let percentage = ((value / total) * 100).toFixed(1) + "%";
+                            return `${label}: ${value} (${percentage})`;
+                        }
+                    }
                 }
             },
             // Animasi saat chart muncul
