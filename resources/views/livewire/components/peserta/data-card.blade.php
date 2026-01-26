@@ -1,5 +1,5 @@
 @if ($statusPembayaran !== 'Lunas')
-    <div class="flex items-center px-4 py-10 rounded-lg border-l-4 {{ $statusPembayaran === 'Belum Bayar' ? 'bg-red-50 border-red-500' : 'bg-orange-50 border-orange-500' }} shadow-sm"
+    <div class="flex items-center px-4 py-8 rounded-lg border-l-4 {{ $statusPembayaran === 'Belum Bayar' ? 'bg-red-50 border-red-500' : 'bg-orange-50 border-orange-500' }} shadow-sm"
         role="alert">
         <div class="flex-shrink-0">
             <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
