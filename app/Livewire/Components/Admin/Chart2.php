@@ -19,7 +19,6 @@ class Chart2 extends Component
     public function mount(): void
     {
         $this->year = Carbon::now()->year;
-        $this->dispatch('updateChartData',  $this->data);
         $this->prepareData();
     }
 
@@ -48,6 +47,7 @@ class Chart2 extends Component
     {
         // Panggil ulang data setiap kali render agar data tetap ada saat tahun berubah
         $this->prepareData();
+        $this->dispatch('updateChartData',  $this->data);
         return view('livewire.components.admin.chart2');
     }
 }
