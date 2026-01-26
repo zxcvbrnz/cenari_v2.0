@@ -5,7 +5,7 @@
         </div>
         <hr />
         <div class="p-4">
-            <div style="width: 80%; margin: auto;">
+            <div wire:ignore class="relative w-full h-[350px] md:h-[450px]" style=" margin: auto;">
                 <canvas id="barChart"></canvas>
             </div>
         </div>
@@ -26,16 +26,16 @@
     var ctx = document.getElementById('barChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                }
-            },
-            interaction: {
-                intersect: false,
-            },
-        },
+        // options: {
+        //     scales: {
+        //         y: {
+        //             beginAtZero: true,
+        //         }
+        //     },
+        //     interaction: {
+        //         intersect: false,
+        //     },
+        // },
         data: {
             labels: @json($data['labels']),
             datasets: [{
@@ -68,6 +68,29 @@
                 fill: true
             }]
         },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Penting agar tinggi container CSS dipatuhi
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 20
+                    }
+                }
+            }
+        }
     });
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
