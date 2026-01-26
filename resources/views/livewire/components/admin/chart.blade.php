@@ -43,29 +43,33 @@
                 data: @json($data['data']),
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 1,
+                borderWidth: 2,
                 fill: true
+                tension: 0.3
             }, {
                 label: 'Data Peserta lulus/Nonaktif',
                 data: @json($data['data2']),
                 backgroundColor: 'rgba(255, 159, 64, 0.2)',
                 borderColor: 'rgb(255, 159, 64)',
-                borderWidth: 1,
+                borderWidth: 2,
                 fill: true
+                tension: 0.3
             }, {
                 label: 'Data Peserta Pelatihan Baru/Aktif',
                 data: @json($data['data3']),
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgb(54, 162, 235)',
-                borderWidth: 1,
+                borderWidth: 2,
                 fill: true
+                tension: 0.3
             }, {
                 label: 'Data Peserta Pelatihan lulus/Nonaktif',
                 data: @json($data['data4']),
                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
                 borderColor: 'rgb(153, 102, 255)',
-                borderWidth: 1,
+                borderWidth: 2,
                 fill: true
+                tension: 0.3
             }]
         },
         options: {
