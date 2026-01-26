@@ -3,7 +3,6 @@
 namespace App\Livewire\Components\Admin;
 
 use App\Models\Mapel;
-use App\Models\Peserta;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Carbon\Carbon;
@@ -12,9 +11,9 @@ class Chart2 extends Component
 {
     public $data;
     public int $year;
+    public string $type = 'Private'; // Default awal
 
-    // Tambahkan properti ini agar Livewire memantau perubahan input
-    protected $updatesQueryString = ['year'];
+    protected $updatesQueryString = ['year', 'type'];
 
     public function mount(): void
     {
@@ -22,20 +21,25 @@ class Chart2 extends Component
         $this->prepareData();
     }
 
-    // Fungsi ini kita pisahkan agar bisa dipanggil di mount() dan render()
     public function prepareData(): void
     {
-        $mapelData = Mapel::with(['pesertas' => function ($query) {
+        // Tentukan relasi berdasarkan tipe
+        $relation = ($this->type === 'Private') ? 'pesertas' : 'groups';
+
+        $mapelData = Mapel::with([$relation => function ($query) {
             $query->select(DB::raw('id_mapel, MONTH(created_at) as month, COUNT(*) as count'))
                 ->whereYear('created_at', $this->year)
                 ->groupBy('id_mapel', 'month');
         }])->get();
 
-        $this->data = $mapelData->map(function ($mapel) {
+        $this->data = $mapelData->map(function ($mapel) use ($relation) {
             $monthlyData = array_fill(0, 12, 0);
-            foreach ($mapel->pesertas as $peserta) {
-                $monthlyData[$peserta->month - 1] = $peserta->count;
+
+            // Ambil data dari relasi yang sedang aktif (pesertas atau groups)
+            foreach ($mapel->$relation as $item) {
+                $monthlyData[$item->month - 1] = $item->count;
             }
+
             return [
                 'nama' => $mapel->nama,
                 'monthlyData' => $monthlyData,
@@ -45,9 +49,8 @@ class Chart2 extends Component
 
     public function render()
     {
-        // Panggil ulang data setiap kali render agar data tetap ada saat tahun berubah
         $this->prepareData();
-        $this->dispatch('updateChartData',  chartData: $this->data);
+        $this->dispatch('updateChartData', chartData: $this->data);
         return view('livewire.components.admin.chart2');
     }
 }

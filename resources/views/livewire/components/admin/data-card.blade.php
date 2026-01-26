@@ -79,8 +79,8 @@
                 <span class="text-3xl font-bold">
                     {{ $pesertaDidikNonaktif }} </span>
             </div>
-            <div class="-mt-1">
-                <span class="text-sm text-slate-600">Peserta Didik Selesai</span>
+            <div class="-mt-1 text-slate-600">
+                <span class="text-sm">Peserta Didik Selesai</span>
                 <span class="text-xs block">{{ __('(Nonaktif - Terdapat Sertifikat)') }}</span>
             </div>
         </div>
