@@ -36,6 +36,7 @@ class PaymentCallbackController extends Controller
 
         if (in_array($status, ['settlement', 'capture'])) {
             $transaction->status = 'paid';
+            $transaction->peserta->update(['status_pembayaran' => 'Lunas']);
         } elseif (in_array($status, ['cancel', 'expire', 'deny'])) {
             $transaction->status = 'failed';
         } elseif ($status == 'pending') {
