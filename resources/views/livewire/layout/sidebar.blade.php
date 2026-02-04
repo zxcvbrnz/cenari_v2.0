@@ -294,7 +294,7 @@
                         </li>
                     @endif
                     <li>
-                        <x-side-link href="{{ route('peserta.pembayaran') }}" :active="request()->routeIs('peserta.pembayaran')" wire:navigate>
+                        <x-side-link href="{{ route('peserta.pembayaran') }}" :active="request()->routeIs('peserta.pembayaran')">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 class="w-6 h-6"viewBox="0 0 256 256">
                                 <path
