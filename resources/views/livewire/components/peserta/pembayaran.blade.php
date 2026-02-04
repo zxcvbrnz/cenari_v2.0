@@ -102,7 +102,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="px-6 py-12 text-center">
+                                    <td colspan="4" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center gap-2 text-slate-400">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 opacity-20"
                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
