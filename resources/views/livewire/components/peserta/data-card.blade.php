@@ -16,7 +16,7 @@
                 Segera lakukan pelunasan untuk dapat mengakses seluruh fitur.
             </p>
             <p class="mt-3 text-sm md:mt-0 md:ml-6">
-                <a href="#" wire:navigate
+                <a href="{{ route('peserta.pembayaran') }}" wire:navigate
                     class="whitespace-nowrap font-medium {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }} hover:text-red-600 underline">
                     Lihat Rincian Tagihan &rarr;
                 </a>

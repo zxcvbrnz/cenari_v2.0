@@ -10,7 +10,6 @@ class Pembayaran extends Model
 {
     protected $table = 'pembayarans';
     protected $guarded = ['id'];
-
     protected $casts = [
         'tanggal_dibayar' => 'datetime',
     ];

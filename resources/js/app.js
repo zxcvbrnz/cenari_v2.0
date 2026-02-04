@@ -58,3 +58,35 @@ function error() {
         text: 'ee'
     })
 }
+
+// Handler Midtrans untuk Livewire
+document.addEventListener('livewire:init', () => {
+    Livewire.on('payWithMidtrans', (data) => {
+        // Cek apakah Snap sudah terload
+        if (typeof window.snap === 'undefined') {
+            console.error('Midtrans Snap.js belum terload. Pastikan script SDK ada di layout.');
+            return;
+        }
+
+        // Jika data dikirim sebagai array/objek (Livewire 3 style)
+        const token = Array.isArray(data) ? data[0].snapToken : data.snapToken;
+
+        window.snap.pay(token, {
+            onSuccess: function (result) {
+                console.log('Payment Success:', result);
+                window.location.reload();
+            },
+            onPending: function (result) {
+                console.log('Payment Pending:', result);
+                window.location.reload();
+            },
+            onError: function (result) {
+                console.log('Payment Error:', result);
+                window.location.reload();
+            },
+            onClose: function () {
+                console.log('Customer closed the popup without finishing the payment');
+            }
+        });
+    });
+});

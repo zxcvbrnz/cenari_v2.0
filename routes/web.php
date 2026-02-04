@@ -16,6 +16,8 @@ use App\Http\Middleware\Materi;
 
 Route::get('/peserta/{unique_code}', [AdminController::class, 'unique_code_peserta']);
 
+Route::post('/api/midtrans/callback', [App\Http\Controllers\MidtransController::class, 'callback']);
+
 
 Route::get('/', function () {
     return redirect('/login');
@@ -148,6 +150,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/absen/{token}', [PesertaController::class, 'absen']);
         Route::get('/penilaian', [PesertaController::class, 'penilaian'])->name('peserta.penilaian');
         Route::view('/anggota-pelatihan', 'peserta.anggota-pelatihan')->name('peserta.anggota.pelatihan');
+        Route::view('/riwayat-pembayaran', 'peserta.pembayaran')->name('peserta.pembayaran');
     });
 
     Route::view('profile', 'profile')->name('profile');
