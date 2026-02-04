@@ -20,8 +20,15 @@ class MidtransController extends Controller
                 $orderParts = explode('-', $request->order_id);
                 $pesertaId = end($orderParts);
 
+                // 1. Simpan ke tabel riwayat pembayaran
+                Pembayaran::create([
+                    'id_peserta' => $pesertaId,
+                    'jumlah_dibayar' => $request->gross_amount,
+                    'status' => 'Lunas',
+                ]);
+
                 // 2. Update status pembayaran di tabel peserta
-                $peserta = Peserta::where(column: 'order_id', $request->order_id)->first();
+                $peserta = Peserta::find($pesertaId);
                 $totalHutang = 500000; // Sesuaikan
                 $sudahBayar = Pembayaran::where('id_peserta', $pesertaId)->sum('jumlah_dibayar');
 

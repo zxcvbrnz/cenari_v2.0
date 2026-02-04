@@ -15,9 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // $middleware->append(Admin::class);
-        // $middleware->append(Instruktur::class);
-        // $middleware->append(Peserta::class);
         $middleware->validateCsrfTokens(except: [
             'midtrans/callback',
         ]);
