@@ -11,12 +11,14 @@ use App\Http\Middleware\AdminOrInstruktur;
 use App\Http\Middleware\Instruktur;
 use App\Http\Middleware\Peserta;
 use App\Http\Middleware\Materi;
+use App\Http\Controllers\PaymentCallbackController;
+
 
 // use Silvanix\Wablas\Message;
 
 Route::get('/peserta/{unique_code}', [AdminController::class, 'unique_code_peserta']);
 
-Route::post('/api/midtrans/callback', [App\Http\Controllers\MidtransController::class, 'callback']);
+Route::post('/midtrans/callback', [PaymentCallbackController::class, 'callback']);
 
 
 Route::get('/', function () {
