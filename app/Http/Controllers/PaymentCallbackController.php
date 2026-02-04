@@ -36,6 +36,6 @@ class PaymentCallbackController extends Controller
             $transaction->status = 'pending';
         }
         $transaction->save();
-        return response()->json(['message' => 'Webhook processed successfully']);
+        return response()->json(['message' => 'Webhook processed successfully'], 200);
     }
 }
