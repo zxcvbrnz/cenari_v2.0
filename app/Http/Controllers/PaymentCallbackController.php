@@ -24,7 +24,7 @@ class PaymentCallbackController extends Controller
             $pembayaran = Pembayaran::where('order_id', $orderId)->first();
 
             if (!$pembayaran) {
-                return Response::json(['message' => 'Order tidak ditemukan'], 404);
+                return response()->json(['message' => 'Order tidak ditemukan'], 404);
             }
 
             // Logika Update Status
@@ -39,9 +39,9 @@ class PaymentCallbackController extends Controller
                 'status' => $newStatus
             ]);
 
-            return Response::json(['message' => 'Status Updated']);
+            return response()->json(['message' => 'Status Updated']);
         } catch (\Exception $e) {
-            return Response::json(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }
