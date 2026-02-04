@@ -13,7 +13,6 @@ class Pembayaran extends Component
     {
         $peserta = auth()->user()->peserta;
         $harga = $peserta->mapel->harga;
-        // Pastikan hanya menghitung yang sudah sukses/paid jika ingin sisa tagihan akurat
         $totalTerbayar = $peserta->pembayaran->where('status', 'paid')->sum('jumlah_dibayar');
         $sisaTagihan = $harga - $totalTerbayar;
 
@@ -22,12 +21,13 @@ class Pembayaran extends Component
             return;
         }
 
-        // Konfigurasi Midtrans
+        // 1. Konfigurasi Midtrans
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
+        // Buat Order ID unik
         $orderId = 'PAY-' . time() . '-' . $peserta->id;
 
         $params = [
@@ -42,19 +42,20 @@ class Pembayaran extends Component
         ];
 
         try {
+            // 2. Minta Snap Token TERLEBIH DAHULU
             $snapToken = Snap::getSnapToken($params);
 
-            // CATAT ke riwayat pembayaran dengan status pending
+            // 3. Jika berhasil dapat token, BARU simpan ke database dengan status pending
             $peserta->pembayaran()->create([
-                'id_peserta'       => auth()->user()->peserta->id,
-                'order_id'       => $orderId,
-                'jumlah_dibayar' => $sisaTagihan,
+                'id_peserta'      => $peserta->id,
+                'order_id'        => $orderId,
+                'jumlah_dibayar'  => $sisaTagihan,
                 'tanggal_dibayar' => now(),
-                'deskripsi'      => '-',
-                'status'      => 'pending',
+                'deskripsi'       => 'Pelunasan Program',
+                'status'          => 'pending',
             ]);
 
-            // Livewire 3 menggunakan sintaks array untuk dispatch
+            // 4. Munculkan popup Midtrans di frontend
             $this->dispatch('payWithMidtrans', snapToken: $snapToken);
         } catch (\Exception $e) {
             $this->dispatch('alert-fail', message: 'Terjadi kesalahan: ' . $e->getMessage());
