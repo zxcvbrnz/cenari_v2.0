@@ -8,20 +8,22 @@
 
                 <div class="flex items-center gap-3">
                     {{-- Tombol Pelunasan --}}
-                    {{-- @if (auth()->user()->peserta->status_pembayaran !== 'Lunas')
-                        <button wire:click="bayar" wire:loading.attr="disabled"
-                            class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-xs font-bold transition flex items-center gap-2">
-                            <span wire:loading.remove wire:target="bayar" class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                </svg>
-                                BAYAR PELUNASAN
-                            </span>
-                            <span wire:loading wire:target="bayar" style="display: none;">MENGHUBUNGKAN...</span>
-                        </button>
-                    @endif --}}
+                    @if ($setting == 'ON')
+                        @if (auth()->user()->peserta->status_pembayaran !== 'Lunas')
+                            <button wire:click="bayar" wire:loading.attr="disabled"
+                                class="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-xs font-bold transition flex items-center gap-2">
+                                <span wire:loading.remove wire:target="bayar" class="flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                    </svg>
+                                    BAYAR PELUNASAN
+                                </span>
+                                <span wire:loading wire:target="bayar" style="display: none;">MENGHUBUNGKAN...</span>
+                            </button>
+                        @endif
+                    @endif
 
                     {{-- Badge Status --}}
                     @php

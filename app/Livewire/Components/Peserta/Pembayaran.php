@@ -6,6 +6,7 @@ use Livewire\Component;
 use Midtrans\Config;
 use Midtrans\Snap;
 use App\Models\Pembayaran as PembayaranModel;
+use App\Models\Setting;
 
 class Pembayaran extends Component
 {
@@ -67,10 +68,13 @@ class Pembayaran extends Component
         // Ambil riwayat terbaru
         $riwayat = auth()->user()->peserta->pembayaran()->orderBy('created_at', 'desc')->where('jumlah_dibayar', '!=', 0)->get();
         $harga = auth()->user()->peserta->mapel->harga;
+        $setting = Setting::findOrFail(2)->value;
 
         return view('livewire.components.peserta.pembayaran', [
             'riwayat' => $riwayat,
-            'harga' => $harga
+            'harga' => $harga,
+            'setting' => $setting,
+
         ]);
     }
 }
