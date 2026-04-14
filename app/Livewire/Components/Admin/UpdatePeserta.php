@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components\Admin;
 
+use App\Models\Instruktur;
 use App\Models\InstrukturMapel;
 use App\Models\Peserta;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +82,8 @@ class UpdatePeserta extends Component
         $id_instruktur = $insmap[0];
         $id_mapel = $insmap[1];
         $this->peserta->user->update(['name' => $this->name]);
+        $oldGroupId = $this->peserta->id_group;
+        $oldInstrukturId = $this->peserta->id_instruktur;
         if ($this->peserta->id_group) {
             $this->peserta->update([
                 ...$this->data_peserta,
@@ -92,6 +95,35 @@ class UpdatePeserta extends Component
                 ...$this->data_peserta,
             ]);
         }
+
+        $newInstruktur = Instruktur::where('id_instruktur', $id_instruktur)->first();
+
+        $send = new Message();
+
+
+        if ($oldGroupId != $this->peserta->id_group) {
+            $waMessages[] = [
+                'phone' => $this->data_peserta['nomor_telepon'],
+                'message' => 'Halo ' . $this->peserta->user->name . ', <br> Grup belajar Anda telah diperbarui menjadi: ' . ($this->peserta->group->name ?? 'Grup Baru'),
+            ];
+        }
+
+        // Cek jika Instruktur berubah
+        if ($oldInstrukturId != $this->peserta->id_instruktur) {
+            $waMessages[] = [
+                'phone' => $this->data_peserta['nomor_telepon'],
+                'message' => 'Halo ' . $this->peserta->user->name . ', <br> Instruktur pembimbing Anda telah diperbarui menjadi: ' . ($this->peserta->instruktur->user->name ?? 'Instruktur Baru'),
+            ];
+            $waMessages[] = [
+                'phone' => $newInstruktur->nomor_telepon,
+                'message' => 'Halo *' . $newInstruktur->user->name . '*<br><br>' .
+                    'Murid Bernama *' . $this->data_peserta['name'] . '* Telah Menjadi Murid Didik Anda, Untuk Lebih Lanjut' . "<br><br>" .
+                    'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
+                    'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
+            ];
+        }
+
+        $send->multiple_text($waMessages);
 
         $this->dispatch('alert-success', message: 'Berhasil diedit.');
         $this->dispatch('reload-province');
