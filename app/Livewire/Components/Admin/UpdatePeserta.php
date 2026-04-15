@@ -72,18 +72,25 @@ class UpdatePeserta extends Component
 
     public function update(): void
     {
+        // 1. Validasi Absensi
         if ($this->peserta->riwayatAbsensi->count() > 0) {
             if ($this->instruktur != $this->peserta->id_instruktur . '-' . $this->peserta->id_mapel) {
                 $this->dispatch('alert-fail', message: 'Tidak dapat mengganti instruktur jika pembelajaran sudah dimulai.');
                 return;
             }
         }
+
+        // 2. Persiapan Data
         $insmap = explode('-', $this->instruktur);
         $id_instruktur = $insmap[0];
         $id_mapel = $insmap[1];
-        $this->peserta->user->update(['name' => $this->name]);
-        $oldGroupId = $this->peserta->id_group;
+
+        // Simpan ID lama sebelum update untuk pengecekan
         $oldInstrukturId = $this->peserta->id_instruktur;
+
+        // 3. Update User & Peserta
+        $this->peserta->user->update(['name' => $this->name]);
+
         if ($this->peserta->id_group) {
             $this->peserta->update([
                 ...$this->data_peserta,
@@ -96,35 +103,42 @@ class UpdatePeserta extends Component
             ]);
         }
 
-        $newInstruktur = Instruktur::where('id_instruktur', $id_instruktur)->first();
+        // Refresh data model agar relasi instruktur ikut terupdate
+        $this->peserta->refresh();
 
+        // 4. Logika Pengiriman WhatsApp
         $send = new Message();
-
-
-        if ($oldGroupId != $this->peserta->id_group) {
-            $waMessages[] = [
-                'phone' => $this->data_peserta['nomor_telepon'],
-                'message' => 'Halo ' . $this->peserta->user->name . ', <br> Grup belajar Anda telah diperbarui menjadi: ' . ($this->peserta->group->name ?? 'Grup Baru'),
-            ];
-        }
+        $waMessages = []; // Inisialisasi array kosong agar tidak error jika tidak ada if yang terpenuhi
 
         // Cek jika Instruktur berubah
-        if ($oldInstrukturId != $this->peserta->id_instruktur) {
-            $waMessages[] = [
-                'phone' => $this->data_peserta['nomor_telepon'],
-                'message' => 'Halo ' . $this->peserta->user->name . ', <br> Instruktur pembimbing Anda telah diperbarui menjadi: ' . ($this->peserta->instruktur->user->name ?? 'Instruktur Baru'),
-            ];
-            $waMessages[] = [
-                'phone' => $newInstruktur->nomor_telepon,
-                'message' => 'Halo *' . $newInstruktur->user->name . '*<br><br>' .
-                    'Murid Bernama *' . $this->data_peserta['name'] . '* Telah Menjadi Murid Didik Anda, Untuk Lebih Lanjut' . "<br><br>" .
-                    'Silahkan Buka www.kursus.cenari.sch.id' . "<br>" .
-                    'Tutorial untuk menggunakan aplikasi kursus.cenari.sch.id silahkan kunjungi web http://cenari.sch.id/modul-tutorial',
-            ];
+        if ($oldInstrukturId != $id_instruktur) {
+            // Ambil data instruktur baru beserta relasi usernya
+            $newInstruktur = Instruktur::with('user')->find($id_instruktur);
+
+            if ($newInstruktur) {
+                // Pesan untuk Murid
+                $waMessages[] = [
+                    'phone' => $this->data_peserta['nomor_telepon'],
+                    'message' => 'Halo ' . $this->peserta->user->name . ', <br> Instruktur pembimbing Anda telah diperbarui menjadi: ' . ($newInstruktur->user->name ?? 'Instruktur Baru'),
+                ];
+
+                // Pesan untuk Instruktur Baru
+                $waMessages[] = [
+                    'phone' => $newInstruktur->nomor_telepon,
+                    'message' => 'Halo *' . ($newInstruktur->user->name ?? 'Instruktur') . '*<br><br>' .
+                        'Murid Bernama *' . $this->name . '* Telah Menjadi Murid Didik Anda. Untuk informasi lebih lanjut,' . "<br><br>" .
+                        'Silahkan Buka: www.kursus.cenari.sch.id' . "<br>" .
+                        'Tutorial penggunaan aplikasi: http://cenari.sch.id/modul-tutorial',
+                ];
+            }
         }
 
-        $send->multiple_text($waMessages);
+        // Kirim hanya jika ada pesan dalam antrean
+        if (!empty($waMessages)) {
+            $send->multiple_text($waMessages);
+        }
 
+        // 5. Finishing
         $this->dispatch('alert-success', message: 'Berhasil diedit.');
         $this->dispatch('reload-province');
     }
