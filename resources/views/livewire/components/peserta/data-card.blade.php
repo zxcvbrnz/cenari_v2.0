@@ -26,8 +26,8 @@
 @endif
 <div class="w-full">
     <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
-        <div class="mt-4">
-            <span class="text-3xl font-bold">{{ $kursus }}</span>
+        <div>
+            <span class="text-xl font-bold text-slate-500">{{ $kursus }}</span>
         </div>
     </div>
 </div>
