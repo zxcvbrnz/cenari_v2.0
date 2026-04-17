@@ -24,6 +24,13 @@
         </div>
     </div>
 @endif
+<div class="w-full">
+    <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
+        <div class="mt-4">
+            <span class="text-3xl font-bold">{{ $kursus }}</span>
+        </div>
+    </div>
+</div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
     @if (!auth()->user()->peserta->group)
         <div class="w-full h-40">
