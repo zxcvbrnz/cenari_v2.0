@@ -1,28 +1,30 @@
-@if ($statusPembayaran !== 'Lunas')
-    <div class="flex items-center px-4 py-8 rounded-lg border-l-4 {{ $statusPembayaran === 'Belum Bayar' ? 'bg-red-50 border-red-500' : 'bg-orange-50 border-orange-500' }} shadow-sm"
-        role="alert">
-        <div class="flex-shrink-0">
-            <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                    clip-rule="evenodd"></path>
-            </svg>
+@if (!auth()->user()->peserta->group)
+    @if ($statusPembayaran !== 'Lunas')
+        <div class="flex items-center px-4 py-8 rounded-lg border-l-4 {{ $statusPembayaran === 'Belum Bayar' ? 'bg-red-50 border-red-500' : 'bg-orange-50 border-orange-500' }} shadow-sm"
+            role="alert">
+            <div class="flex-shrink-0">
+                <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <div class="ml-3 flex-1 md:flex md:justify-between items-center">
+                <p class="text-sm {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }}">
+                    <span class="font-bold">Perhatian!</span>
+                    Status pembayaran Anda saat ini adalah <span
+                        class="font-black underline">{{ $statusPembayaran }}</span>.
+                    Segera lakukan pelunasan untuk dapat mengakses seluruh fitur.
+                </p>
+                <p class="mt-3 text-sm md:mt-0 md:ml-6">
+                    <a href="{{ route('peserta.pembayaran') }}"
+                        class="whitespace-nowrap font-medium {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }} hover:text-red-600 underline">
+                        Lihat Rincian Tagihan &rarr;
+                    </a>
+                </p>
+            </div>
         </div>
-        <div class="ml-3 flex-1 md:flex md:justify-between items-center">
-            <p class="text-sm {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }}">
-                <span class="font-bold">Perhatian!</span>
-                Status pembayaran Anda saat ini adalah <span
-                    class="font-black underline">{{ $statusPembayaran }}</span>.
-                Segera lakukan pelunasan untuk dapat mengakses seluruh fitur.
-            </p>
-            <p class="mt-3 text-sm md:mt-0 md:ml-6">
-                <a href="{{ route('peserta.pembayaran') }}"
-                    class="whitespace-nowrap font-medium {{ $statusPembayaran === 'Belum Bayar' ? 'text-red-700' : 'text-orange-700' }} hover:text-red-600 underline">
-                    Lihat Rincian Tagihan &rarr;
-                </a>
-            </p>
-        </div>
-    </div>
+    @endif
 @endif
 <div class="w-full">
     <div class="w-full h-full bg-white shadow-lg border border-slate-200 rounded-sm px-8 py-6">
