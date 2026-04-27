@@ -16,10 +16,9 @@ class Chart extends Component
         $id_group = $data->peserta->id_group;
         if ($id_group) {
             $this->instruktur = $data->peserta->group->instruktur;
-            $this->jadwalKursus = $data->peserta->group->jadwalKursus;
         } else {
             $this->instruktur = $data->peserta->instruktur;
-            $this->jadwalKursus = $data->peserta->jadwalKursus;
         }
+        $this->jadwalKursus = $data->peserta->jadwalKursus;
     }
 }
