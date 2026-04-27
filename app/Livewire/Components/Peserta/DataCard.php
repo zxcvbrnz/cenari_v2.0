@@ -18,7 +18,7 @@ class DataCard extends Component
     public function mount(): void
     {
         $data = Auth::user();
-        $this->kursus = $data->peserta->group->name ?? $data->peserta->mapel->nama;
+        $this->kursus = $data->peserta->group->nama ?? $data->peserta->mapel->nama;
         $this->statusPembayaran = $data->peserta->status_pembayaran;
         $this->absensi = Absen::where('id_peserta', $data->id_peserta)->where('status', 2)->count();
         $this->sertifikat = $data->peserta->sertifikat;
