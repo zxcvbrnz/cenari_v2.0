@@ -21,6 +21,10 @@ class HapusPeserta extends Component
 
     public function hapusPeserta(): void
     {
+        if ($this->peserta->riwayatAbsensi) {
+            $this->dispatch('alert-fail', message: 'Peserta yang sudah memiliki riwayat absensi tidak dapat dihapus!.');
+            return;
+        }
 
         if ($this->peserta->sertifikat->link) {
             $this->dispatch('alert-fail', message: 'Peserta yang sudah memiliki sertifikat tidak dapat dihapus!.');
