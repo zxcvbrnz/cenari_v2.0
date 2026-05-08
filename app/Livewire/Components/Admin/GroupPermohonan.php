@@ -88,7 +88,7 @@ class GroupPermohonan extends Component
 
         $ins = $data->id_instruktur;
         $nomor_telpon = Instruktur::findOrFail($ins);
-        $tanggalwaktu = Carbon::parse($data->waktu_mulai)->locale('id')->format('d F Y - H:i');
+        $tanggalwaktu = Carbon::parse($data->waktu_mulai)->locale('id')->isoFormat('dddd, D MMMM YYYY - HH:mm');
 
         // Daftar antrean pesan
         $queue = [

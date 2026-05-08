@@ -48,7 +48,7 @@ class PrivatePermohonan extends Component
         $data = Absen::findOrFail($id);
         $ins = $data->id_instruktur;
         $nomor_telpon = Instruktur::findOrFail($ins);
-        $tanggalwaktu = Carbon::parse($data->waktu_mulai)->locale('id')->format('d F Y - H:i');
+        $tanggalwaktu = Carbon::parse($data->waktu_mulai)->locale('id')->isoFormat('dddd, D MMMM YYYY - HH:mm');
 
         // Kumpulkan daftar penerima agar mudah dikirim satu per satu dengan jeda
         $receivers = [
