@@ -12,6 +12,7 @@ use App\Http\Middleware\Instruktur;
 use App\Http\Middleware\Peserta;
 use App\Http\Middleware\Materi;
 use App\Http\Controllers\PaymentCallbackController;
+use App\Http\Controllers\AutoLoginController;
 
 
 // use Silvanix\Wablas\Message;
@@ -19,6 +20,8 @@ use App\Http\Controllers\PaymentCallbackController;
 Route::get('/peserta/{unique_code}', [AdminController::class, 'unique_code_peserta']);
 
 Route::post('/midtrans/callback', [PaymentCallbackController::class, 'callback']);
+
+Route::get('/auto-login', [AutoLoginController::class, 'handleLogin']);
 
 
 Route::get('/', function () {
