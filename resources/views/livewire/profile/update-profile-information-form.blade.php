@@ -14,8 +14,8 @@ new class extends Component {
     use WithFileUploads;
 
     public string $image = '';
-    
-    #[Validate('image|max:5120')] 
+
+    #[Validate('image|max:5120')]
     public $postImage;
 
     public string $name = '';
@@ -169,9 +169,7 @@ new class extends Component {
     </header>
 
     <form wire:submit="updateProfileInformation" class="mt-6 space-y-6">
-        <div class="pb-6"
-            x-data="{ uploading: false, progress: 0 }"
-            x-on:livewire-upload-start="uploading = true"
+        <div class="pb-6" x-data="{ uploading: false, progress: 0 }" x-on:livewire-upload-start="uploading = true"
             x-on:livewire-upload-finish="uploading = false; progress = 0;"
             x-on:livewire-upload-error="uploading = false; progress = 0;"
             x-on:livewire-upload-progress="progress = $event.detail.progress">
@@ -219,7 +217,9 @@ new class extends Component {
             </div>
             <div x-show="uploading" class="text-slate-600">
                 <div class="w-full lg:w-1/2 mt-4 bg-gray-200 rounded-sm">
-                    <div x-text="progress + '%'" class="rounded-sm text-center text-white" style="font-size: 10px; padding-top: 1px; padding-bottom: 1px; background:#7c3aed;" :style="{ width: progress + '%' }"></div>
+                    <div x-text="progress + '%'" class="rounded-sm text-center text-white"
+                        style="font-size: 10px; padding-top: 1px; padding-bottom: 1px; background:#7c3aed;"
+                        :style="{ width: progress + '%' }"></div>
                 </div>
                 <div class="text-sm">Uploading....</div>
             </div>
@@ -237,8 +237,8 @@ new class extends Component {
 
         <div>
             <x-input-label for="username" :value="__('Username')" />
-            <x-text-input wire:model="username" id="username" name="username" type="text" class="mt-1 block w-full"
-                required autofocus autocomplete="username" />
+            <x-text-input @if (auth()->user()->role == 'peserta') disabled @endif wire:model="username" id="username"
+                name="username" type="text" class="mt-1 block w-full" required autofocus autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 

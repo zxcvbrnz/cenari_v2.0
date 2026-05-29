@@ -7,11 +7,13 @@
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-sm">
-                <div class="max-w-xl">
-                    <livewire:profile.update-password-form />
+            @if (!auth()->user()->role == 'peserta')
+                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-sm">
+                    <div class="max-w-xl">
+                        <livewire:profile.update-password-form />
+                    </div>
                 </div>
-            </div>
+            @endif
 
             @if (auth()->user()->role == 'peserta')
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-sm">
