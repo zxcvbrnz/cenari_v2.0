@@ -237,8 +237,8 @@ new class extends Component {
 
         <div>
             <x-input-label for="username" :value="__('Username')" />
-            <x-text-input @if (auth()->user()->role == 'peserta') disabled @endif wire:model="username" id="username"
-                name="username" type="text" class="mt-1 block w-full" required autofocus autocomplete="username" />
+            <x-text-input wire:model="username" id="username" name="username" type="text" :disabled="auth()->user()->role === 'peserta'"
+                class="mt-1 block w-full" required autofocus autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 
