@@ -7,7 +7,7 @@
                 </div>
             </div>
 
-            @if (!auth()->user()->role == 'peserta')
+            @if (auth()->user()->role != 'peserta')
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-sm">
                     <div class="max-w-xl">
                         <livewire:profile.update-password-form />
