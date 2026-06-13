@@ -113,7 +113,7 @@ class PrivatePermohonan extends Component
 
             // Berikan jeda antara 4 sampai 8 detik, kecuali pada pesan terakhir
             if ($index < count($receivers) - 1) {
-                sleep(rand(10, 20));
+                sleep(rand(2, 5));
             }
         }
     }

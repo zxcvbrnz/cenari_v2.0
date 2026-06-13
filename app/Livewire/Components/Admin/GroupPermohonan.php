@@ -151,7 +151,7 @@ class GroupPermohonan extends Component
 
             // Beri jeda 5-9 detik kecuali setelah pesan terakhir
             if ($index < count($queue) - 1) {
-                sleep(rand(10, 20));
+                sleep(rand(2, 5));
             }
         }
     }
