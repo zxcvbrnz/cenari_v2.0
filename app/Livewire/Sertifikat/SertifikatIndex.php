@@ -70,7 +70,7 @@ class SertifikatIndex extends Component
                 ],
 
             ];
-            // $send->multiple_text($wa);
+            $send->multiple_text($wa);
 
             $this->reset('id_peserta', 'sertifikat');
             // $this->pesertas = Sertifikat::where('link', null)->latest()->get();
