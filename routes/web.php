@@ -13,6 +13,8 @@ use App\Http\Middleware\Peserta;
 use App\Http\Middleware\Materi;
 use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\AutoLoginController;
+use Silvanix\Wablas\Message;
+
 
 
 // use Silvanix\Wablas\Message;
@@ -28,31 +30,31 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-// Route::get('/tesmsg', function () {
-//     $send = new Message();
+Route::get('/tesmsg', function () {
+    $send = new Message();
 
-//     $wa = [
-//             [
-//             'phone' => '089691884833',
-//             'message' =>
-//                 "Halo *Admin*\n" .
-//                 "Permohonan Jadwal Telah Disetujui\n" .
-//                 "```\n" .
-//                 "Instruktur     : Udin Samoh\n" .
-//                 "Peserta Didik  : Markonah NG\n" .
-//                 "Tanggal/Waktu  : 30 July 2025 - 19:00\n" .
-//                 "Keterangan     : terakhir\n" .
-//                 "```\n" .
-//                 "Silakan cek informasi lengkap di website kami:\n" .
-//                 "www.kursus.cenari.sch.id",
+    $wa = [
+        [
+            'phone' => '089691884833',
+            'message' =>
+            "Halo *Admin*\n" .
+                "Permohonan Jadwal Telah Disetujui\n" .
+                "```\n" .
+                "Instruktur     : Udin Samoh\n" .
+                "Peserta Didik  : Markonah NG\n" .
+                "Tanggal/Waktu  : 30 July 2025 - 19:00\n" .
+                "Keterangan     : terakhir\n" .
+                "```\n" .
+                "Silakan cek informasi lengkap di website kami:\n" .
+                "www.kursus.cenari.sch.id",
 
-//             ],
-//     ];
+        ],
+    ];
 
-//     $send->multiple_text($wa);
+    $send->multiple_text($wa);
 
-//     return 'Pesan berhasil dikirim (cek WhatsApp)';
-// });
+    return 'Pesan berhasil dikirim (cek WhatsApp)';
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
