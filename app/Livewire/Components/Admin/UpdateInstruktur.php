@@ -21,7 +21,7 @@ class UpdateInstruktur extends Component
     public $mapels;
 
     public $pesertadik;
-    
+
     public $selectedMapels = [];
 
     public $instrukturMapels;
@@ -77,7 +77,7 @@ class UpdateInstruktur extends Component
         $wa = [
             [
                 'phone' => $this->data_instruktur['nomor_telepon'],
-                'message' => 'Halo ' . $this->instruktur->user->name . ', <br> Kami Ingin Memberitahukan Bahwa Password Anda Telah Direset Menjadi "cenarikursus" <br> Silahkan login Melalui  www.kursus.cenari.sch.id',
+                'message' => 'Halo ' . $this->instruktur->user->name . ', <br><br>Kami Ingin Memberitahukan Bahwa Password Anda Telah Direset Menjadi "cenarikursus" <br>Silahkan login Melalui www.kursus.cenari.sch.id<br><br>----------------------------------------<br>*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
             ],
         ];
         $send->multiple_text($wa);

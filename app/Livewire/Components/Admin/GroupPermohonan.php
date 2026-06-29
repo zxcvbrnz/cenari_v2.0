@@ -94,7 +94,8 @@ class GroupPermohonan extends Component
         $queue = [
             [
                 'phone' => $nomor_telpon->nomor_telepon,
-                'message' => "Halo *" . $nomor_telpon->user->name . "*\n" .
+                'message' =>
+                "Halo *" . $nomor_telpon->user->name . "*\n" .
                     "Permohonanmu Telah Direspon dan Disetujui\n" .
                     "```\n" .
                     "Pelatihan     : " . $data->nama_group . "\n" .
@@ -102,7 +103,9 @@ class GroupPermohonan extends Component
                     "Keterangan    : " . $data->keterangan . "\n" .
                     "```\n" .
                     "Silakan cek informasi lengkap di website kami:\n" .
-                    "www.kursus.cenari.sch.id",
+                    "www.kursus.cenari.sch.id\n\n" .
+                    "----------------------------------------\n" .
+                    "*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.",
             ],
             [
                 'phone' => '085103326061',

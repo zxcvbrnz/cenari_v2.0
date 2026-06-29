@@ -89,7 +89,7 @@ new class extends Component {
             $wa = [
                 [
                     'phone' => $nomor_telpon,
-                    'message' => 'Halo Peserta, Username Anda Telah Diubah Dari ' . $username_old . '<br>' . 'Menjadi ' . $username_new . '<br>' . 'Silahkan Cek Website Kami Dibawah ini' . '<br>' . 'www.kursus.cenari.sch.id',
+                    'message' => 'Halo Peserta, Username Anda Telah Diubah Dari *' . $username_old . '*<br>' . 'Menjadi *' . $username_new . '*<br>' . 'Silahkan Cek Website Kami Dibawah ini<br>' . 'www.kursus.cenari.sch.id<br><br>' . '----------------------------------------<br>' . '*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
                 ],
             ];
             $send->multiple_text($wa);
@@ -98,7 +98,7 @@ new class extends Component {
             $wa = [
                 [
                     'phone' => $nomor_telpon,
-                    'message' => 'Halo Instruktur, Username Anda Telah Diubah Dari ' . $username_old . '<br>' . 'Menjadi ' . $username_new . '<br>' . 'Silahkan Cek Website Kami Dibawah ini' . '<br>' . 'www.kursus.cenari.sch.id',
+                    'message' => 'Halo Instruktur, Username Anda Telah Diubah Dari *' . $username_old . '*<br>' . 'Menjadi *' . $username_new . '*<br>' . 'Silahkan Cek Website Kami Dibawah ini<br>' . 'www.kursus.cenari.sch.id<br><br>' . '----------------------------------------<br>' . '*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
                 ],
             ];
             $send->multiple_text($wa);

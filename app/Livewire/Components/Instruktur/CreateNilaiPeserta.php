@@ -139,7 +139,7 @@ class CreateNilaiPeserta extends Component
 
         ];
         $send->multiple_text($wa);
-        sleep(rand(10, 20));
+        sleep(rand(2, 5));
         $wa = [
             [
                 'phone' => env('ADMIN_NUMBER_2'),

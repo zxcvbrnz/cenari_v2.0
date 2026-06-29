@@ -119,7 +119,7 @@ class UpdatePeserta extends Component
                 // Pesan untuk Murid
                 $waMessages[] = [
                     'phone' => $this->data_peserta['nomor_telepon'],
-                    'message' => 'Halo ' . $this->peserta->user->name . ', <br> Instruktur pembimbing Anda telah diperbarui menjadi: ' . ($newInstruktur->user->name ?? 'Instruktur Baru'),
+                    'message' => 'Halo ' . $this->peserta->user->name . ', <br><br>Instruktur pembimbing Anda telah diperbarui menjadi: *' . ($newInstruktur->user->name ?? 'Instruktur Baru') . '*<br><br>----------------------------------------<br>*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
                 ];
 
                 // Pesan untuk Instruktur Baru
@@ -128,7 +128,9 @@ class UpdatePeserta extends Component
                     'message' => 'Halo *' . ($newInstruktur->user->name ?? 'Instruktur') . '*<br><br>' .
                         'Murid Bernama *' . $this->name . '* Telah Menjadi Murid Didik Anda. Untuk informasi lebih lanjut,' . "<br><br>" .
                         'Silahkan Buka: www.kursus.cenari.sch.id' . "<br>" .
-                        'Tutorial penggunaan aplikasi: http://cenari.sch.id/modul-tutorial',
+                        'Tutorial penggunaan aplikasi: http://cenari.sch.id/modul-tutorial' . "<br><br>" .
+                        '----------------------------------------<br>' .
+                        '*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
                 ];
             }
         }
@@ -155,7 +157,7 @@ class UpdatePeserta extends Component
         $wa = [
             [
                 'phone' => $this->data_peserta['nomor_telepon'],
-                'message' => 'Halo ' . $this->peserta->user->name . ', <br> Kami Ingin Memberitahukan Bahwa Password Anda Telah Direset Menjadi "cenarikursus" <br> Silahkan login Melalui  www.kursus.cenari.sch.id',
+                'message' => 'Halo ' . $this->peserta->user->name . ', <br><br>Kami Ingin Memberitahukan Bahwa Password Anda Telah Direset Menjadi "cenarikursus" <br>Silahkan login Melalui www.kursus.cenari.sch.id<br><br>----------------------------------------<br>*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
             ],
         ];
         $send->multiple_text($wa);
