@@ -46,7 +46,9 @@ Route::get('/tesmsg', function () {
                 "Keterangan     : terakhir\n" .
                 "```\n" .
                 "Silakan cek informasi lengkap di website kami:\n" .
-                "www.kursus.cenari.sch.id",
+                "www.kursus.cenari.sch.id\n\n" .
+                "----------------------------------------\n" .
+                "*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.",
 
         ],
     ];
