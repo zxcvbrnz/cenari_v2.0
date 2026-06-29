@@ -36,7 +36,7 @@ class SertifikatIndex extends Component
     {
         $this->validate([
             'id_peserta' => ['required'],
-            'sertifikat' => ['required', 'max:1024'],
+            'sertifikat' => ['required', 'max:3072'],
         ]);
 
         $send = new Message();
