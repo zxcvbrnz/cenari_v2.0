@@ -9,6 +9,7 @@
         @endif
         @if ($role == 'peserta')
             <livewire:components.peserta.data-card />
+            <livewire:components.peserta.sertifikat-image />
             <livewire:components.peserta.chart />
         @endif
         @if ($role == 'admin')
