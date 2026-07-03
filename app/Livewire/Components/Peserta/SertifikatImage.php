@@ -14,8 +14,9 @@ class SertifikatImage extends Component
     public $image;
     public $existingImage; // Untuk menampung gambar lama jika mode edit
 
-    public function mount($id_peserta = null)
+    public function mount()
     {
+        $id_peserta = auth()->user()->id_peserta;
         $this->id_peserta = $id_peserta;
 
         // Jika ada id_peserta, coba ambil data lama (mode edit)
