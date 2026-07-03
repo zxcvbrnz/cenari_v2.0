@@ -64,9 +64,10 @@ class SertifikatIndex extends Component
                 [
                     'phone' => $peserta->nomor_telepon,
                     'message' => 'Halo *' . $peserta->user->name . '*' . '<br><br>' . 'Anda telah mendapatkan e-Sertifikat.' .
-                        '<br>' . 'Sertifikat fisik dapat diambil ditempat kami dengan membawa 2 pas foto 3x4.' .
                         '<br><br>' . 'Silahkan buka link dibawah untuk melihat' .
-                        '<br>' . 'www.kursus.cenari.sch.id',
+                        '<br>' . 'www.kursus.cenari.sch.id<br><br>' .
+                        '----------------------------------------<br>' .
+                        '*Catatan:* Ini adalah akun bot otomatis, mohon tidak membalas chat ini. Jika ada pertanyaan lebih lanjut, silakan hubungi via WhatsApp ke *08134021142*.',
                 ],
 
             ];
