@@ -53,10 +53,10 @@ Route::get('/', function () {
 //         ],
 //     ];
 
-    $send->multiple_text($wa);
+//     $send->multiple_text($wa);
 
-    return 'Pesan berhasil dikirim (cek WhatsApp)';
-});
+//     return 'Pesan berhasil dikirim (cek WhatsApp)';
+// });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
