@@ -5,6 +5,7 @@ namespace App\Livewire\Components\Peserta;
 use Livewire\Component;
 use Livewire\WithFileUploads; // Wajib diimport
 use App\Models\SertifikatImage as SertifikatModel;
+use Illuminate\Support\Facades\Storage;
 
 class SertifikatImage extends Component
 {
@@ -34,14 +35,28 @@ class SertifikatImage extends Component
             'image' => 'image|max:2048', // Maksimal 2MB
         ]);
 
-        // Proses penyimpanan berkas
+        // 1. Cari tahu apakah peserta ini sudah punya data gambar lama di database
+        $oldData = SertifikatModel::where('id_peserta', $this->id_peserta)->first();
+
+        // 2. Proses penyimpanan berkas baru ke storage
         $imageName = $this->image->store('sertifikat-images', 'public');
 
-        // Update atau Create ke Database
+        // 3. Jika data lama ada DAN file lamanya benar-benar ada di folder storage, HAPUS!
+        if ($oldData && $oldData->image && Storage::disk('public')->exists($oldData->image)) {
+            Storage::disk('public')->delete($oldData->image);
+        }
+
+        // 4. Update atau Create data baru ke Database
         SertifikatModel::updateOrCreate(
             ['id_peserta' => $this->id_peserta],
             ['image' => $imageName]
         );
+
+        // 5. Reset input file agar tombol kembali otomatis terkunci (disabled) setelah berhasil
+        $this->reset('image');
+
+        // 6. Perbarui data gambar saat ini agar preview langsung berganti ke foto yang baru disave
+        $this->existingImage = $imageName;
 
         session()->flash('message', 'Foto sertifikat berhasil diperbarui!');
     }

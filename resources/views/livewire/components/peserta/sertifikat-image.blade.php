@@ -1,4 +1,4 @@
-<div class="p-6 bg-white rounded-lg shadow-md" x-data="{ isUploading: false }">
+<div class="p-6 bg-white rounded-lg shadow-md" x-data="{ isUploading: false, isSaving: false }">
     <h2 class="text-lg font-semibold text-gray-700 mb-4">Pengaturan Foto Sertifikat</h2>
 
     @if (session()->has('message'))
@@ -9,7 +9,7 @@
 
     <form wire:submit.prevent="save" class="grid grid-cols-1 md:grid-cols-2 gap-6"
         x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false"
-        x-on:livewire-upload-error="isUploading = false">
+        x-on:livewire-upload-error="isUploading = false" x-on:submit="isSaving = true">
 
         <div class="space-y-4">
             <label class="block text-sm font-medium text-gray-700">Upload Foto Peserta</label>
@@ -57,12 +57,12 @@
                 @enderror
             </div>
 
-            <button type="submit" wire:loading.attr="disabled" wire:target="save" {{ !$image ? 'disabled' : '' }}
+            <button type="submit" :disabled="isSaving || {{ !$image ? 'true' : 'false' }}"
                 class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed">
 
-                <span wire:loading.remove wire:target="save">Simpan Foto</span>
+                <span x-show="!isSaving">Simpan Foto</span>
 
-                <span wire:loading wire:target="save" class="inline-flex items-center justify-center gap-2" x-cloak>
+                <span x-show="isSaving" class="inline-flex items-center justify-center gap-2" x-cloak>
                     <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                             stroke-width="4"></circle>
