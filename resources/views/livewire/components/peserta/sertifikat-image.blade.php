@@ -9,7 +9,8 @@
 
     <form wire:submit.prevent="save" class="grid grid-cols-1 md:grid-cols-2 gap-6"
         x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false"
-        x-on:livewire-upload-error="isUploading = false" x-on:submit="isSaving = true">
+        x-on:livewire-upload-error="isUploading = false" x-on:submit="isSaving = true"
+        x-on:saved.window="isSaving = false">
 
         <div class="space-y-4">
             <label class="block text-sm font-medium text-gray-700">Upload Foto Peserta</label>

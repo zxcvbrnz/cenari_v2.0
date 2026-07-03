@@ -59,6 +59,8 @@ class SertifikatImage extends Component
         $this->existingImage = $imageName;
 
         session()->flash('message', 'Foto sertifikat berhasil diperbarui!');
+
+        $this->dispatch('saved');
     }
 
     public function render()
