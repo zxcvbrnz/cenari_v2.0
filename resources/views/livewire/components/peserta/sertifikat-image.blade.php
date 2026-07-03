@@ -60,33 +60,35 @@
                 @endif
             </div>
 
-            <div>
-                <input type="file" wire:model="image" id="image-input" class="hidden" accept="image/*">
-                <label for="image-input"
-                    class="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-md border border-gray-300 shadow-sm transition">
-                    Pilih File Foto
-                </label>
-                @error('image')
-                    <span class="text-red-500 text-xs block mt-1">{{ $message }}</span>
-                @enderror
-            </div>
+            @if (auth()->user()->peserta->status == 'aktif' && !auth()->user()->peserta->sertifikat)
+                <div>
+                    <input type="file" wire:model="image" id="image-input" class="hidden" accept="image/*">
+                    <label for="image-input"
+                        class="cursor-pointer inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-md border border-gray-300 shadow-sm transition">
+                        Pilih File Foto
+                    </label>
+                    @error('image')
+                        <span class="text-red-500 text-xs block mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            <button type="submit" :disabled="isSaving || {{ !$image ? 'true' : 'false' }}"
-                class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed">
+                <button type="submit" :disabled="isSaving || {{ !$image ? 'true' : 'false' }}"
+                    class="w-full inline-flex justify-center items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed">
 
-                <span x-show="!isSaving">Simpan Foto</span>
+                    <span x-show="!isSaving">Simpan Foto</span>
 
-                <span x-show="isSaving" class="inline-flex items-center justify-center gap-2" x-cloak>
-                    <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                            stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                        </path>
-                    </svg>
-                    <span>Menyimpan...</span>
-                </span>
-            </button>
+                    <span x-show="isSaving" class="inline-flex items-center justify-center gap-2" x-cloak>
+                        <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        <span>Menyimpan...</span>
+                    </span>
+                </button>
+            @endif
         </div>
 
         <div
