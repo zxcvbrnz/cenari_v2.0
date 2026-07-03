@@ -56,7 +56,7 @@ class Peserta extends Model
     {
         return $this->hasMany(Pembayaran::class, 'id_peserta');
     }
-    public function sertifikatImages(): HasOne
+    public function sertifikatImage(): HasOne
     {
         return $this->hasOne(SertifikatImage::class, 'id_peserta');
     }
