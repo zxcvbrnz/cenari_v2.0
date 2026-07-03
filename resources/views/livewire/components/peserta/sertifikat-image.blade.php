@@ -1,5 +1,17 @@
 <div class="p-6 bg-white rounded-lg shadow-md" x-data="{ isUploading: false, isSaving: false }">
-    <h2 class="text-lg font-semibold text-gray-700 mb-4">Pengaturan Foto Sertifikat</h2>
+    <h2 class="text-lg font-semibold text-gray-700 mb-1">Pengaturan Foto Sertifikat</h2>
+
+    <div class="mb-4 p-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg text-xs flex items-start gap-2">
+        <svg class="h-4 w-4 text-amber-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div>
+            <span class="font-semibold">Perhatian:</span> Unggah foto ini <strong>wajib</strong> diisi oleh seluruh
+            peserta untuk keperluan penerbitan dan pembuatan sertifikat resmi.
+        </div>
+    </div>
 
     @if (session()->has('message'))
         <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">
@@ -13,7 +25,8 @@
         x-on:saved.window="isSaving = false">
 
         <div class="space-y-4">
-            <label class="block text-sm font-medium text-gray-700">Upload Foto Peserta</label>
+            <label class="block text-sm font-medium text-gray-700">Upload Foto Peserta <span
+                    class="text-red-500">*</span></label>
 
             <div
                 class="border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center min-h-[250px] relative">
@@ -94,6 +107,7 @@
             <div class="mt-4 max-w-xs">
                 <p class="text-sm font-medium text-gray-700">Ketentuan Foto:</p>
                 <ul class="text-xs text-gray-500 text-left list-disc list-inside mt-1 space-y-1">
+                    <li class="text-amber-700 font-medium">Wajib diisi untuk keperluan pembuatan sertifikat</li>
                     <li>Posisi badan tegap menghadap depan</li>
                     <li>Menggunakan pakaian formal/rapi</li>
                     <li>Latar belakang berwarna polos (Rekomendasi Merah/Biru)</li>
