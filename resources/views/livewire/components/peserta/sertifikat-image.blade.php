@@ -60,7 +60,7 @@
                 @endif
             </div>
 
-            @if (auth()->user()->peserta->status == 'aktif' && !auth()->user()->peserta->sertifikat)
+            @if (auth()->user()->peserta->status === 'aktif' && !auth()->user()->peserta->sertifikat->link)
                 <div>
                     <input type="file" wire:model="image" id="image-input" class="hidden" accept="image/*">
                     <label for="image-input"
