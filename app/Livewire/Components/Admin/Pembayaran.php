@@ -71,13 +71,14 @@ class Pembayaran extends Component
     public function pelunasan($id): void
     {
         $this->peserta = Peserta::findOrFail($id);
+        $totalBayar = $this->peserta->pembayaran->first()->total_bayar ?? ($this->peserta->mapel->harga ?? 0);
         if ($this->peserta->status_pembayaran === 'Lunas') {
             $this->dispatch('alert-fail', message: 'Peserta Sudah Lunas');
             return;
         }
         $this->data_pembayaran['id_peserta'] = $this->peserta->id;
         $this->data_pembayaran['id_group'] = null;
-        $this->data_pembayaran['jumlah_dibayar'] = $this->peserta->mapel->harga - $this->peserta->pembayaran->sum('jumlah_dibayar');
+        $this->data_pembayaran['jumlah_dibayar'] = $totalBayar - $this->peserta->pembayaran->sum('jumlah_dibayar');
         $this->status_pembayaran = 'Lunas';
         $this->dispatch('reload-table-pembayaran');
     }
@@ -85,13 +86,14 @@ class Pembayaran extends Component
     public function pelunasanGroup($id): void
     {
         $this->group = Group::findOrFail($id);
+        $totalBayar = $this->group->pembayaran->first()->total_bayar ?? ($this->group->harga ?? 0);
         if ($this->group->status_pembayaran === 'Lunas') {
             $this->dispatch('alert-fail', message: 'Group Sudah Lunas');
             return;
         }
         $this->data_pembayaran['id_group'] = $this->group->id;
         $this->data_pembayaran['id_peserta'] = null;
-        $this->data_pembayaran['jumlah_dibayar'] = $this->group->harga - $this->group->pembayaran->sum('jumlah_dibayar');
+        $this->data_pembayaran['jumlah_dibayar'] = $totalBayar - $this->group->pembayaran->sum('jumlah_dibayar');
         $this->status_pembayaran = 'Lunas';
         $this->dispatch('reload-table-pembayaran');
     }

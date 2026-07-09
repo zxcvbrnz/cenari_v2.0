@@ -158,7 +158,7 @@
                                 <td>Rp{{ number_format($pembayaran->jumlah_dibayar, 0, ',', '.') }}</td>
                                 <td>Rp{{ number_format($harga, 0, ',', '.') }}</td>
                                 <!-- Kolom baru untuk menampilkan selisih -->
-                                <td>{{ $harga - $totalPembayaranPeserta == 0 ? 'Lunas' : 'Rp' . number_format($harga - $totalPembayaranPeserta, 0, ',', '.') }}
+                                <td>{{ $harga - $totalPembayaranPeserta <= 0 ? 'Lunas' : 'Rp' . number_format($harga - $totalPembayaranPeserta, 0, ',', '.') }}
                                 </td>
                                 <td>{{ $pembayaran->tanggal_dibayar->format('d F Y H:i') }}</td>
                                 <td>{{ $pembayaran->deskripsi }}</td>
