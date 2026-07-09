@@ -1,14 +1,5 @@
 <main class="pb-14 md:pb-20">
     <div class="mb-6">
-        @php
-            $status = auth()->user()->peserta->status_pembayaran;
-            $statusClasses = match ($status) {
-                'Lunas' => 'bg-emerald-100 text-emerald-600 border border-emerald-200',
-                'Belum Lunas' => 'bg-orange-100 text-orange-600 border border-orange-200',
-                'Belum Bayar' => 'bg-red-100 text-red-600 border border-red-200',
-                default => 'bg-slate-100 text-slate-600',
-            };
-        @endphp
         <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
             <div class="p-4 flex justify-between items-center border-b border-slate-100">
                 <div class="flex items-center gap-3">
@@ -35,6 +26,15 @@
                     @endif
 
                     {{-- Badge Status --}}
+                    @php
+                        $status = auth()->user()->peserta->status_pembayaran;
+                        $statusClasses = match ($status) {
+                            'Lunas' => 'bg-emerald-100 text-emerald-600 border border-emerald-200',
+                            'Belum Lunas' => 'bg-orange-100 text-orange-600 border border-orange-200',
+                            'Belum Bayar' => 'bg-red-100 text-red-600 border border-red-200',
+                            default => 'bg-slate-100 text-slate-600',
+                        };
+                    @endphp
                     <div class="text-sm font-medium px-3 py-1 rounded-full {{ $statusClasses }}">
                         {{ $status }}
                     </div>
@@ -54,10 +54,16 @@
                 </div>
                 <div class="p-6 text-center bg-slate-50/50">
                     <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">Sisa Tagihan</p>
-                    <p
-                        class="text-lg font-bold {{ $status === 'Lunas' || $harga - $riwayat->where('status', 'paid')->sum('jumlah_dibayar') <= 0 ? 'text-slate-700' : 'text-red-500' }}">
-                        Rp
-                        {{ $status === 'Lunas' ? '0' : number_format($harga - $riwayat->where('status', 'paid')->sum('jumlah_dibayar'), 0, ',', '.') }}
+                    @php
+                        // Hitung sisa pembayaran (Total Tagihan - Total yang sudah dibayar)
+                        $sisa = $totalTagihan - $riwayat->where('status', 'paid')->sum('jumlah_dibayar');
+
+                        // Jika hasilnya minus, kunci di angka 0
+                        $sisaTampil = max(0, $sisa);
+                    @endphp
+
+                    <p class="text-lg font-bold {{ $sisa > 0 ? 'text-red-500' : 'text-slate-700' }}">
+                        Rp {{ number_format($sisaTampil, 0, ',', '.') }}
                     </p>
                     @if (auth()->user()->peserta->status_pembayaran !== 'Lunas')
                         <p class="text-[10px] text-red-400 mt-1 italic">* Harap segera melakukan pelunasan</p>

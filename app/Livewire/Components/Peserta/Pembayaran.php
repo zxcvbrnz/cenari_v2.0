@@ -69,11 +69,13 @@ class Pembayaran extends Component
         $riwayat = auth()->user()->peserta->pembayaran()->orderBy('created_at', 'desc')->where('jumlah_dibayar', '!=', 0)->get();
         $harga = auth()->user()->peserta->mapel->harga;
         $setting = Setting::findOrFail(2)->value;
+        $totalTagihan = $riwayat->first()->total_dibayar ?? ($peserta->mapel->harga ?? 0);
 
         return view('livewire.components.peserta.pembayaran', [
             'riwayat' => $riwayat,
             'harga' => $harga,
             'setting' => $setting,
+            'totalTagihan' => $totalTagihan,
 
         ]);
     }

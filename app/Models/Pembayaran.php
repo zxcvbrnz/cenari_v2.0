@@ -25,20 +25,35 @@ class Pembayaran extends Model
     protected static function booted()
     {
         static::creating(function ($pembayaran) {
-            // Jika jumlah_dibayar tidak diisi manual saat input, jalankan logika default
+            // Jika total_dibayar tidak diisi manual saat input, jalankan logika default
             if (empty($pembayaran->total_dibayar)) {
 
-                // Kondisi 1: Jika ada id_group, ambil dari group -> mapel -> harga
+                $pembayaranSebelumnya = null;
+
+                // 1. Cari pembayaran terakhir berdasarkan Group atau Peserta
                 if ($pembayaran->id_group) {
-                    // Pastikan di Model Group sudah ada relasi ke 'mapel'
-                    $pembayaran->total_dibayar = $pembayaran->group->mapel->harga ?? 0;
+                    $pembayaranSebelumnya = self::where('id_group', $pembayaran->id_group)
+                        ->latest() // mengambil data berdasarkan created_at terbaru
+                        ->first();
+                } elseif ($pembayaran->id_peserta) {
+                    $pembayaranSebelumnya = self::where('id_peserta', $pembayaran->id_peserta)
+                        ->latest()
+                        ->first();
                 }
-                // Kondisi 2: Jika tidak ada id_group, ambil dari peserta -> mapel -> harga
-                elseif ($pembayaran->id_peserta) {
-                    // Pastikan di Model Peserta sudah ada relasi ke 'mapel'
-                    $pembayaran->total_dibayar = $pembayaran->peserta->mapel->harga ?? 0;
+
+                // 2. Jalankan logika pengecekan
+                if ($pembayaranSebelumnya && !empty($pembayaranSebelumnya->total_dibayar)) {
+                    // JIKA ADA PEMBAYARAN SEBELUMNYA: Ambil dari total_dibayar data terakhir tersebut
+                    $pembayaran->total_dibayar = $pembayaranSebelumnya->total_dibayar;
                 } else {
-                    $pembayaran->total_dibayar = 0; // Cadangan jika keduanya kosong
+                    // JIKA TIDAK ADA: Ambil dari harga mapel (Logika awal Anda)
+                    if ($pembayaran->id_group) {
+                        $pembayaran->total_dibayar = $pembayaran->group->mapel->harga ?? 0;
+                    } elseif ($pembayaran->id_peserta) {
+                        $pembayaran->total_dibayar = $pembayaran->peserta->mapel->harga ?? 0;
+                    } else {
+                        $pembayaran->total_dibayar = 0;
+                    }
                 }
             }
         });
