@@ -134,9 +134,11 @@
                                 $isOlderThanThreeDays = abs($hoursSincePayment) > $threeDaysInHours;
 
                                 // Hitung harga berdasarkan grup atau peserta
-                                $harga = $pembayaran->id_group
-                                    ? $pembayaran->group->harga
-                                    : $pembayaran->peserta->mapel->harga;
+                                // $harga = $pembayaran->id_group
+                                //     ? $pembayaran->group->harga
+                                //     : $pembayaran->peserta->mapel->harga;
+
+                                $harga = $pembayaran->total_bayar;
 
                                 // Hitung total pembayaran peserta jika ada
                                 $totalPembayaranPeserta = $pembayaran->id_group
