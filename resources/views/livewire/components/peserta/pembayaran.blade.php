@@ -44,7 +44,7 @@
                 <div class="p-6 border-b md:border-b-0 md:border-r border-slate-100 text-center">
                     <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">Total Harga Program
                     </p>
-                    <p class="text-lg font-bold text-slate-700">Rp {{ number_format($harga, 0, ',', '.') }}</p>
+                    <p class="text-lg font-bold text-slate-700">Rp {{ number_format($totalTagihan, 0, ',', '.') }}</p>
                 </div>
                 <div class="p-6 border-b md:border-b-0 md:border-r border-slate-100 text-center">
                     <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">Total Telah Dibayar
