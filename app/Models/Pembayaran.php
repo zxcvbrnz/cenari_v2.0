@@ -25,8 +25,8 @@ class Pembayaran extends Model
     protected static function booted()
     {
         static::creating(function ($pembayaran) {
-            // Jika total_dibayar tidak diisi manual saat input, jalankan logika default
-            if (empty($pembayaran->total_dibayar)) {
+            // Jika total_bayar tidak diisi manual saat input, jalankan logika default
+            if (empty($pembayaran->total_bayar)) {
 
                 $pembayaranSebelumnya = null;
 
@@ -42,17 +42,17 @@ class Pembayaran extends Model
                 }
 
                 // 2. Jalankan logika pengecekan
-                if ($pembayaranSebelumnya && !empty($pembayaranSebelumnya->total_dibayar)) {
-                    // JIKA ADA PEMBAYARAN SEBELUMNYA: Ambil dari total_dibayar data terakhir tersebut
-                    $pembayaran->total_dibayar = $pembayaranSebelumnya->total_dibayar;
+                if ($pembayaranSebelumnya && !empty($pembayaranSebelumnya->total_bayar)) {
+                    // JIKA ADA PEMBAYARAN SEBELUMNYA: Ambil dari total_bayar data terakhir tersebut
+                    $pembayaran->total_bayar = $pembayaranSebelumnya->total_bayar;
                 } else {
                     // JIKA TIDAK ADA: Ambil dari harga mapel (Logika awal Anda)
                     if ($pembayaran->id_group) {
-                        $pembayaran->total_dibayar = $pembayaran->group->mapel->harga ?? 0;
+                        $pembayaran->total_bayar = $pembayaran->group->mapel->harga ?? 0;
                     } elseif ($pembayaran->id_peserta) {
-                        $pembayaran->total_dibayar = $pembayaran->peserta->mapel->harga ?? 0;
+                        $pembayaran->total_bayar = $pembayaran->peserta->mapel->harga ?? 0;
                     } else {
-                        $pembayaran->total_dibayar = 0;
+                        $pembayaran->total_bayar = 0;
                     }
                 }
             }
