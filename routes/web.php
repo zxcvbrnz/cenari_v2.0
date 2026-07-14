@@ -14,8 +14,65 @@ use App\Http\Middleware\Materi;
 use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\AutoLoginController;
 use Silvanix\Wablas\Message;
+use App\Facades\Whatsapp;
 
 
+Route::prefix('test-whatsapp')->group(function () {
+
+    /**
+     * Uji Coba 1: Mengirim Pesan Teks Biasa
+     * Akses URL: domain-anda.test/test-whatsapp/text?to=08xxxxxxxxxx
+     */
+    Route::get('/text', function () {
+        $to = request('to');
+
+        if (!$to) {
+            return response()->json(['error' => 'Masukkan parameter nomor tujuan (?to=08xxxx) pada URL'], 400);
+        }
+
+        $message = "Halo, ini adalah pesan uji coba teks biasa dari aplikasi Laravel Cenari!";
+        $status = Whatsapp::sendText($to, $message);
+
+        if ($status) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pesan teks berhasil dikirim ke ' . $to,
+                'note' => 'Pesan hanya masuk jika nomor tersebut berinteraksi dengan nomor bisnis dalam 24 jam terakhir.'
+            ]);
+        }
+
+        return response()->json(['status' => 'failed', 'message' => 'Gagal mengirim pesan teks. Periksa log Laravel untuk detailnya.'], 500);
+    });
+
+    /**
+     * Uji Coba 2: Mengirim Pesan Template (Blast / Notifikasi Awal)
+     * Akses URL: domain-anda.test/test-whatsapp/template?to=08xxxxxxxxxx
+     */
+    Route::get('/template', function () {
+        $to = request('to');
+
+        if (!$to) {
+            return response()->json(['error' => 'Masukkan parameter nomor tujuan (?to=08xxxx) pada URL'], 400);
+        }
+
+        // Contoh menggunakan template default Meta yaitu 'hello_world' (tidak memerlukan variabel parameters)
+        // Jika menggunakan template custom, isi array dengan parameter {{1}}, {{2}}, dst.
+        $templateName = 'hello_world';
+        $parameters = [];
+        $language = 'en_US'; // Sesuaikan bahasa template 'hello_world' (biasanya en_US)
+
+        $status = Whatsapp::sendTemplate($to, $templateName, $parameters, $language);
+
+        if ($status) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pesan template "' . $templateName . '" berhasil dikirim ke ' . $to
+            ]);
+        }
+
+        return response()->json(['status' => 'failed', 'message' => 'Gagal mengirim pesan template. Periksa log Laravel.'], 500);
+    });
+});
 
 // use Silvanix\Wablas\Message;
 
