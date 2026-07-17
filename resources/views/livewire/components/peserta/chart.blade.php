@@ -13,11 +13,20 @@
             @if ($jadwalKursus->count() > 0)
                 <ul class="list-disc">
                     @foreach ($jadwalKursus as $dat)
-                        <li class="text-sm">
-                            Kursus pada tanggal <span
-                                class="text-teal-600 font-semibold">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
-                            ~
-                            Instruktur: <span class="text-amber-600 font-semibold">{{ $dat->nama_instruktur }}</span>
+                        <li class="text-sm mb-3">
+                            <div class="mb-1">
+                                Kursus pada tanggal <span
+                                    class="text-teal-600 font-semibold">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
+                                ~
+                                Instruktur: <span
+                                    class="text-amber-600 font-semibold">{{ $dat->nama_instruktur }}</span>
+                            </div>
+                            {{-- Menampilkan Keterangan --}}
+                            @if ($dat->keterangan)
+                                <div class="text-slate-500 italic">
+                                    Keterangan: {{ $dat->keterangan }}
+                                </div>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -28,7 +37,7 @@
         </div>
     </div>
     <div class="lg:col-span-2 bg-white border border-slate-200 shadow-lg rounded-sm py-4">
-        <div class="pb-4 px-4 sm:px-6">Insturktur</div>
+        <div class="pb-4 px-4 sm:px-6">Instruktur</div>
         <hr>
         <div class="pt-4 px-4 sm:px-6">
             <div class="flex justify-center">
@@ -64,11 +73,11 @@
                                     $nomor = '62' . substr($nomor, 1);
                                 }
                             @endphp
-                            
+
                             <a target="_blank"
-                               href="{{ 'https://wa.me/' . $nomor . '?text=' . urlencode('Hallo Instruktur ' . $instruktur->user->name) }}"
-                               class="text-blue-800 hover:text-blue-600 underline font-thin">
-                               {{ $instruktur->nomor_telepon ?? '08xxxxxxx' }}
+                                href="{{ 'https://wa.me/' . $nomor . '?text=' . urlencode('Hallo Instruktur ' . $instruktur->user->name) }}"
+                                class="text-blue-800 hover:text-blue-600 underline font-thin">
+                                {{ $instruktur->nomor_telepon ?? '08xxxxxxx' }}
                             </a>
                         </td>
                     </div>

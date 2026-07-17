@@ -12,13 +12,22 @@
         @if ($absens->count() > 0)
             <ul class="list-disc">
                 @foreach ($absens as $record)
-                    <li class="text-sm">
-                        Jadwal: <span
-                            class="text-teal-600 font-semibold">{{ $record->waktu_mulai->format('d M Y H:i') }}</span> ~
-                        Absen pada: <span
-                            class="text-violet-600 font-semibold">{{ $record->waktu_absen->format('d M Y H:i') }}</span>
-                        ~
-                        Instruktur: <span class="text-amber-600 font-semibold">{{ $record->nama_instruktur }}</span>
+                    <li class="text-sm mb-3">
+                        <div class="mb-1">
+                            Jadwal: <span
+                                class="text-teal-600 font-semibold">{{ $record->waktu_mulai->format('d M Y H:i') }}</span>
+                            ~
+                            Absen pada: <span
+                                class="text-violet-600 font-semibold">{{ $record->waktu_absen->format('d M Y H:i') }}</span>
+                            ~
+                            Instruktur: <span class="text-amber-600 font-semibold">{{ $record->nama_instruktur }}</span>
+                        </div>
+                        {{-- Menampilkan Keterangan jika ada --}}
+                        @if ($record->keterangan)
+                            <div class="text-slate-500 italic">
+                                Keterangan: {{ $record->keterangan }}
+                            </div>
+                        @endif
                     </li>
                 @endforeach
             </ul>

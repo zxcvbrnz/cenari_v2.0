@@ -16,29 +16,50 @@
         <hr>
         <div class="py-4 px-6 lg:px-10">
             @if ($jadwalCount > 0)
-                <ul class="list-disc">
+                <ul class="list-disc space-y-3">
+                    {{-- Loop Jadwal Group / Pelatihan --}}
                     @foreach ($jadwalGroup as $dat)
-                        <li class="text-sm"> Jadwal
-                            <span class="font-bold text-slate-800"><span class="text-sky-600">Pelatihan</span>
-                                {{ $dat->nama_group }}</span>
-                            pada
-                            <span class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
-                            ~ {{ $dat->keterangan }}
+                        <li class="text-sm">
+                            <div class="mb-0.5">
+                                Jadwal
+                                <span class="font-bold text-slate-800">
+                                    <span class="text-sky-600">Pelatihan</span> {{ $dat->nama_group }}
+                                </span>
+                                pada
+                                <span
+                                    class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
+                            </div>
+                            @if ($dat->keterangan)
+                                <div class="text-slate-500 italic pl-0">
+                                    Keterangan: {{ $dat->keterangan }}
+                                </div>
+                            @endif
                         </li>
                     @endforeach
+
+                    {{-- Loop Jadwal Private --}}
                     @foreach ($jadwalPrivate as $dat)
-                        <li class="text-sm"> Jadwal
-                            <span class="font-bold text-slate-800"><span class="text-teal-600">Private</span>
-                                {{ $dat->nama_peserta }}</span>
-                            pada
-                            <span class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
-                            ~ {{ $dat->keterangan }}
+                        <li class="text-sm">
+                            <div class="mb-0.5">
+                                Jadwal
+                                <span class="font-bold text-slate-800">
+                                    <span class="text-teal-600">Private</span> {{ $dat->nama_peserta }}
+                                </span>
+                                pada
+                                <span
+                                    class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
+                            </div>
+                            @if ($dat->keterangan)
+                                <div class="text-slate-500 italic pl-0">
+                                    Keterangan: {{ $dat->keterangan }}
+                                </div>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
             @else
-                <div class="flex justify-center py-6 px-4 text-slate-600"><span>Kamu tidak memiliki permohonan
-                        kursus private</span>
+                <div class="flex justify-center py-6 px-4 text-slate-600">
+                    <span>Kamu tidak memiliki permohonan kursus private</span>
                 </div>
             @endif
         </div>

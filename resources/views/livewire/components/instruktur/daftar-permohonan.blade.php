@@ -54,8 +54,8 @@
                 </div>
                 <div class="mt-4">
                     <x-input-label class="required" for="keterangan" :value="__('Keterangan')" />
-                    <x-text-input id="keterangan" wire:model="keterangan" name="keterangan" type="text" placeholder="Pertemuan ke- , Bertempat di-"
-                        class="mt-1 block w-full" required />
+                    <x-text-input id="keterangan" wire:model="keterangan" name="keterangan" type="text"
+                        placeholder="Pertemuan ke- , Bertempat di-" class="mt-1 block w-full" required />
                 </div>
                 <div class="mt-4">
                     <x-input-label class="required" for="tanggal" :value="__('Tanggal/Waktu')" />
@@ -69,6 +69,7 @@
         </div>
     </div>
     <div class="grid gap-8 lg:col-span-3">
+        {{-- Daftar Permohonan Private --}}
         <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
             <div class="flex items-center space-x-2 py-4 px-4 sm:px-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 256 256">
@@ -82,27 +83,37 @@
             <div class="grid py-4 h-48">
                 <div class="px-6 lg:px-10 overflow-y-auto">
                     @if ($permohonanPrivate->count() > 0)
-                        <ul class="list-disc">
+                        <ul class="list-disc space-y-3">
                             @foreach ($permohonanPrivate as $dat)
                                 <li class="text-sm">
-                                    <span class="text-orange-600 font-bold">Pending</span> Jadwal
-                                    <span class="font-bold text-slate-800"><span class="text-teal-600">Private</span>
-                                        {{ $dat->nama_peserta }}</span>
-                                    pada
-                                    <span
-                                        class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
-                                    ~ {{ $dat->keterangan }}
+                                    <div class="mb-0.5">
+                                        <span class="text-orange-600 font-bold">Pending</span> Jadwal
+                                        <span class="font-bold text-slate-800">
+                                            <span class="text-teal-600">Private</span> {{ $dat->nama_peserta }}
+                                        </span>
+                                        pada
+                                        <span
+                                            class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
+                                    </div>
+                                    {{-- Menampilkan Keterangan --}}
+                                    @if ($dat->keterangan)
+                                        <div class="text-slate-500 italic">
+                                            Keterangan: {{ $dat->keterangan }}
+                                        </div>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>
                     @else
-                        <div class="flex justify-center py-6 px-4 text-slate-600"><span>Kamu tidak memiliki permohonan
-                                kursus private</span>
+                        <div class="flex justify-center py-6 px-4 text-slate-600">
+                            <span>Kamu tidak memiliki permohonan kursus private</span>
                         </div>
                     @endif
                 </div>
             </div>
         </div>
+
+        {{-- Daftar Permohonan Pelatihan --}}
         <div class="bg-white border border-slate-200 shadow-lg rounded-sm">
             <div class="flex items-center space-x-2 py-4 px-4 sm:px-6">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 256 256">
@@ -116,22 +127,30 @@
             <div class="grid py-4 h-48">
                 <div class="px-6 lg:px-10 overflow-y-auto">
                     @if ($permohonanGroup->count() > 0)
-                        <ul class="list-disc">
+                        <ul class="list-disc space-y-3">
                             @foreach ($permohonanGroup as $dat)
                                 <li class="text-sm">
-                                    <span class="text-orange-600 font-bold">Pending</span> Jadwal
-                                    <span class="font-bold text-slate-800"><span class="text-sky-600">Pelatihan</span>
-                                        {{ $dat->nama_group }}</span>
-                                    pada
-                                    <span
-                                        class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
-                                    ~ {{ $dat->keterangan }}
+                                    <div class="mb-0.5">
+                                        <span class="text-orange-600 font-bold">Pending</span> Jadwal
+                                        <span class="font-bold text-slate-800">
+                                            <span class="text-sky-600">Pelatihan</span> {{ $dat->nama_group }}
+                                        </span>
+                                        pada
+                                        <span
+                                            class="font-bold text-violet-600">{{ $dat->waktu_mulai->format('d M Y H:i') }}</span>
+                                    </div>
+                                    {{-- Menampilkan Keterangan --}}
+                                    @if ($dat->keterangan)
+                                        <div class="text-slate-500 italic">
+                                            Keterangan: {{ $dat->keterangan }}
+                                        </div>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>
                     @else
-                        <div class="flex justify-center py-6 px-4 text-slate-600"><span>Kamu tidak memiliki permohonan
-                                pelatihan</span>
+                        <div class="flex justify-center py-6 px-4 text-slate-600">
+                            <span>Kamu tidak memiliki permohonan pelatihan</span>
                         </div>
                     @endif
                 </div>
