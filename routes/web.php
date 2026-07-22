@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\AutoLoginController;
 use Silvanix\Wablas\Message;
 use App\Facades\Whatsapp;
+use App\Livewire\WhatsAppChat;
 
 
 Route::prefix('test-whatsapp')->group(function () {
@@ -138,6 +139,8 @@ Route::middleware(['auth'])->group(function () {
 
     // ========== ROUTE ADMIN =============
     Route::middleware([Admin::class])->group(function () {
+
+        Route::get('/whatsapp-chat', WhatsAppChat::class)->middleware(['auth']);
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
         Route::get('/export-peserta-pdf/{id}', [PdfController::class, 'GeneratePDF'])->name('export.peserta.pdf');
