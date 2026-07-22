@@ -19,13 +19,18 @@ class Sidebar extends Component
 
     public function mount(): void
     {
-        $this->loadSettings();
         $this->role = Auth::user()->role;
-        $this->settingWhatsapp = Setting::findOrFail(3);
+
+        // Cukup panggil method ini sekali di mount
+        $this->loadSettings();
+
+        // Query Unread Messages
         $this->unreadMessages = Message::where('direction', 'inbound')
-            ->where('status', 'unread') // atau 'received'
+            ->where('status', 'unread')
             ->count();
-        $permohonanPrivate = Absen::where('status', 0)->where('id_group', null)->count();
+
+        // Query Permohonan
+        $permohonanPrivate = Absen::where('status', 0)->whereNull('id_group')->count();
         $permohonanGroup = Absen::select('id_group', 'id_instruktur', 'waktu_mulai', 'keterangan')
             ->where('status', 0)
             ->whereNotNull('id_group')
@@ -35,11 +40,16 @@ class Sidebar extends Component
 
         $this->permohonan = $permohonanPrivate + $permohonanGroup;
     }
+
     #[On('whatsapp-setting-updated')]
-    public function loadSettings()
+    public function loadSettings(): void
     {
-        $this->settingWhatsapp = Setting::findOrFail(3);
+        // Cari berdasarkan ID atau kolom 'key' agar lebih fleksibel
+        $this->settingWhatsapp = Setting::find(3);
+        // Atau jika menggunakan key:
+        // $this->settingWhatsapp = Setting::where('key', 'whatsapp')->first();
     }
+
     public function render()
     {
         return view('livewire.layout.sidebar');
