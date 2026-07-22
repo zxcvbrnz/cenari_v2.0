@@ -141,7 +141,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware([Admin::class])->group(function () {
 
         if (Setting::findOrFail(3)->value === 'ON') {
-            Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp.chat');
+            Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp');
         }
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
