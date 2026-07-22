@@ -25,6 +25,33 @@
                     <span class="text-sm text-slate-800">Menu Utama</span>
                 </li>
                 @if ($role == 'admin')
+                    @if ($settingWhatsapp->value === 'ON')
+                        <li>
+                            <x-side-link href="{{ route('whatsapp.chat') }}" :active="request()->routeIs('whatsapp*')" wire:navigate>
+                                <!-- Icon WhatsApp -->
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6"
+                                    viewBox="0 0 256 256">
+                                    <path
+                                        d="M187.58,144.84l-32-16a8,8,0,0,0-8,0l-14.35,9.57a56.12,56.12,0,0,1-27.63-27.63l9.57-14.35a8,8,0,0,0,0-8l-16-32a8,8,0,0,0-10.71-3.58L61.08,66.42a8,8,0,0,0-4.66,6.33c-2.88,27.1,7.24,57.76,28.48,79,21.24,21.24,51.9,31.36,79,28.48a8,8,0,0,0,6.33-4.66l13.57-27.39A8,8,0,0,0,187.58,144.84ZM128,24A104,104,0,0,0,36.18,176.88L24.21,218.77a16,16,0,0,0,19,19l41.89-12A104,104,0,1,0,128,24Zm0,192a87.46,87.46,0,0,1-44.82-12.3,8,8,0,0,0-5.48-1.09l-34,9.71,9.71-34a8,8,0,0,0-1.09-5.48A88,88,0,1,1,128,216Z">
+                                    </path>
+                                </svg>
+
+                                <span class="flex-1 ms-3 whitespace-nowrap">WhatsApp Messenger</span>
+
+                                {{-- Badge Indikator Pesan Belum Dibaca --}}
+                                @if (isset($unreadMessages) && $unreadMessages > 0)
+                                    <span class="relative flex h-3 w-3">
+                                        <span
+                                            class="animate-ping absolute inline-flex h-full p-2 w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span
+                                            class="relative rounded-full text-xs h-3 w-3 p-2 bg-emerald-500 text-white flex items-center justify-center">
+                                            {{ $unreadMessages }}
+                                        </span>
+                                    </span>
+                                @endif
+                            </x-side-link>
+                        </li>
+                    @endif
                     <li>
                         <x-side-link href="{{ route('permohonan') }}" :active="request()->routeIs('permohonan')" wire:navigate>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6"
@@ -166,8 +193,8 @@
                                 </x-side-link>
                             </li>
                             <li>
-                                <x-side-link class="ml-10" href="{{ route('admin.create.mapel') }}" :active="request()->routeIs('admin.create.mapel')"
-                                    wire:navigate>
+                                <x-side-link class="ml-10" href="{{ route('admin.create.mapel') }}"
+                                    :active="request()->routeIs('admin.create.mapel')" wire:navigate>
                                     <span class="pl-2 py-0.5">Tambah Program</span>
                                 </x-side-link>
                             </li>

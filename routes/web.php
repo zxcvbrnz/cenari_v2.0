@@ -16,7 +16,7 @@ use App\Http\Controllers\AutoLoginController;
 use Silvanix\Wablas\Message;
 use App\Facades\Whatsapp;
 use App\Livewire\WhatsAppChat;
-
+use App\Models\Setting;
 
 Route::prefix('test-whatsapp')->group(function () {
 
@@ -140,7 +140,9 @@ Route::middleware(['auth'])->group(function () {
     // ========== ROUTE ADMIN =============
     Route::middleware([Admin::class])->group(function () {
 
-        Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp.chat');
+        if (Setting::findOrFail(3)->value === 'ON') {
+            Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp.chat');
+        }
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
         Route::get('/export-peserta-pdf/{id}', [PdfController::class, 'GeneratePDF'])->name('export.peserta.pdf');
