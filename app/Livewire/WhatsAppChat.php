@@ -67,7 +67,7 @@ class WhatsAppChat extends Component
                 'status'       => 'sent'
             ]);
 
-            $this->replyMessage = '';
+            $this->reset('replyMessage');
         } else {
             session()->flash('error', 'Gagal mengirim pesan via API. Pastikan sesi 24 jam dengan kontak masih aktif.');
         }
