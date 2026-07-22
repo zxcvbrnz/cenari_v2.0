@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Message;
-use App\Facades\Whatsapp;
+use App\Facades\Whatsapp; // Sesuaikan dengan namespace Facade milik Anda
 use Illuminate\Support\Facades\DB;
 
 class WhatsAppChat extends Component
@@ -12,7 +12,7 @@ class WhatsAppChat extends Component
     public $selectedPhone = null;
     public $replyMessage = '';
 
-    // Modal state & input
+    // Property untuk modal chat baru
     public $showNewChatModal = false;
     public $newPhone = '';
 
@@ -22,7 +22,7 @@ class WhatsAppChat extends Component
     {
         $this->selectedPhone = $phone;
 
-        // Tandai pesan belum dibaca menjadi dibaca (read)
+        // Tandai pesan sebagai terbaca saat kontak dipilih
         Message::where('phone_number', $phone)
             ->where('status', 'unread')
             ->update(['status' => 'read']);
@@ -35,10 +35,10 @@ class WhatsAppChat extends Component
         ], [
             'newPhone.required' => 'Nomor WhatsApp wajib diisi.',
             'newPhone.numeric' => 'Nomor WhatsApp hanya boleh berupa angka.',
-            'newPhone.digits_between' => 'Nomor WhatsApp tidak valid (terlalu pendek/panjang).'
+            'newPhone.digits_between' => 'Nomor WhatsApp tidak valid.'
         ]);
 
-        // Otomatis ubah awalan 08xx menjadi 628xx
+        // Format otomatis nomor 08xx menjadi 628xx
         $formattedPhone = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $this->newPhone));
 
         $this->selectedPhone = $formattedPhone;
@@ -52,14 +52,14 @@ class WhatsAppChat extends Component
             'replyMessage' => 'required|string',
             'selectedPhone' => 'required'
         ], [
-            'replyMessage.required' => 'Tulis pesan terlebih dahulu.'
+            'replyMessage.required' => 'Ketik pesan terlebih dahulu.'
         ]);
 
         // 1. Kirim via Facade WhatsApp Meta
         $status = Whatsapp::sendText($this->selectedPhone, $this->replyMessage);
 
         if ($status) {
-            // 2. Simpan ke database
+            // 2. Simpan pesan outbound ke database
             Message::create([
                 'phone_number' => $this->selectedPhone,
                 'direction'    => 'outbound',
@@ -67,19 +67,22 @@ class WhatsAppChat extends Component
                 'status'       => 'sent'
             ]);
 
+            // Reset field pesan agar state Livewire bersih
             $this->reset('replyMessage');
         } else {
-            session()->flash('error', 'Gagal mengirim pesan via API. Pastikan sesi 24 jam dengan kontak masih aktif.');
+            session()->flash('error', 'Gagal mengirim pesan via API Meta. Pastikan sesi 24 jam masih aktif.');
         }
     }
 
     public function render()
     {
+        // Ambil daftar kontak unik yang pernah chat
         $contacts = Message::select('phone_number', DB::raw('MAX(created_at) as last_chat'))
             ->groupBy('phone_number')
             ->orderBy('last_chat', 'desc')
             ->get();
 
+        // Ambil riwayat chat untuk kontak terpilih
         $messages = [];
         if ($this->selectedPhone) {
             $messages = Message::where('phone_number', $this->selectedPhone)

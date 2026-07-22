@@ -1,6 +1,7 @@
 <main class="py-10 md:px-6 max-w-7xl mx-auto">
 
-    <div class="flex h-[620px] border rounded-xl bg-white shadow-sm overflow-hidden" wire:poll.3s>
+    {{-- Main Chat Container (Tanpa wire:poll di sini agar tidak merusak state form) --}}
+    <div class="flex h-[620px] border rounded-xl bg-white shadow-sm overflow-hidden">
 
         <!-- ================= SIDEBAR: LIST KONTAK ================= -->
         <div class="w-1/3 border-r bg-gray-50 flex flex-col">
@@ -58,8 +59,8 @@
                     </span>
                 </div>
 
-                <!-- Chat Messages Area -->
-                <div class="flex-1 p-4 overflow-y-auto flex flex-col space-y-3 bg-[#e5ddd5]/20">
+                <!-- Chat Messages Area (Polling ditempatkan khusus di sini) -->
+                <div class="flex-1 p-4 overflow-y-auto flex flex-col space-y-3 bg-[#e5ddd5]/20" wire:poll.3s>
                     @if (session()->has('error'))
                         <div class="bg-red-50 text-red-600 border border-red-200 p-3 text-xs rounded-lg mb-2">
                             {{ session('error') }}
@@ -84,25 +85,23 @@
                     @endforelse
                 </div>
 
-                <!-- Form Input & Tombol Kirim -->
+                <!-- Form Input & Tombol Kirim (State dikontrol via Alpine.js agar bebas konflik morphing) -->
                 <div class="p-3.5 bg-white border-t">
-                    <form wire:submit.prevent="sendMessage" class="flex gap-2 items-center">
-                        <input type="text" wire:model="replyMessage" wire:loading.attr="disabled"
-                            wire:target="sendMessage" placeholder="Ketik balasan pesan..."
+                    <form wire:submit.prevent="sendMessage" x-data="{ isSending: false }" x-on:submit="isSending = true"
+                        x-on:livewire-upload-finish="isSending = false" class="flex gap-2 items-center">
+
+                        <input type="text" wire:model="replyMessage" :disabled="isSending"
+                            placeholder="Ketik balasan pesan..."
                             class="flex-1 border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100">
 
-                        <button type="submit" wire:loading.attr="disabled" wire:target="sendMessage"
-                            class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center justify-center min-w-[90px] disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button type="submit" :disabled="isSending"
+                            class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center justify-center min-w-[100px] disabled:opacity-50 disabled:cursor-not-allowed">
 
-                            <!-- Teks 'Kirim' HANYA tampil jika TIDAK sedang mengirim -->
-                            <span wire:loading.remove wire:target="sendMessage">
-                                Kirim
-                            </span>
+                            <!-- Teks Normal -->
+                            <span x-show="!isSending">Kirim</span>
 
-                            <!-- Teks 'Sending...' HANYA tampil SAAT sedang mengirim -->
-                            <span wire:loading wire:target="sendMessage">
-                                Sending...
-                            </span>
+                            <!-- Teks Loading Pas Diklik -->
+                            <span x-show="isSending" x-cloak class="text-xs">Sending...</span>
 
                         </button>
                     </form>
