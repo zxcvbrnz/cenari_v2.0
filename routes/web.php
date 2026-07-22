@@ -140,7 +140,7 @@ Route::middleware(['auth'])->group(function () {
     // ========== ROUTE ADMIN =============
     Route::middleware([Admin::class])->group(function () {
 
-        Route::get('/whatsapp-chat', WhatsAppChat::class)->middleware(['auth']);
+        Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp.chat');
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
         Route::get('/export-peserta-pdf/{id}', [PdfController::class, 'GeneratePDF'])->name('export.peserta.pdf');
