@@ -87,20 +87,35 @@
 
                 <!-- Form Input & Tombol Kirim -->
                 <div class="p-3.5 bg-white border-t">
-                    <form wire:submit.prevent="sendMessage" class="flex gap-2 items-center">
+                    <form x-data="{ isSending: false }"
+                        @submit.prevent="
+                                if (!isSending) {
+                                    isSending = true;
+                                    $wire.sendMessage().then(() => {
+                                        isSending = false;
+                                    }).catch(() => {
+                                        isSending = false;
+                                    });
+                                }
+                            "
+                        class="flex gap-2 items-center">
 
-                        <input type="text" wire:model="replyMessage" wire:loading.attr="disabled"
-                            wire:target="sendMessage" placeholder="Ketik balasan pesan..."
+                        <input type="text" wire:model="replyMessage" :disabled="isSending"
+                            placeholder="Ketik balasan pesan..."
                             class="flex-1 border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100">
 
-                        <button type="submit" wire:loading.attr="disabled" wire:target="sendMessage"
+                        <button type="submit" :disabled="isSending"
                             class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center justify-center min-w-[100px] disabled:opacity-50 disabled:cursor-not-allowed">
 
                             <!-- Teks Normal -->
-                            <span wire:loading.remove wire:target="sendMessage">Kirim</span>
+                            <template x-if="!isSending">
+                                <span>Kirim</span>
+                            </template>
 
-                            <!-- Teks Otomatis Berubah & Kembali Normal Setelah Response Selesai -->
-                            <span wire:loading wire:target="sendMessage" class="text-xs">Sending...</span>
+                            <!-- Teks Loading -->
+                            <template x-if="isSending">
+                                <span class="text-xs">Sending...</span>
+                            </template>
 
                         </button>
                     </form>
