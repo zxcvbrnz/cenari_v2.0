@@ -27,7 +27,7 @@
                 @if ($role == 'admin')
                     @if ($settingWhatsapp->value === 'ON')
                         <li>
-                            <x-side-link href="{{ route('whatsapp.chat') }}" :active="request()->routeIs('whatsapp*')" wire:navigate>
+                            <x-side-link href="{{ route('whatsapp.chat') }}" :active="request()->routeIs('whatsapp.chat*')" wire:navigate>
                                 <!-- Icon WhatsApp -->
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6"
                                     viewBox="0 0 256 256">
