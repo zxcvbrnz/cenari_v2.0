@@ -29,7 +29,6 @@ class General extends Component
 
     public function update()
     {
-        // Simpan nilai checkbox ke database
         $this->setting1->value = $this->setting1edit ? 'ON' : 'OFF';
         $this->setting2->value = $this->setting2edit ? 'ON' : 'OFF';
         $this->whatsappSetting->value = $this->whatsappSettingEdit ? 'ON' : 'OFF';
@@ -39,5 +38,10 @@ class General extends Component
         $this->whatsappSetting->save();
 
         $this->dispatch('alert-success', message: 'Berhasil Mengupdate Pengaturan');
+
+        // Cek apakah kolom 'value' pada $whatsappSetting benar-benar berubah saat save()
+        if ($this->whatsappSetting->wasChanged('value')) {
+            $this->dispatch('whatsapp-setting-updated');
+        }
     }
 }

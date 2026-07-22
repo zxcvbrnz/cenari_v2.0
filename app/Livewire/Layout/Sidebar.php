@@ -7,6 +7,7 @@ use App\Models\Absen;
 use App\Models\Message;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 
 class Sidebar extends Component
 {
@@ -18,6 +19,7 @@ class Sidebar extends Component
 
     public function mount(): void
     {
+        $this->loadSettings();
         $this->role = Auth::user()->role;
         $this->settingWhatsapp = Setting::findOrFail(3);
         $this->unreadMessages = Message::where('direction', 'inbound')
@@ -32,6 +34,11 @@ class Sidebar extends Component
             ->count();
 
         $this->permohonan = $permohonanPrivate + $permohonanGroup;
+    }
+    #[On('whatsapp-setting-updated')]
+    public function loadSettings()
+    {
+        $this->settingWhatsapp = Setting::findOrFail(3);
     }
     public function render()
     {

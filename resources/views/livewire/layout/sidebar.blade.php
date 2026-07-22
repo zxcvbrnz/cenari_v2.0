@@ -1,6 +1,6 @@
 <aside>
     <div class="fixed top-0 left-0 z-50 h-screen  w-64 shadow-md transition-transform sm:translate-x-0"
-        :class="sidebarOpen ? '' : '-translate-x-full'" wire:poll.3s>
+        :class="sidebarOpen ? '' : '-translate-x-full'">
         <div class="absolute top-0 left-0 h-full w-full px-3 py-4 overflow-y-auto bg-white">
             <ul x-data="{ menuOpen: {{ request()->routeIs('admin.create.*') ? 2 : (request()->routeIs('admin.data.*') ? 1 : (request()->routeIs('admin.jadwal.*') ? 3 : 'null')) }} }" class="space-y-2 font-medium">
                 <li class="flex items-end">
