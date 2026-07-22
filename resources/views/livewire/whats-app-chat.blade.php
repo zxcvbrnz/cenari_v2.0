@@ -85,23 +85,22 @@
                     @endforelse
                 </div>
 
-                <!-- Form Input & Tombol Kirim (State dikontrol via Alpine.js agar bebas konflik morphing) -->
+                <!-- Form Input & Tombol Kirim -->
                 <div class="p-3.5 bg-white border-t">
-                    <form wire:submit.prevent="sendMessage" x-data="{ isSending: false }" x-on:submit="isSending = true"
-                        x-on:livewire-upload-finish="isSending = false" class="flex gap-2 items-center">
+                    <form wire:submit.prevent="sendMessage" class="flex gap-2 items-center">
 
-                        <input type="text" wire:model="replyMessage" :disabled="isSending"
-                            placeholder="Ketik balasan pesan..."
+                        <input type="text" wire:model="replyMessage" wire:loading.attr="disabled"
+                            wire:target="sendMessage" placeholder="Ketik balasan pesan..."
                             class="flex-1 border border-gray-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100">
 
-                        <button type="submit" :disabled="isSending"
+                        <button type="submit" wire:loading.attr="disabled" wire:target="sendMessage"
                             class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center justify-center min-w-[100px] disabled:opacity-50 disabled:cursor-not-allowed">
 
                             <!-- Teks Normal -->
-                            <span x-show="!isSending">Kirim</span>
+                            <span wire:loading.remove wire:target="sendMessage">Kirim</span>
 
-                            <!-- Teks Loading Pas Diklik -->
-                            <span x-show="isSending" x-cloak class="text-xs">Sending...</span>
+                            <!-- Teks Otomatis Berubah & Kembali Normal Setelah Response Selesai -->
+                            <span wire:loading wire:target="sendMessage" class="text-xs">Sending...</span>
 
                         </button>
                     </form>
