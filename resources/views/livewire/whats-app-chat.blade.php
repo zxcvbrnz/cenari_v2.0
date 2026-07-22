@@ -94,15 +94,16 @@
                         <button type="submit" wire:loading.attr="disabled" wire:target="sendMessage"
                             class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white px-5 py-2 rounded-lg text-sm font-semibold transition flex items-center justify-center min-w-[90px] disabled:opacity-50 disabled:cursor-not-allowed">
 
-                            <!-- Teks Normal (Hanya muncul saat TIDAK sedang loading sendMessage) -->
+                            <!-- Teks 'Kirim' HANYA tampil jika TIDAK sedang mengirim -->
                             <span wire:loading.remove wire:target="sendMessage">
                                 Kirim
                             </span>
 
-                            <!-- Teks Sending (Hanya muncul SAAT loading sendMessage) -->
-                            <span wire:loading wire:target="sendMessage" class="text-xs">
+                            <!-- Teks 'Sending...' HANYA tampil SAAT sedang mengirim -->
+                            <span wire:loading wire:target="sendMessage">
                                 Sending...
                             </span>
+
                         </button>
                     </form>
                 </div>
