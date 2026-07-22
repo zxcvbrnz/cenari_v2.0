@@ -12,12 +12,38 @@ class WhatsAppChat extends Component
     public $selectedPhone = null;
     public $replyMessage = '';
 
-    // Auto refresh setiap 3 detik untuk mengecek pesan baru masuk
+    // Properti untuk Modal Chat Baru
+    public $showNewChatModal = false;
+    public $newPhone = '';
+
     protected $listeners = ['refreshChat' => '$refresh'];
 
     public function selectContact($phone)
     {
         $this->selectedPhone = $phone;
+
+        // Tandai pesan sebagai sudah dibaca (read) saat kontak dipilih
+        Message::where('phone_number', $phone)
+            ->where('status', 'unread')
+            ->update(['status' => 'read']);
+    }
+
+    public function openNewChat()
+    {
+        $this->validate([
+            'newPhone' => 'required|numeric|digits_between:9,15'
+        ], [
+            'newPhone.required' => 'Nomor telepon wajib diisi.',
+            'newPhone.numeric' => 'Nomor telepon harus berupa angka.',
+            'newPhone.digits_between' => 'Nomor telepon tidak valid.'
+        ]);
+
+        // Format nomor agar konsisten (hapus angka 0 depan atau tanda + jika ada)
+        $formattedPhone = preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $this->newPhone));
+
+        $this->selectedPhone = $formattedPhone;
+        $this->newPhone = '';
+        $this->showNewChatModal = false;
     }
 
     public function sendMessage()
