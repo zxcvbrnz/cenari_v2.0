@@ -15,6 +15,7 @@ use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\AutoLoginController;
 use Silvanix\Wablas\Message;
 use App\Facades\Whatsapp;
+use App\Livewire\JamDigitalManager;
 use App\Livewire\WhatsAppChat;
 use App\Models\Setting;
 
@@ -143,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
         if (Setting::findOrFail(3)->value === 'ON') {
             Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp');
         }
+
+        Route::get('/manage-jam-digital', JamDigitalManager::class)->name('jam.digital');
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
         Route::get('/export-peserta-pdf/{id}', [PdfController::class, 'GeneratePDF'])->name('export.peserta.pdf');
