@@ -1,4 +1,4 @@
-    <main class="py-14 md:py-20 md:px-6 grid grid-cols-1 gap-8">
+    <main class="py-14 md:py-20 ">
         <div class="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-100 mt-6">
             <h2 class="text-xl font-bold text-gray-800 mb-4">Pengaturan Jam Digital ESP8266</h2>
 
