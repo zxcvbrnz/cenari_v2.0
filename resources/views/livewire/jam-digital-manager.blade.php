@@ -19,9 +19,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Teks Baris Bawah (Maks. 15
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Teks Baris Bawah (Maks. 11
                         Karakter)</label>
-                    <input type="text" wire:model="subText" maxlength="15"
+                    <input type="text" wire:model="subText" maxlength="11"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     @error('subText')
                         <span class="text-xs text-red-500">{{ $message }}</span>
