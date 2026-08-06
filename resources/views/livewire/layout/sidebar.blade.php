@@ -365,7 +365,7 @@
                         </x-side-link>
                     </li>
                     <li>
-                        <x-side-link href="{{ route('jam-digital') }}" :active="request()->routeIs('jam-digital')" wire:navigate>
+                        <x-side-link href="{{ route('jam.digital') }}" :active="request()->routeIs('jam.digital')" wire:navigate>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6"
                                 viewBox="0 0 256 256">
                                 <!-- Icon Display Matrix / Running Text (Broadcast Signal / Ticker Screen) -->
