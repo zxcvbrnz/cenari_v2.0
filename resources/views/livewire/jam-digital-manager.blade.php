@@ -3,11 +3,11 @@
             <h2 class="text-xl font-bold text-gray-800 mb-4">Pengaturan Jam Digital ESP8266</h2>
 
             @if (session()->has('message'))
-                <div class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
+                <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition.duration.500ms
+                    class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
                     {{ session('message') }}
                 </div>
             @endif
-
             <form wire:submit.prevent="save" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Teks Running</label>
