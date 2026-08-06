@@ -364,6 +364,18 @@
                             <span class="flex-1 ms-3 whitespace-nowrap">General</span>
                         </x-side-link>
                     </li>
+                    <li>
+                        <x-side-link href="{{ route('jam-digital') }}" :active="request()->routeIs('jam-digital')" wire:navigate>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6"
+                                viewBox="0 0 256 256">
+                                <!-- Icon Display Matrix / Running Text (Broadcast Signal / Ticker Screen) -->
+                                <path
+                                    d="M216,40H40A16,16,0,0,0,24,56V184a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,144H40V56H216V184ZM104,120a12,12,0,1,1-12-12A12,12,0,0,1,104,120Zm48,0a12,12,0,1,1-12-12A12,12,0,0,1,152,120Zm48,0a12,12,0,1,1-12-12A12,12,0,0,1,200,120ZM200,216a8,8,0,0,1-8,8H64a8,8,0,0,1,0-16H192A8,8,0,0,1,200,216Z">
+                                </path>
+                            </svg>
+                            <span class="flex-1 ms-3 whitespace-nowrap">Running Text</span>
+                        </x-side-link>
+                    </li>
                 @endif
             </ul>
         </div>

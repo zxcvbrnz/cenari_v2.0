@@ -145,7 +145,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/whatsapp-chat', WhatsAppChat::class)->name('whatsapp');
         }
 
-        Route::get('/manage-jam-digital', JamDigitalManager::class)->name('jam.digital');
+        Route::get('/manage-running-text-cenari', JamDigitalManager::class)->name('jam.digital');
 
         Route::view('/masukan/{id}', 'masukan-detail')->name('masukan.detail');
         Route::get('/export-peserta-pdf/{id}', [PdfController::class, 'GeneratePDF'])->name('export.peserta.pdf');
