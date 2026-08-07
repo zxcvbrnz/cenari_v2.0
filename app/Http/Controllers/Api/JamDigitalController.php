@@ -22,7 +22,10 @@ class JamDigitalController extends Controller
                 'enableClock' => true,
                 'enableText'  => true,
                 'enableAnim'  => true,
+                'enableInfo'  => true,
                 'animType'    => 1,
+                'webUrl'      => 'cenari.sch.id',
+                'contactInfo' => '081234567890',
             ]);
         }
 
@@ -34,7 +37,10 @@ class JamDigitalController extends Controller
             'enableClock' => (bool) ($config->enableClock ?? true),
             'enableText'  => (bool) ($config->enableText ?? true),
             'enableAnim'  => (bool) ($config->enableAnim ?? true),
+            'enableInfo'  => (bool) ($config->enableInfo ?? true),
             'animType'    => (int) ($config->animType ?? 1),
+            'webUrl'      => $config->webUrl ?? 'cenari.sch.id',
+            'contactInfo' => $config->contactInfo ?? '081234567890',
         ]);
     }
 }

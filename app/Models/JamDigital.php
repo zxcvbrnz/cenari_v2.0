@@ -10,13 +10,24 @@ class JamDigital extends Model
     use HasFactory;
 
     protected $fillable = [
-        'running_text',
-        'sub_text',
+        'runningText',
+        'subText',
         'speed',
         'size',
         'enableClock',
         'enableText',
         'enableAnim',
         'animType',
+        'enableInfo',
+        'webUrl',
+        'contactInfo',
+    ];
+
+    protected $casts = [
+        'enableClock' => 'boolean',
+        'enableText'  => 'boolean',
+        'enableAnim'  => 'boolean',
+        'enableInfo'  => 'boolean',
+        'animType'    => 'integer',
     ];
 }

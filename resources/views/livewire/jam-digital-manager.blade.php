@@ -31,17 +31,23 @@
                     <label class="flex items-center space-x-3 cursor-pointer">
                         <input type="checkbox" wire:model="enableAnim"
                             class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="text-sm text-gray-700 font-medium">Tampilkan Animasi CENARI</span>
+                        <span class="text-sm text-gray-700 font-medium">Tampilkan Animasi Full CENARI</span>
+                    </label>
+
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" wire:model="enableInfo"
+                            class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="text-sm text-gray-700 font-medium">Tampilkan Static Info (Web & Kontak)</span>
                     </label>
                 </div>
 
                 <div class="mt-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Animasi</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Animasi Full Screen</label>
                     <select wire:model="animType"
                         class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="1">Detak Jantung (Heartbeat)</option>
-                        <option value="2">Radar / Sonar Scan</option>
-                        <option value="3">Equalizer Bar</option>
+                        <option value="1">Full Matrix Rain</option>
+                        <option value="2">Full Wave & Grid Scan</option>
+                        <option value="3">Full Particle Sparks</option>
                     </select>
                     @error('animType')
                         <span class="text-xs text-red-500">{{ $message }}</span>
@@ -49,43 +55,71 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: TEKS & KONFIGURASI DISPLAY -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Teks Running</label>
-                <input type="text" wire:model="runningText"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('runningText')
-                    <span class="text-xs text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
+            <!-- SECTION 2: TEKS RUNNING & SUBTEXT -->
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                <h3 class="text-sm font-semibold text-gray-700">Teks Running & Layar Jam</h3>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Teks Baris Bawah (Maks. 15 Karakter)</label>
-                <input type="text" wire:model="subText" maxlength="15"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('subText')
-                    <span class="text-xs text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kecepatan Jalan (ms)</label>
-                    <input type="number" wire:model="speed" min="10" max="150"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @error('speed')
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Teks Running</label>
+                    <input type="text" wire:model="runningText"
+                        class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    @error('runningText')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Ukuran Teks</label>
-                    <select wire:model="size"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="1">Normal (1 Baris)</option>
-                        <option value="2">Besar (2 Baris)</option>
-                    </select>
-                    @error('size')
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Teks Baris Bawah Jam (Maks. 15
+                        Karakter)</label>
+                    <input type="text" wire:model="subText" maxlength="15"
+                        class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    @error('subText')
+                        <span class="text-xs text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kecepatan Jalan (ms)</label>
+                        <input type="number" wire:model="speed" min="10" max="150"
+                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        @error('speed')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Ukuran Teks Running</label>
+                        <select wire:model="size"
+                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="1">Normal (1 Baris)</option>
+                            <option value="2">Besar (2 Baris)</option>
+                        </select>
+                        @error('size')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: KONFIGURASI STATIC INFO (WEB & KONTAK) -->
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                <h3 class="text-sm font-semibold text-gray-700">Informasi Static (Web & Kontak)</h3>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Website Info</label>
+                    <input type="text" wire:model="webUrl" placeholder="cenari.sch.id"
+                        class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    @error('webUrl')
+                        <span class="text-xs text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kontak / WhatsApp Info</label>
+                    <input type="text" wire:model="contactInfo" placeholder="081234567890"
+                        class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    @error('contactInfo')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
