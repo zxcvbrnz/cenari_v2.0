@@ -14,5 +14,9 @@ class JamDigital extends Model
         'sub_text',
         'speed',
         'size',
+        'enableClock',
+        'enableText',
+        'enableAnim',
+        'animType',
     ];
 }

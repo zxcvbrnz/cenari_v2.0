@@ -19,14 +19,22 @@ class JamDigitalController extends Controller
                 'subText'     => 'RTC OK',
                 'speed'       => 35,
                 'size'        => 1,
+                'enableClock' => true,
+                'enableText'  => true,
+                'enableAnim'  => true,
+                'animType'    => 1,
             ]);
         }
 
         return response()->json([
-            'runningText' => $config->running_text,
-            'subText'     => $config->sub_text,
+            'runningText' => $config->running_text ?? $config->runningText,
+            'subText'     => $config->sub_text ?? $config->subText,
             'speed'       => (int) $config->speed,
             'size'        => (int) $config->size,
+            'enableClock' => (bool) ($config->enableClock ?? true),
+            'enableText'  => (bool) ($config->enableText ?? true),
+            'enableAnim'  => (bool) ($config->enableAnim ?? true),
+            'animType'    => (int) ($config->animType ?? 1),
         ]);
     }
 }
