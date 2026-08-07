@@ -68,9 +68,9 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Teks Running</label>
-                    <input type="text" wire:model="runningText"
+                    <input type="text" wire:model="running_text"
                         class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @error('runningText')
+                    @error('running_text')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
@@ -78,9 +78,9 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Teks Baris Bawah Jam (Maks. 15
                         Karakter)</label>
-                    <input type="text" wire:model="subText" maxlength="15"
+                    <input type="text" wire:model="sub_text" maxlength="15"
                         class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @error('subText')
+                    @error('sub_text')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
