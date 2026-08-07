@@ -10,11 +10,10 @@ class JamDigital extends Model
     use HasFactory;
 
     protected $fillable = [
-        'runningText',
-        'subText',
+        'running_text',
+        'sub_text',
         'speed',
         'size',
-        'clockSize',
         'enableClock',
         'enableText',
         'enableAnim',
@@ -25,9 +24,6 @@ class JamDigital extends Model
     ];
 
     protected $casts = [
-        'speed'       => 'integer',
-        'size'        => 'integer',
-        'clockSize'   => 'integer',
         'enableClock' => 'boolean',
         'enableText'  => 'boolean',
         'enableAnim'  => 'boolean',

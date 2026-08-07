@@ -7,8 +7,8 @@ use App\Models\JamDigital;
 
 class JamDigitalManager extends Component
 {
-    public string $runningText = '';
-    public string $subText = '';
+    public string $running_text = '';
+    public string $sub_text = '';
     public int $speed = 35;
     public int $size = 1;
     public int $clockSize = 1;
@@ -23,8 +23,8 @@ class JamDigitalManager extends Component
     public string $contactInfo = '';
 
     protected array $rules = [
-        'runningText' => 'required|string|max:255',
-        'subText'     => 'required|string|max:15',
+        'running_text' => 'required|string|max:255',
+        'sub_text'     => 'required|string|max:15',
         'speed'       => 'required|integer|min:10|max:150',
         'size'        => 'required|integer|in:1,2',
         'clockSize'   => 'required|integer|in:1,2',
@@ -42,8 +42,8 @@ class JamDigitalManager extends Component
         $config = JamDigital::first();
 
         if ($config) {
-            $this->runningText = $config->runningText ?? '';
-            $this->subText     = $config->subText ?? '';
+            $this->running_text = $config->running_text ?? '';
+            $this->sub_text     = $config->sub_text ?? '';
             $this->speed       = (int) ($config->speed ?? 35);
             $this->size        = (int) ($config->size ?? 1);
             $this->clockSize   = (int) ($config->clockSize ?? 1);
@@ -64,8 +64,8 @@ class JamDigitalManager extends Component
         JamDigital::updateOrCreate(
             ['id' => 1],
             [
-                'runningText' => $this->runningText,
-                'subText'     => $this->subText,
+                'running_text' => $this->running_text,
+                'sub_text'     => $this->sub_text,
                 'speed'       => $this->speed,
                 'size'        => $this->size,
                 'clockSize'   => $this->clockSize,
