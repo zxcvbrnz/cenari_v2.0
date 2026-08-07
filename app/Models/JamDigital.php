@@ -14,6 +14,7 @@ class JamDigital extends Model
         'subText',
         'speed',
         'size',
+        'clockSize',
         'enableClock',
         'enableText',
         'enableAnim',
@@ -24,6 +25,9 @@ class JamDigital extends Model
     ];
 
     protected $casts = [
+        'speed'       => 'integer',
+        'size'        => 'integer',
+        'clockSize'   => 'integer',
         'enableClock' => 'boolean',
         'enableText'  => 'boolean',
         'enableAnim'  => 'boolean',
