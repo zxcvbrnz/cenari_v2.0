@@ -12,14 +12,14 @@ class JamDigitalManager extends Component
     public int $speed = 35;
     public int $size = 1;
 
-    // Properti Mode Tampilan
+    // Mode Tampilan
     public bool $enableClock = true;
     public bool $enableText = true;
     public bool $enableAnim = true;
-    public bool $enableInfo = true; // Tambahan Baru
+    public bool $enableInfo = true;
     public int $animType = 1;
 
-    // Properti Info Static Tambahan
+    // Informasi Static
     public string $webUrl = 'cenari.sch.id';
     public string $contactInfo = '081234567890';
 
@@ -42,21 +42,21 @@ class JamDigitalManager extends Component
         $config = JamDigital::first();
 
         if ($config) {
-            $this->runningText = $config->running_text ?? $config->runningText;
-            $this->subText     = $config->sub_text ?? $config->subText;
-            $this->speed       = $config->speed;
-            $this->size        = $config->size;
+            $this->runningText = $config->running_text ?? $config->runningText ?? '';
+            $this->subText     = $config->sub_text ?? $config->subText ?? '';
+            $this->speed       = (int) ($config->speed ?? 35);
+            $this->size        = (int) ($config->size ?? 1);
 
-            // Inisialisasi Pengaturan Mode Tampilan
-            $this->enableClock = $config->enableClock ?? true;
-            $this->enableText  = $config->enableText ?? true;
-            $this->enableAnim  = $config->enableAnim ?? true;
-            $this->enableInfo  = $config->enableInfo ?? true;
-            $this->animType    = $config->animType ?? 1;
+            // Inisialisasi Mode Tampilan (Support Snake & Camel Case)
+            $this->enableClock = (bool) ($config->enable_clock ?? $config->enableClock ?? true);
+            $this->enableText  = (bool) ($config->enable_text ?? $config->enableText ?? true);
+            $this->enableAnim  = (bool) ($config->enable_anim ?? $config->enableAnim ?? true);
+            $this->enableInfo  = (bool) ($config->enable_info ?? $config->enableInfo ?? true);
+            $this->animType    = (int) ($config->anim_type ?? $config->animType ?? 1);
 
-            // Inisialisasi Teks Static Info
-            $this->webUrl      = $config->webUrl ?? 'cenari.sch.id';
-            $this->contactInfo = $config->contactInfo ?? '081234567890';
+            // Inisialisasi Static Info
+            $this->webUrl      = $config->web_url ?? $config->webUrl ?? 'cenari.sch.id';
+            $this->contactInfo = $config->contact_info ?? $config->contactInfo ?? '081234567890';
         }
     }
 
@@ -76,13 +76,13 @@ class JamDigitalManager extends Component
                 'sub_text'     => $this->subText,
                 'speed'        => $this->speed,
                 'size'         => $this->size,
-                'enableClock'  => $this->enableClock,
-                'enableText'   => $this->enableText,
-                'enableAnim'   => $this->enableAnim,
-                'enableInfo'   => $this->enableInfo,
-                'animType'     => $this->animType,
-                'webUrl'       => $this->webUrl,
-                'contactInfo'  => $this->contactInfo,
+                'enable_clock' => $this->enableClock,
+                'enable_text'  => $this->enableText,
+                'enable_anim'  => $this->enableAnim,
+                'enable_info'  => $this->enableInfo,
+                'anim_type'    => $this->animType,
+                'web_url'      => $this->webUrl,
+                'contact_info' => $this->contactInfo,
             ]
         );
 
