@@ -10,13 +10,25 @@ class JamDigitalController extends Controller
 {
     public function getData(): JsonResponse
     {
-        // Ambil record pertama atau data default jika tabel kosong
         $config = JamDigital::first();
+
+        // Template default schedule 7 hari
+        $defaultSchedule = [
+            ['enabled' => true,  'startHour' => 6, 'startMinute' => 0, 'endHour' => 22, 'endMinute' => 0],
+            ['enabled' => true,  'startHour' => 6, 'startMinute' => 0, 'endHour' => 22, 'endMinute' => 0],
+            ['enabled' => true,  'startHour' => 6, 'startMinute' => 0, 'endHour' => 22, 'endMinute' => 0],
+            ['enabled' => true,  'startHour' => 6, 'startMinute' => 0, 'endHour' => 22, 'endMinute' => 0],
+            ['enabled' => true,  'startHour' => 6, 'startMinute' => 0, 'endHour' => 22, 'endMinute' => 0],
+            ['enabled' => true,  'startHour' => 6, 'startMinute' => 0, 'endHour' => 22, 'endMinute' => 0],
+            ['enabled' => false, 'startHour' => 0, 'startMinute' => 0, 'endHour' => 0,  'endMinute' => 0],
+        ];
 
         if (!$config) {
             return response()->json([
-                'runningText' => 'Selamat Datang di Jam Digital!',
-                'subText'     => 'RTC OK',
+                'runningText' => 'Selamat Datang di Cenari Education Center',
+                'subText'     => 'CENARI OK',
+                'webUrl'      => 'cenari.sch.id',
+                'contactInfo' => '081234567890',
                 'speed'       => 35,
                 'size'        => 1,
                 'clockSize'   => 1,
@@ -25,24 +37,26 @@ class JamDigitalController extends Controller
                 'enableAnim'  => true,
                 'enableInfo'  => true,
                 'animType'    => 1,
-                'webUrl'      => 'cenari.sch.id',
-                'contactInfo' => '081234567890',
+                'matrixPower' => true,
+                'schedule'    => $defaultSchedule,
             ]);
         }
 
         return response()->json([
-            'runningText' => $config->running_text ?? $config->runningText,
-            'subText'     => $config->sub_text ?? $config->subText,
+            'runningText' => $config->running_text,
+            'subText'     => $config->sub_text,
+            'webUrl'      => $config->web_url ?? 'cenari.sch.id',
+            'contactInfo' => $config->contact_info ?? '081234567890',
             'speed'       => (int) $config->speed,
             'size'        => (int) $config->size,
-            'clockSize'   => (int) ($config->clock_size ?? $config->clockSize ?? 1),
-            'enableClock' => (bool) ($config->enable_clock ?? $config->enableClock ?? true),
-            'enableText'  => (bool) ($config->enable_text ?? $config->enableText ?? true),
-            'enableAnim'  => (bool) ($config->enable_anim ?? $config->enableAnim ?? true),
-            'enableInfo'  => (bool) ($config->enable_info ?? $config->enableInfo ?? true),
-            'animType'    => (int) ($config->anim_type ?? $config->animType ?? 1),
-            'webUrl'      => $config->web_url ?? $config->webUrl ?? 'cenari.sch.id',
-            'contactInfo' => $config->contact_info ?? $config->contactInfo ?? '081234567890',
+            'clockSize'   => (int) $config->clock_size,
+            'enableClock' => (bool) $config->enable_clock,
+            'enableText'  => (bool) $config->enable_text,
+            'enableAnim'  => (bool) $config->enable_anim,
+            'enableInfo'  => (bool) $config->enable_info,
+            'animType'    => (int) $config->anim_type,
+            'matrixPower' => (bool) $config->matrix_power,
+            'schedule'    => $config->schedule ?? $defaultSchedule,
         ]);
     }
 }

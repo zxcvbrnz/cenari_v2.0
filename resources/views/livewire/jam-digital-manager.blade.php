@@ -2,10 +2,22 @@
     <div class="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-100 mt-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Pengaturan Jam Digital ESP8266</h2>
 
+        {{-- ALERT SUCCESS (Diperbaiki dengan wire:key & Tombol Close) --}}
         @if (session()->has('message'))
-            <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition.duration.500ms
-                class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
-                {{ session('message') }}
+            <div wire:key="alert-{{ microtime() }}" x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show"
+                x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="flex items-center justify-between p-3.5 mb-4 text-sm text-green-800 bg-green-50 border border-green-200 rounded-lg shadow-sm">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-4 h-4 text-green-600 fill-current shrink-0" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 8 0 100-16 8 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span class="font-medium">{{ session('message') }}</span>
+                </div>
+                <button type="button" @click="show = false"
+                    class="text-green-600 hover:text-green-800 font-bold text-lg leading-none ml-2">&times;</button>
             </div>
         @endif
 
@@ -62,7 +74,48 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: TEKS RUNNING & LAYAR JAM -->
+            <!-- SECTION 2: HARDWARE & SISTEM (NEW FIELD) -->
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                <h3 class="text-sm font-semibold text-gray-700">Pengaturan Hardware & Waktu</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kecerahan LED (0 - 15)</label>
+                        <input type="number" wire:model="brightness" min="0" max="15"
+                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        @error('brightness')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Format Jam</label>
+                        <select wire:model="timeFormat"
+                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="24">24 Jam (14:30)</option>
+                            <option value="12">12 Jam (02:30 PM)</option>
+                        </select>
+                        @error('timeFormat')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Zona Waktu (GMT)</label>
+                        <select wire:model="timezone"
+                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="7">WIB (GMT+7)</option>
+                            <option value="8">WITA (GMT+8)</option>
+                            <option value="9">WIT (GMT+9)</option>
+                        </select>
+                        @error('timezone')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: TEKS RUNNING & LAYAR JAM -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
                 <h3 class="text-sm font-semibold text-gray-700">Teks Running & Layar Jam</h3>
 
@@ -121,7 +174,7 @@
                 </div>
             </div>
 
-            <!-- SECTION 3: KONFIGURASI STATIC INFO (WEB & KONTAK) -->
+            <!-- SECTION 4: KONFIGURASI STATIC INFO (WEB & KONTAK) -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
                 <h3 class="text-sm font-semibold text-gray-700">Informasi Static (Web & Kontak)</h3>
 
