@@ -50,7 +50,7 @@ class JamDigitalManager extends Component
     public function mount(): void
     {
         $config = JamDigital::first();
-        $dayNames = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+        $dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
         if ($config) {
             $this->running_text   = $config->running_text ?? '';
