@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::table('jam_digitals', function (Blueprint $table) {
             $table->integer('clock_size')->default(1)->after('size');
-            $table->boolean('matrix_power')->default(true)->after('enable_info');
+            $table->boolean('matrix_power')->default(true)->after('enableInfo');
             $table->json('schedule')->nullable()->after('matrix_power');
         });
     }
