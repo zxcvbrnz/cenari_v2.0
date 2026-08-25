@@ -2,7 +2,7 @@
     <div class="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-100 mt-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Pengaturan Jam Digital ESP8266</h2>
 
-        {{-- ALERT SUCCESS (Diperbaiki dengan wire:key & Tombol Close) --}}
+        {{-- ALERT SUCCESS --}}
         @if (session()->has('message'))
             <div wire:key="alert-{{ microtime() }}" x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show"
                 x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
@@ -23,7 +23,18 @@
 
         <form wire:submit.prevent="save" class="space-y-5">
 
-            <!-- SECTION 1: MODE TAMPILAN AKTIF -->
+            <!-- SECTION 1: HARDWARE & CONTROL POWER -->
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                <h3 class="text-sm font-semibold text-gray-700">Power & Operasional Panel</h3>
+
+                <label class="flex items-center space-x-3 cursor-pointer">
+                    <input type="checkbox" wire:model="matrixPower"
+                        class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                    <span class="text-sm text-gray-700 font-medium">Power Matrix Panel (ON / OFF)</span>
+                </label>
+            </div>
+
+            <!-- SECTION 2: MODE TAMPILAN AKTIF -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <h3 class="text-sm font-semibold text-gray-700 mb-3">Mode Tampilan Aktif</h3>
 
@@ -74,48 +85,41 @@
                 </div>
             </div>
 
-            <!-- SECTION 2: HARDWARE & SISTEM (NEW FIELD) -->
+            <!-- SECTION 3: JADWAL OPERASIONAL (SCHEDULE ARRAY) -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
-                <h3 class="text-sm font-semibold text-gray-700">Pengaturan Hardware & Waktu</h3>
+                <h3 class="text-sm font-semibold text-gray-700">Jadwal Operasional Automatic Standby</h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kecerahan LED (0 - 15)</label>
-                        <input type="number" wire:model="brightness" min="0" max="15"
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Jam Nyala / Mulai</label>
+                        <input type="time" wire:model="onTime"
                             class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        @error('brightness')
+                        @error('onTime')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Format Jam</label>
-                        <select wire:model="timeFormat"
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Jam Mati / Standby</label>
+                        <input type="time" wire:model="offTime"
                             class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="24">24 Jam (14:30)</option>
-                            <option value="12">12 Jam (02:30 PM)</option>
-                        </select>
-                        @error('timeFormat')
-                            <span class="text-xs text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Zona Waktu (GMT)</label>
-                        <select wire:model="timezone"
-                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="7">WIB (GMT+7)</option>
-                            <option value="8">WITA (GMT+8)</option>
-                            <option value="9">WIT (GMT+9)</option>
-                        </select>
-                        @error('timezone')
+                        @error('offTime')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
+
+                <div class="pt-2">
+                    <label class="flex items-center space-x-3 cursor-pointer">
+                        <input type="checkbox" wire:model="enableSchedule"
+                            class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                        <span class="text-sm text-gray-700 font-medium">Aktifkan Auto Sleep/Standby Berdasarkan
+                            Jadwal</span>
+                    </label>
+                </div>
             </div>
 
-            <!-- SECTION 3: TEKS RUNNING & LAYAR JAM -->
+            <!-- SECTION 4: TEKS RUNNING & LAYAR JAM -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
                 <h3 class="text-sm font-semibold text-gray-700">Teks Running & Layar Jam</h3>
 
@@ -174,24 +178,25 @@
                 </div>
             </div>
 
-            <!-- SECTION 4: KONFIGURASI STATIC INFO (WEB & KONTAK) -->
+            <!-- SECTION 5: KONFIGURASI STATIC INFO (WEB & KONTAK) -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
                 <h3 class="text-sm font-semibold text-gray-700">Informasi Static (Web & Kontak)</h3>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Website Info</label>
-                    <input type="text" wire:model="webUrl" placeholder="cenari.sch.id"
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Website Info (`web_url`)</label>
+                    <input type="text" wire:model="web_url" placeholder="cenari.sch.id"
                         class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @error('webUrl')
+                    @error('web_url')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kontak / WhatsApp Info</label>
-                    <input type="text" wire:model="contactInfo" placeholder="081234567890"
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kontak / WhatsApp Info
+                        (`contact_info`)</label>
+                    <input type="text" wire:model="contact_info" placeholder="081234567890"
                         class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @error('contactInfo')
+                    @error('contact_info')
                         <span class="text-xs text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
