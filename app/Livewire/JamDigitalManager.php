@@ -55,8 +55,8 @@ class JamDigitalManager extends Component
         if ($config) {
             $this->running_text   = $config->running_text ?? '';
             $this->sub_text       = $config->sub_text ?? '';
-            $this->web_url        = $config->web_url ?? '';
-            $this->contact_info   = $config->contact_info ?? '';
+            $this->web_url        = $config->webUrl ?? '';
+            $this->contact_info   = $config->contactInfo ?? '';
             $this->speed          = (int) ($config->speed ?? 35);
             $this->size           = (int) ($config->size ?? 1);
             $this->clockSize      = (int) ($config->clock_size ?? 1);
@@ -119,8 +119,8 @@ class JamDigitalManager extends Component
             [
                 'running_text' => $this->running_text,
                 'sub_text'     => $this->sub_text,
-                'web_url'      => $this->web_url,
-                'contact_info' => $this->contact_info,
+                'webUrl'      => $this->web_url,
+                'contactInfo' => $this->contact_info,
                 'speed'        => $this->speed,
                 'size'         => $this->size,
                 'clock_size'    => $this->clockSize,

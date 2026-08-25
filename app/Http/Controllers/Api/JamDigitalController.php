@@ -45,17 +45,17 @@ class JamDigitalController extends Controller
         return response()->json([
             'runningText' => $config->running_text,
             'subText'     => $config->sub_text,
-            'webUrl'      => $config->web_url ?? 'cenari.sch.id',
-            'contactInfo' => $config->contact_info ?? '081234567890',
+            'webUrl'      => $config->webUrl ?? 'cenari.sch.id',
+            'contactInfo' => $config->contactInfo ?? '081234567890',
             'speed'       => (int) $config->speed,
             'size'        => (int) $config->size,
-            'clockSize'   => (int) $config->clockSize,
+            'clockSize'   => (int) $config->clock_size,
             'enableClock' => (bool) $config->enableClock,
             'enableText'  => (bool) $config->enableText,
             'enableAnim'  => (bool) $config->enableAnim,
             'enableInfo'  => (bool) $config->enableInfo,
             'animType'    => (int) $config->animType,
-            'matrixPower' => (bool) $config->matrixPower,
+            'matrixPower' => (bool) $config->matrix_power,
             'schedule'    => $config->schedule ?? $defaultSchedule,
         ]);
     }

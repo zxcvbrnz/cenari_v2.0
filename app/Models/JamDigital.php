@@ -12,8 +12,8 @@ class JamDigital extends Model
     protected $fillable = [
         'running_text',
         'sub_text',
-        'web_url',
-        'contact_info',
+        'webUrl',
+        'contactInfo',
         'speed',
         'size',
         'clock_size',
