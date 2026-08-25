@@ -59,13 +59,13 @@ class JamDigitalManager extends Component
             $this->contact_info   = $config->contact_info ?? '';
             $this->speed          = (int) ($config->speed ?? 35);
             $this->size           = (int) ($config->size ?? 1);
-            $this->clockSize      = (int) ($config->clockSize ?? 1);
+            $this->clockSize      = (int) ($config->clock_size ?? 1);
             $this->enableClock    = (bool) ($config->enableClock ?? true);
             $this->enableText     = (bool) ($config->enableText ?? true);
             $this->enableAnim     = (bool) ($config->enableAnim ?? true);
             $this->enableInfo     = (bool) ($config->enableInfo ?? true);
             $this->animType       = (int) ($config->animType ?? 1);
-            $this->matrixPower    = (bool) ($config->matrixPower ?? true);
+            $this->matrixPower    = (bool) ($config->matrix_power ?? true);
 
             $savedSchedule = $config->schedule ?? [];
 
@@ -123,13 +123,13 @@ class JamDigitalManager extends Component
                 'contact_info' => $this->contact_info,
                 'speed'        => $this->speed,
                 'size'         => $this->size,
-                'clockSize'    => $this->clockSize,
+                'clock_size'    => $this->clockSize,
                 'enableClock'  => $this->enableClock,
                 'enableText'   => $this->enableText,
                 'enableAnim'   => $this->enableAnim,
                 'enableInfo'   => $this->enableInfo,
                 'animType'     => $this->animType,
-                'matrixPower'  => $this->matrixPower,
+                'matrix_power'  => $this->matrixPower,
                 'schedule'     => $formattedSchedule,
             ]
         );

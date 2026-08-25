@@ -16,13 +16,13 @@ class JamDigital extends Model
         'contact_info',
         'speed',
         'size',
-        'clockSize',
+        'clock_size',
         'enableClock',
         'enableText',
         'enableAnim',
         'enableInfo',
         'animType',
-        'matrixPower',
+        'matrix_power',
         'schedule',
     ];
 
@@ -35,7 +35,7 @@ class JamDigital extends Model
         'enableText'  => 'boolean',
         'enableAnim'  => 'boolean',
         'enableInfo'  => 'boolean',
-        'matrixPower' => 'boolean',
+        'matrix_power' => 'boolean',
         'schedule'     => 'array',
     ];
 }
