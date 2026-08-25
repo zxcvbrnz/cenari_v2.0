@@ -1,5 +1,5 @@
 <main class="py-14 md:py-20">
-    <div class="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-100 mt-6">
+    <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-100 mt-6">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Pengaturan Jam Digital ESP8266</h2>
 
         {{-- ALERT SUCCESS --}}
@@ -11,7 +11,7 @@
                 <div class="flex items-center space-x-2">
                     <svg class="w-4 h-4 text-green-600 fill-current shrink-0" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
-                            d="M10 18a8 8 8 0 100-16 8 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            d="M10 18a8 8 0 100-16 8 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                             clip-rule="evenodd" />
                     </svg>
                     <span class="font-medium">{{ session('message') }}</span>
@@ -23,7 +23,7 @@
 
         <form wire:submit.prevent="save" class="space-y-5">
 
-            <!-- SECTION 1: HARDWARE & CONTROL POWER -->
+            <!-- SECTION 1: POWER HARDWARE -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
                 <h3 class="text-sm font-semibold text-gray-700">Power & Operasional Panel</h3>
 
@@ -85,37 +85,45 @@
                 </div>
             </div>
 
-            <!-- SECTION 3: JADWAL OPERASIONAL (SCHEDULE ARRAY) -->
-            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
-                <h3 class="text-sm font-semibold text-gray-700">Jadwal Operasional Automatic Standby</h3>
+            <!-- SECTION 3: JADWAL OPERASIONAL 7 HARI (DaySchedule STRUCT) -->
+            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                <h3 class="text-sm font-semibold text-gray-700">Jadwal Operasional (7 Hari Independen)</h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Jam Nyala / Mulai</label>
-                        <input type="time" wire:model="onTime"
-                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        @error('onTime')
-                            <span class="text-xs text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+                <div class="space-y-2">
+                    @foreach ($schedules as $index => $sched)
+                        <div
+                            class="flex flex-wrap items-center justify-between p-2.5 rounded-lg border {{ $sched['enabled'] ? 'bg-white border-gray-200' : 'bg-gray-100 border-gray-200 opacity-60' }} transition-all">
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Jam Mati / Standby</label>
-                        <input type="time" wire:model="offTime"
-                            class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        @error('offTime')
-                            <span class="text-xs text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
+                            <div class="flex items-center space-x-2 w-28">
+                                <input type="checkbox" wire:model.live="schedules.{{ $index }}.enabled"
+                                    id="day-{{ $index }}"
+                                    class="w-4 h-4 text-blue-600 rounded border-gray-300 focus:ring-blue-500">
+                                <label for="day-{{ $index }}"
+                                    class="text-sm font-semibold text-gray-700 cursor-pointer">
+                                    {{ $sched['day_name'] }}
+                                </label>
+                            </div>
 
-                <div class="pt-2">
-                    <label class="flex items-center space-x-3 cursor-pointer">
-                        <input type="checkbox" wire:model="enableSchedule"
-                            class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
-                        <span class="text-sm text-gray-700 font-medium">Aktifkan Auto Sleep/Standby Berdasarkan
-                            Jadwal</span>
-                    </label>
+                            <div class="flex items-center space-x-2">
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-xs text-gray-500">ON:</span>
+                                    <input type="time" wire:model="schedules.{{ $index }}.start_time"
+                                        class="text-xs p-1 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                        {{ !$sched['enabled'] ? 'disabled' : '' }}>
+                                </div>
+
+                                <span class="text-gray-400 text-xs">-</span>
+
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-xs text-gray-500">OFF:</span>
+                                    <input type="time" wire:model="schedules.{{ $index }}.end_time"
+                                        class="text-xs p-1 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                                        {{ !$sched['enabled'] ? 'disabled' : '' }}>
+                                </div>
+                            </div>
+
+                        </div>
+                    @endforeach
                 </div>
             </div>
 
@@ -178,7 +186,7 @@
                 </div>
             </div>
 
-            <!-- SECTION 5: KONFIGURASI STATIC INFO (WEB & KONTAK) -->
+            <!-- SECTION 5: INFORMASI STATIC (WEB & KONTAK) -->
             <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
                 <h3 class="text-sm font-semibold text-gray-700">Informasi Static (Web & Kontak)</h3>
 

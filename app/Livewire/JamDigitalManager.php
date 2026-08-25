@@ -7,6 +7,7 @@ use App\Models\JamDigital;
 
 class JamDigitalManager extends Component
 {
+    // Field Pengaturan Teks & Tampilan
     public string $running_text = '';
     public string $sub_text = '';
     public string $web_url = '';
@@ -22,34 +23,34 @@ class JamDigitalManager extends Component
     public bool $enableInfo = true;
     public int $animType = 1;
 
-    // Field Hardware & Schedule (JSON Array)
     public bool $matrixPower = true;
-    public bool $enableSchedule = true;
-    public string $onTime = '06:00';
-    public string $offTime = '22:00';
+
+    // Array Jadwal 7 Hari (Senin - Minggu)
+    public array $schedules = [];
 
     protected array $rules = [
-        'running_text'   => 'required|string|max:255',
-        'sub_text'       => 'nullable|string|max:15',
-        'web_url'        => 'nullable|string|max:255',
-        'contact_info'   => 'nullable|string|max:50',
-        'speed'          => 'required|integer|min:10|max:150',
-        'size'           => 'required|integer|in:1,2',
-        'clockSize'      => 'required|integer|in:1,2',
-        'enableClock'    => 'boolean',
-        'enableText'     => 'boolean',
-        'enableAnim'     => 'boolean',
-        'enableInfo'     => 'boolean',
-        'animType'       => 'required|integer|in:1,2,3,4,5,6,7,8,9,10',
-        'matrixPower'    => 'boolean',
-        'enableSchedule' => 'boolean',
-        'onTime'         => 'required|date_format:H:i',
-        'offTime'        => 'required|date_format:H:i',
+        'running_text'           => 'required|string|max:255',
+        'sub_text'               => 'nullable|string|max:15',
+        'web_url'                => 'nullable|string|max:255',
+        'contact_info'           => 'nullable|string|max:50',
+        'speed'                  => 'required|integer|min:10|max:150',
+        'size'                   => 'required|integer|in:1,2',
+        'clockSize'              => 'required|integer|in:1,2',
+        'enableClock'            => 'boolean',
+        'enableText'             => 'boolean',
+        'enableAnim'             => 'boolean',
+        'enableInfo'             => 'boolean',
+        'animType'               => 'required|integer|in:1,2,3,4,5,6,7,8,9,10',
+        'matrixPower'            => 'boolean',
+        'schedules.*.enabled'    => 'boolean',
+        'schedules.*.start_time' => 'required|date_format:H:i',
+        'schedules.*.end_time'   => 'required|date_format:H:i',
     ];
 
     public function mount(): void
     {
         $config = JamDigital::first();
+        $dayNames = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 
         if ($config) {
             $this->running_text   = $config->running_text ?? '';
@@ -66,17 +67,52 @@ class JamDigitalManager extends Component
             $this->animType       = (int) ($config->animType ?? 1);
             $this->matrixPower    = (bool) ($config->matrixPower ?? true);
 
-            // Ekstrak data JSON schedule dari database
-            $scheduleData         = $config->schedule ?? [];
-            $this->enableSchedule = (bool) ($scheduleData['enable'] ?? true);
-            $this->onTime         = $scheduleData['on_time'] ?? '06:00';
-            $this->offTime        = $scheduleData['off_time'] ?? '22:00';
+            $savedSchedule = $config->schedule ?? [];
+
+            foreach ($dayNames as $index => $dayName) {
+                $item = $savedSchedule[$index] ?? null;
+
+                $startH = isset($item['startHour']) ? sprintf('%02d', $item['startHour']) : '06';
+                $startM = isset($item['startMinute']) ? sprintf('%02d', $item['startMinute']) : '00';
+                $endH   = isset($item['endHour']) ? sprintf('%02d', $item['endHour']) : '22';
+                $endM   = isset($item['endMinute']) ? sprintf('%02d', $item['endMinute']) : '00';
+
+                $this->schedules[$index] = [
+                    'day_name'   => $dayName,
+                    'enabled'    => isset($item['enabled']) ? (bool) $item['enabled'] : ($index < 6),
+                    'start_time' => "{$startH}:{$startM}",
+                    'end_time'   => "{$endH}:{$endM}",
+                ];
+            }
+        } else {
+            foreach ($dayNames as $index => $dayName) {
+                $this->schedules[$index] = [
+                    'day_name'   => $dayName,
+                    'enabled'    => $index < 6,
+                    'start_time' => '06:00',
+                    'end_time'   => '22:00',
+                ];
+            }
         }
     }
 
     public function save(): void
     {
         $this->validate();
+
+        // Mengubah string HH:MM dari form ke format integer struct ESP (DaySchedule)
+        $formattedSchedule = array_map(function ($item) {
+            [$startH, $startM] = explode(':', $item['start_time'] ?: '00:00');
+            [$endH, $endM]     = explode(':', $item['end_time'] ?: '00:00');
+
+            return [
+                'enabled'     => (bool) $item['enabled'],
+                'startHour'   => (int) $startH,
+                'startMinute' => (int) $startM,
+                'endHour'     => (int) $endH,
+                'endMinute'   => (int) $endM,
+            ];
+        }, $this->schedules);
 
         JamDigital::updateOrCreate(
             ['id' => 1],
@@ -94,12 +130,7 @@ class JamDigitalManager extends Component
                 'enableInfo'   => $this->enableInfo,
                 'animType'     => $this->animType,
                 'matrixPower'  => $this->matrixPower,
-                // Disimpan sebagai array (otomatis dikonversi ke JSON oleh $casts model)
-                'schedule'     => [
-                    'enable'   => $this->enableSchedule,
-                    'on_time'  => $this->onTime,
-                    'off_time' => $this->offTime,
-                ],
+                'schedule'     => $formattedSchedule,
             ]
         );
 
